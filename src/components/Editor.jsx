@@ -3,10 +3,6 @@ import { Button, Tab, Tabs } from "react-bootstrap";
 import LoideAceEditor from "./LoideAceEditor";
 
 const Editor = (props) => {
-    function onChange(newValue) {
-        console.log("change", newValue);
-    }
-
     return (
         <div className="loide-editor">
             <LoideAceEditor
@@ -14,9 +10,19 @@ const Editor = (props) => {
                 width={`0px`}
                 mode="asp"
                 theme="tomorrow"
-                // onChange={onChange}
                 name="UNIQUE_ID_OF_DIV"
-                editorProps={{ $blockScrolling: true }}
+                editorProps={{
+                    $blockScrolling: true,
+                }}
+                setOptions={{
+                    fontSize: 15,
+                    enableBasicAutocompletion: true,
+                    enableLiveAutocompletion: true,
+                    enableSnippets: true,
+                    cursorStyle: "smooth",
+                    copyWithEmptySelection: true,
+                    scrollPastEnd: 0.5,
+                }}
                 style={{ flexGrow: 1 }}
             />
         </div>
