@@ -13,16 +13,19 @@ const LoideAceEditor = (props) => {
     var solverChosen = "dlv2";
 
     const onChange = (value) => {
-        console.log(props.mode);
+        // console.log(props.mode);
         inizializeAutoComplete(value);
+        if (props.onChange) props.onChange({tabKey: props.tabKey,value: value});
     };
 
-    const onFocus = () => {
+    const onFocus = (e) => {
         window.dispatchEvent(new Event("resize"));
+
+        if (props.onFocus) props.onFocus({tabKey: props.tabKey,event: e});
     };
 
     const inizializeSnippets = () => {
-        console.log("langTools", langTools);
+        // console.log("langTools", langTools);
 
         langTools.setCompleters([]); // reset completers.
 
