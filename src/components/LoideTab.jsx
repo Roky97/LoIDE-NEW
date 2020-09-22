@@ -1,5 +1,5 @@
 import React from "react";
-import { Tabs, TabList, Tab, TabPanel } from "react-tabs";
+import { Tab } from "react-tabs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const LoideTab = (props) => (

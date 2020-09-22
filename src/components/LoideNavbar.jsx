@@ -30,9 +30,9 @@ const LoideNavbar = (props) => {
                     <Nav.Item>
                         <ButtonGroup>
                             <OverlayTrigger
-                                key="run-option-tooltip"
+                                key="run-settings-tooltip"
                                 placement="bottom"
-                                overlay={<Tooltip>Run option</Tooltip>}
+                                overlay={<Tooltip>Run settings</Tooltip>}
                             >
                                 <Button
                                     variant="secondary"

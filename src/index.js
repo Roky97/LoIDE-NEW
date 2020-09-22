@@ -3,9 +3,9 @@ import ReactDOM from "react-dom"
 import App from "./components/App"
 import './global.scss'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCogs, faPlay, faInfo, faPaintBrush, faFolderOpen, faSave, faLink, faPlus, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faCogs, faPlay, faInfo, faPaintBrush, faFolderOpen, faSave, faLink, faPlus, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons'
 
-library.add( faCogs, faPlay, faInfo, faPaintBrush, faFolderOpen, faSave, faLink, faPlus, faTimes );
+library.add( faCogs, faPlay, faInfo, faPaintBrush, faFolderOpen, faSave, faLink, faPlus, faTimes, faTrash );
 
 if (module.hot) {
     module.hot.accept()

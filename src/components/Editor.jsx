@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import LoideAceEditor from "./LoideAceEditor";
 import LoideTab from "./LoideTab";
-import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import { Button } from "react-bootstrap";
+import { Tabs, TabList, TabPanel } from "react-tabs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Editor = (props) => {
