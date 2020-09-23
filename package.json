@@ -12,8 +12,11 @@
   "author": "Rocco Palermiti",
   "license": "MIT",
   "devDependencies": {
+    "@types/react": "^16.9.49",
+    "@types/react-dom": "^16.9.8",
     "parcel-bundler": "^1.12.4",
-    "sass": "^1.26.11"
+    "sass": "^1.26.11",
+    "typescript": "^4.0.3"
   },
   "dependencies": {
     "@babel/core": "^7.11.6",
