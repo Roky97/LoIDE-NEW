@@ -1,16 +1,16 @@
-export interface ILanguage {
+export interface ILanguageData {
     name: string;
     value: string;
-    solvers: ISolver[]
+    solvers: ISolverData[]
 }
-export interface ISolver {
+export interface ISolverData {
     name: string;
     value: string;
-    executors: IExecutor[];
-    options: IOptions[];
+    executors: IExecutorData[];
+    options?: IOptionsData[];
 };
 
-export interface IExecutor {
+export interface IExecutorData {
     protocol?: string;
     url?: string;
     name: string;
@@ -19,7 +19,7 @@ export interface IExecutor {
     port?: number;
 }
 
-export interface IOptions {
+export interface IOptionsData {
     name: string;
     value: string;
     word_argument: boolean;

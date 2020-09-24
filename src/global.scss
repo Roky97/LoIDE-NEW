@@ -214,4 +214,54 @@ body {
     background-color: antiquewhite;
     border: 0;
     padding: 0.375rem 0.75rem;
-  }
+}
+
+.not-alone {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.option-value {
+    border-top: 0;
+    border-radius: 0;
+    padding-right: 37px;
+}
+
+.btn-del-value {
+    position: absolute;
+    right: 5px;
+    top: 6px;
+    bottom: 4px;
+    z-index: 9;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: red;
+    cursor: pointer;
+    opacity: 0;
+    transition: 0.5s;
+}
+
+.input-group:hover > .btn-del-value {
+    opacity: 1;
+}
+
+.btn-add {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-top: 0;
+    border-bottom: 1px solid #ced4da;
+    border-left: 1px solid #ced4da;
+    border-right: 1px solid #ced4da;
+}
+
+.btn-del-option {
+    cursor: pointer;
+    &.badge-danger:hover {
+        background-color: rgb(212, 0, 0);
+
+    }
+}
+
+select {
+    cursor: pointer;
+}

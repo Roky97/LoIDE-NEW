@@ -4,11 +4,11 @@ import LoideNavbar from "./LoideNavbar";
 import SideBar from "./Sidebar";
 import EditorLayout from "./EditorLayout";
 import OpenLayout from "./OpenLayout";
-import { ILanguage } from "../lib/ts/Language";
+import { ILanguageData } from "../lib/ts/Language";
 
-const configInitialState: Array<ILanguage> = new Array<ILanguage>();
+const configInitialState: Array<ILanguageData> = new Array<ILanguageData>();
 
-const dataMock: Array<ILanguage> = [
+const dataMock: Array<ILanguageData> = [
     {
         "name": "ASP",
         "value": "asp",
@@ -102,13 +102,6 @@ const dataMock: Array<ILanguage> = [
                     [{
                         "name": "pddl-executor",
                         "value": "pddl-executor",
-                    }],
-                "options":
-                    [{
-                        "name": "",
-                        "value": "",
-                        "word_argument": false,
-                        "description": ""
                     }]
             }]
 
@@ -125,7 +118,7 @@ const App: React.FC = () => {
     const [sidebarShow, setSidebarShow] = useState(true);
     const [openbarShow, setOpenbarShow] = useState(false);
 
-    const [configData, setConfigData] = useState<Array<ILanguage>>(configInitialState);
+    const [configData, setConfigData] = useState<Array<ILanguageData>>(configInitialState);
 
     useEffect(() => {
         let data =  dataMock;

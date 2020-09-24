@@ -15,7 +15,7 @@ const Editor = (props) => {
     );
 
     const onChange = (event) => {
-        console.log("onChange", event);
+        // console.log("onChange", event);
 
         let tabKey = event.tabKey;
         let tabValue = event.value;
@@ -30,7 +30,7 @@ const Editor = (props) => {
     };
 
     const onDeleteTab = (e) => {
-        console.log("onDeleteTab", tabs.size);
+        // console.log("onDeleteTab", tabs.size);
 
         let r = confirm(
             "Are you sure you want to delete this tab? This cannot be undone."
