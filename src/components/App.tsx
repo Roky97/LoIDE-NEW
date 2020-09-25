@@ -130,7 +130,7 @@ const App: React.FC = () => {
             <div className="loide-header">
                 <LoideNavbar
                     sidebar={{ toggle: setSidebarShow, show: sidebarShow }}
-                    openbar={{ toggle: setOpenbarShow, show: openbarShow }}
+                    topbar={{ toggle: setOpenbarShow, show: openbarShow }}
                 />
             </div>
 

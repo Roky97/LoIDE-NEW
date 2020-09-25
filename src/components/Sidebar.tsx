@@ -1,12 +1,14 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import { Navbar, Nav, Button, ButtonGroup } from "react-bootstrap";
 
-const Sidebar = (props) => {
+interface SidebarProps {
+    show: boolean;
+}
+
+const Sidebar: React.FC<SidebarProps> = (props) => {
     return (
     <div className={`sidebar ${props.show ? "opened" : "closed"}`}>
-        
         {props.children}
-
     </div>);
 };
 

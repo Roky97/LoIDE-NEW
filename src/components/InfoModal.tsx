@@ -1,14 +1,15 @@
 import React from "react";
 import { Button, Modal } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ModalProps } from "../lib/ts/LoideInterfaces";
 
-const AppearanceModal = (props) => {
+const InfoModal: React.FC<ModalProps>= (props) => {
     return (
-        <Modal {...props}>
+        <Modal show={props.show}>
             <Modal.Header closeButton>
                 <Modal.Title>
-                    <FontAwesomeIcon icon="paint-brush" />
-                    <span className="ml-1"> Appearance </span>
+                    <FontAwesomeIcon icon="info" />
+                    <span className="ml-1"> Info </span>
                 </Modal.Title>
             </Modal.Header>
 
@@ -21,9 +22,6 @@ const AppearanceModal = (props) => {
                 </p>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="danger">
-                    Reset
-                </Button>
                 <Button variant="secondary" onClick={props.onHide}>
                     Close
                 </Button>
@@ -32,4 +30,4 @@ const AppearanceModal = (props) => {
     );
 };
 
-export default AppearanceModal;
+export default InfoModal;

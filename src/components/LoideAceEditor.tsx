@@ -5,23 +5,32 @@ import "../lib/ace/mode-asp";
 import "ace-builds/src-noconflict/theme-tomorrow";
 import "ace-builds/src-noconflict/ext-language_tools";
 
-const LoideAceEditor = (props) => {
+interface LoideAceEditorProps {
+    mode: string;
+    tabKey: number;
+    value: string;
+
+    onChange?: (tabKey: number, value: string) => void;
+    onFocus?: (tabKey: number, e: any) => void;
+}
+
+const LoideAceEditor: React.FC<LoideAceEditorProps> = (props) => {
     var langTools = ace.require("ace/ext/language_tools");
 
     var languageChosen = props.mode;
 
     var solverChosen = "dlv2";
 
-    const onChange = (value) => {
+    const onChange = (value: any) => {
         // console.log(props.mode);
         inizializeAutoComplete(value);
-        if (props.onChange) props.onChange({tabKey: props.tabKey,value: value});
+        if (props.onChange) props.onChange(props.tabKey, value);
     };
 
-    const onFocus = (e) => {
+    const onFocus = (e: any) => {
         window.dispatchEvent(new Event("resize"));
 
-        if (props.onFocus) props.onFocus({tabKey: props.tabKey,event: e});
+        if (props.onFocus) props.onFocus(props.tabKey, e);
     };
 
     const inizializeSnippets = () => {
@@ -41,11 +50,11 @@ const LoideAceEditor = (props) => {
                                 /[a-zA-Z_0-9#$\-\u00A2-\uFFFF]/,
                             ],
                             getCompletions: function (
-                                editor,
-                                session,
-                                pos,
-                                prefix,
-                                callback
+                                editor: any,
+                                session: any,
+                                pos: any,
+                                prefix: any,
+                                callback: any
                             ) {
                                 var completions = [
                                     {
@@ -252,11 +261,11 @@ const LoideAceEditor = (props) => {
                                 /[a-zA-Z_0-9#$\-\u00A2-\uFFFF]/,
                             ],
                             getCompletions: function (
-                                editor,
-                                session,
-                                pos,
-                                prefix,
-                                callback
+                                editor: any,
+                                session: any,
+                                pos: any,
+                                prefix: any,
+                                callback: (arg0: null, arg1: { caption: string; snippet: string; meta: string; }[]) => void
                             ) {
                                 var completions = [
                                     {
@@ -318,7 +327,7 @@ const LoideAceEditor = (props) => {
         }
     };
 
-    const inizializeAutoComplete = (editorText) => {
+    const inizializeAutoComplete = (editorText: string) => {
         inizializeSnippets();
 
         switch (languageChosen) {
@@ -327,13 +336,13 @@ const LoideAceEditor = (props) => {
                 let words = editorText.match(splitRegex);
                 if (words != null) {
                     let map = new Map();
-                    words.forEach(function (word) {
-                        let name = word.match(/[^_](([a-zA-Z_]+[0-9]*)*)/)[0];
-                        let arities = word.match(/\(.+?\)/)[0].split(",")
+                    words.forEach(function (word: string) {
+                        let name = word.match(/[^_](([a-zA-Z_]+[0-9]*)*)/)![0];
+                        let arities = word.match(/\(.+?\)/)![0].split(",")
                             .length;
                         map.set(name, arities);
                     });
-                    let completions = [];
+                    let completions: { caption: any; snippet: string; meta: string; }[] = [];
                     map.forEach(function (key, value) {
                         completions.push({
                             caption: value,
@@ -344,11 +353,11 @@ const LoideAceEditor = (props) => {
 
                     let completer = {
                         getCompletions: function (
-                            editor,
-                            session,
-                            pos,
-                            prefix,
-                            callback
+                            editor: any,
+                            session: any,
+                            pos: any,
+                            prefix: any,
+                            callback: (arg0: null, arg1: any[]) => void
                         ) {
                             callback(null, completions);
                         },
@@ -363,7 +372,7 @@ const LoideAceEditor = (props) => {
         }
     };
 
-    const giveBrackets = (value) => {
+    const giveBrackets = (value: number) => {
         var par = "(";
         var LETTER = "A";
         var limit = 0;
@@ -381,7 +390,29 @@ const LoideAceEditor = (props) => {
         return par;
     };
 
-    return <AceEditor {...props} onChange={onChange} onFocus={onFocus} />;
+    return <AceEditor
+        height="100%"
+        width="0px"
+        mode={props.mode}
+        theme="tomorrow"
+        name={`editor-${props.tabKey}`}
+        value={props.value}
+        editorProps={{
+            $blockScrolling: true,
+        }}
+        setOptions={{
+            fontSize: 15,
+            enableBasicAutocompletion: true,
+            enableLiveAutocompletion: true,
+            enableSnippets: true,
+            cursorStyle: "smooth",
+            copyWithEmptySelection: true,
+            scrollPastEnd: true,
+        }}
+        onChange={onChange}
+        onFocus={onFocus}
+        style={{ flexGrow: 1 }}
+    />;
 };
 
 export default LoideAceEditor;

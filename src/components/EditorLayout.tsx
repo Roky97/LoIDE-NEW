@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 import ResizePanel from "react-resize-panel";
 import Editor from "./Editor";
 
-const EditorLayout = (props) => {
+const EditorLayout: React.FC = () => {
     const [outputRight, setOutputRight] = useState(true);
     return (
         <div className="editor-layout">

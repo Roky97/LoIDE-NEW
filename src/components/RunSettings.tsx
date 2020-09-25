@@ -3,7 +3,7 @@ import { Button, Form } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Option from "./Option"
 import { IExecutorData, ILanguageData, IOptionsData, ISolverData } from "../lib/ts/Language";
-import { SolverOption } from "../lib/ts/LoideInterfaces";
+import { ISolverOption } from "../lib/ts/LoideInterfaces";
 
 interface RunSettingsProps {
     languages: ILanguageData[]
@@ -14,7 +14,7 @@ const RunSettings: React.FC<RunSettingsProps> = ({ languages }) => {
     const [currentLanguage, setCurrentLanguage] = useState('');
     const [currentSolver, setCurrentSolver] = useState('');
     const [currentExecutor, setCurrentExecutor] = useState('');
-    const [currentOptions, setCurrentOptions] = useState(new Array<SolverOption>());
+    const [currentOptions, setCurrentOptions] = useState(new Array<ISolverOption>());
 
     useEffect(() => {
         if (languages.length > 0) {
@@ -72,7 +72,7 @@ const RunSettings: React.FC<RunSettingsProps> = ({ languages }) => {
             setCurrentSolver(languageSelected.solvers[0].value);
             setCurrentExecutor(languageSelected.solvers[0].executors[0].value)
             // reset all the options
-            setCurrentOptions(new Array<SolverOption>());
+            setCurrentOptions(new Array<ISolverOption>());
         }
     };
 
@@ -89,7 +89,7 @@ const RunSettings: React.FC<RunSettingsProps> = ({ languages }) => {
     const addOption = () => {
         let optionsAvailable = getOptions();
         if (optionsAvailable.length > 0) {
-            let nextOptions: SolverOption[] = [...currentOptions, { id: currentOptions.length, name: optionsAvailable[0].value, values: [''] }]
+            let nextOptions: ISolverOption[] = [...currentOptions, { id: currentOptions.length, name: optionsAvailable[0].value, values: [''] }]
             setCurrentOptions(nextOptions);
         }
     }

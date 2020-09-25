@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 
-const OpenLayout = (props) => {
+interface OpenLayoutProps {
+    show: boolean;
+}
+
+const OpenLayout: React.FC<OpenLayoutProps> = (props) => {
 
     return (
         <div className={`upbar ${props.show ? "opened" : "closed"}`}>

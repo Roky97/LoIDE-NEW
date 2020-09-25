@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { SolverOption } from "../lib/ts/LoideInterfaces";
+import { ISolverOption } from "../lib/ts/LoideInterfaces";
 import { IOptionsData } from "../lib/ts/Language";
 import { Button, Form, InputGroup } from "react-bootstrap";
+
 interface OptionProps {
     optionsAvailable: IOptionsData[];
-    optionData: SolverOption;
+    optionData: ISolverOption;
     onDelete?: () => void;
     onChangeOptionType?: (newValue: string, id: number) => void;
     onChangeOptionValues?: (newValues: string[], id: number) => void;
     onDeleteOption?: (id: number) => void;
 }
+
 const Option: React.FC<OptionProps> = (props) => {
     var option = props.optionData;
     var optionsAvailable = props.optionsAvailable;

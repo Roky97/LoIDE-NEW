@@ -6,16 +6,21 @@ import {
     ButtonGroup,
     OverlayTrigger,
     Tooltip,
-    Popover,
 } from "react-bootstrap";
-import logo from "../Assets/img/logo_LoIDE.svg";
+import logo from '../assets/img/logo_LoIDE.svg';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import InfoModal from "./InfoModal";
 import AppearanceModal from "./AppearanceModal";
 import SavePopover from "./SavePopover";
 import SharePopover from "./SharePopover";
+import { IToggleItem } from "../lib/ts/LoideInterfaces";
 
-const LoideNavbar = (props) => {
+interface LoideNavbarProps {
+    sidebar: IToggleItem;
+    topbar: IToggleItem;
+}
+
+const LoideNavbar: React.FC<LoideNavbarProps> = (props) => {
     const [appearanceModalShow, setAppearanceModalShow] = React.useState(false);
     const [infoModalShow, setInfoModalShow] = React.useState(false);
 
@@ -32,7 +37,7 @@ const LoideNavbar = (props) => {
                             <OverlayTrigger
                                 key="run-settings-tooltip"
                                 placement="bottom"
-                                overlay={<Tooltip>Run settings</Tooltip>}
+                                overlay={<Tooltip id="tooltip-run-settings-button">Run settings</Tooltip>}
                             >
                                 <Button
                                     variant="secondary"
@@ -85,8 +90,8 @@ const LoideNavbar = (props) => {
                                 <Button
                                     variant="warning"
                                     onClick={() =>
-                                        props.openbar.toggle(
-                                            !props.openbar.show
+                                        props.topbar.toggle(
+                                            !props.topbar.show
                                         )
                                     }
                                 >

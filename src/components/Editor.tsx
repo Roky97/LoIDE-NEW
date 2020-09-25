@@ -4,34 +4,31 @@ import LoideTab from "./LoideTab";
 import { Tabs, TabList, TabPanel } from "react-tabs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Editor = (props) => {
+export interface ILoideTab { title: string, type: string, value: string }
+
+const Editor: React.FC = () => {
     const [tabCountID, setTabCountID] = useState(1);
     const [tabs, setTabs] = useState(
-        new Map().set(tabCountID, {
+        new Map<number, ILoideTab >().set(tabCountID, {
             title: `L P ${tabCountID}`,
             type: "asp",
             value: "",
         })
     );
 
-    const onChange = (event) => {
-        // console.log("onChange", event);
-
-        let tabKey = event.tabKey;
-        let tabValue = event.value;
-
+    const onChange = (tabKey: number, value: string) => {
         let tab = tabs.get(tabKey);
-        tab.value = tabValue;
+        if (tab) {
+            tab.value = value;
 
-        let nexTabs = new Map(tabs);
-        nexTabs.set(tabKey,tab);
-
-        setTabs(nexTabs);
+            let nexTabs = new Map(tabs);
+            nexTabs.set(tabKey, tab);
+    
+            setTabs(nexTabs);
+        }
     };
 
-    const onDeleteTab = (e) => {
-        // console.log("onDeleteTab", tabs.size);
-
+    const onDeleteTab = (tabKey: number) => {
         let r = confirm(
             "Are you sure you want to delete this tab? This cannot be undone."
         );
@@ -48,7 +45,7 @@ const Editor = (props) => {
                 return;
             }
             let nextTabs = new Map(tabs);
-            nextTabs.delete(e);
+            nextTabs.delete(tabKey);
             setTabs(nextTabs);
         }
     };
@@ -69,34 +66,17 @@ const Editor = (props) => {
 
     const loideTabs = [...tabs.keys()].map((key) => (
         <LoideTab key={`tab-${key}`} tabKey={key} onDeleteTab={onDeleteTab}>
-            {tabs.get(key).title}
+            {tabs.get(key)!.title}
         </LoideTab>
     ));
 
     const tabPanels = [...tabs.keys()].map((key) => (
         <TabPanel key={`tabpanel-${key}`}>
             <LoideAceEditor
-                height={`100%`}
-                width={`0px`}
-                mode="asp"
-                theme="tomorrow"
-                name={`editor-${key}`}
                 tabKey={key}
-                value={tabs.get(key).value}
-                editorProps={{
-                    $blockScrolling: true,
-                }}
-                setOptions={{
-                    fontSize: 15,
-                    enableBasicAutocompletion: true,
-                    enableLiveAutocompletion: true,
-                    enableSnippets: true,
-                    cursorStyle: "smooth",
-                    copyWithEmptySelection: true,
-                    scrollPastEnd: 0.5,
-                }}
+                mode="asp"
+                value={tabs.get(key)!.value}
                 onChange={onChange}
-                style={{ flexGrow: 1 }}
             />
         </TabPanel>
     ));
@@ -114,6 +94,7 @@ const Editor = (props) => {
                 </div>
 
                 {tabPanels}
+                
             </Tabs>
         </div>
     );
