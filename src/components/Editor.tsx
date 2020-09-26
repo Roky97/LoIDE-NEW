@@ -1,71 +1,112 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import LoideAceEditor from "./LoideAceEditor";
 import LoideTab from "./LoideTab";
 import { Tabs, TabList, TabPanel } from "react-tabs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-export interface ILoideTab { title: string, type: string, value: string }
+import { EditorStore, RunSettingsStore } from "../lib/store";
+import { ILoideTab } from "../lib/ts/LoideInterfaces";
+import { InitalTabCountID } from "../lib/ts/constant";
 
 const Editor: React.FC = () => {
-    const [tabCountID, setTabCountID] = useState(1);
-    const [tabs, setTabs] = useState(
-        new Map<number, ILoideTab >().set(tabCountID, {
-            title: `L P ${tabCountID}`,
-            type: "asp",
-            value: "",
-        })
-    );
+    const [tabCountID, setTabCountID] = useState(InitalTabCountID);
+    const tabIndex = EditorStore.useState((e) => e.currentTab);
+    const tabs = EditorStore.useState((e) => e.tabs);
+
+    console.log("tabIndex", tabIndex);
+
+    useEffect(() => {
+        if (tabs.size === 0) {
+            EditorStore.update((e) => {
+                e.tabs = new Map<number, ILoideTab>().set(tabCountID, {
+                    title: `L P ${tabCountID}`,
+                    type: "asp",
+                    value: "",
+                });
+                e.currentTab = 0;
+            });
+        }
+    }, []);
 
     const onChange = (tabKey: number, value: string) => {
-        let tab = tabs.get(tabKey);
+        let tab: ILoideTab = Object.assign({}, tabs.get(tabKey));
+
         if (tab) {
             tab.value = value;
 
-            let nexTabs = new Map(tabs);
-            nexTabs.set(tabKey, tab);
-    
-            setTabs(nexTabs);
+            let nextTabs = new Map(tabs);
+            nextTabs.set(tabKey, tab);
+
+            // setTabs(nextTabs);
+            EditorStore.update((e) => {
+                e.tabs = nextTabs;
+            });
         }
     };
 
-    const onDeleteTab = (tabKey: number) => {
+    const onSelectTab = (index: number) => {
+        console.log("tabIndex onSelectTab", tabIndex);
+        EditorStore.update((e) => {
+            e.currentTab = index;
+        });
+    };
+
+    const onDeleteTab = (e: any, tabKey: number) => {
+        e.stopPropagation();
         let r = confirm(
             "Are you sure you want to delete this tab? This cannot be undone."
         );
         if (r) {
             if (tabs.size === 1) {
                 setTabCountID(1);
-                setTabs(
-                    new Map().set(1, {
-                        title: `L P 1`,
-                        type: "asp",
-                        value: "",
-                    })
-                );
+                let nextTabs = new Map().set(1, {
+                    title: `L P 1`,
+                    type: "asp",
+                    value: "",
+                });
+                // setTabs(nextTabs);
+                EditorStore.update((e) => {
+                    e.tabs = nextTabs;
+                    e.currentTab = 0;
+                });
                 return;
             }
             let nextTabs = new Map(tabs);
             nextTabs.delete(tabKey);
-            setTabs(nextTabs);
+            // setTabs(nextTabs);
+            let shift = tabs.size - 1 === tabIndex ? true : false;
+            EditorStore.update((e) => {
+                e.currentTab = shift ? e.currentTab - 1 : e.currentTab;
+                e.tabs = nextTabs;
+            });
         }
     };
 
     const addTab = () => {
         let nextID = tabCountID + 1;
 
-        setTabs(
-            tabs.set(nextID, {
-                title: `L P ${nextID}`,
-                type: "asp",
-                value: "",
-            })
-        );
+        let nextTabs = new Map(tabs);
+        nextTabs.set(nextID, {
+            title: `L P ${nextID}`,
+            type: "asp",
+            value: "",
+        });
+
+        // setTabs(nextTabs);
+        console.log("gatta");
+        EditorStore.update((e) => {
+            e.currentTab = nextTabs.size - 1;
+            e.tabs = nextTabs;
+        });
+
+        EditorStore.update((e) => {
+            e.tabs = nextTabs;
+        });
 
         setTabCountID(tabCountID + 1);
     };
 
     const loideTabs = [...tabs.keys()].map((key) => (
-        <LoideTab key={`tab-${key}`} tabKey={key} onDeleteTab={onDeleteTab}>
+        <LoideTab key={`tab-${key}`} tabkey={key} onDeleteTab={onDeleteTab}>
             {tabs.get(key)!.title}
         </LoideTab>
     ));
@@ -83,7 +124,11 @@ const Editor: React.FC = () => {
 
     return (
         <div className="loide-editor">
-            <Tabs className="loide-tabs">
+            <Tabs
+                className="loide-tabs"
+                selectedIndex={tabIndex}
+                onSelect={onSelectTab}
+            >
                 <div className="loide-tab-list">
                     <div className="loide-tab-list-container">
                         <TabList>{loideTabs}</TabList>
@@ -94,7 +139,6 @@ const Editor: React.FC = () => {
                 </div>
 
                 {tabPanels}
-                
             </Tabs>
         </div>
     );

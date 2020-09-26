@@ -5,7 +5,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const LoideTab = (props: any) => (
     <Tab {...props}>
         {props.children}
-        <a className="delete-tab ml-2" onClick={() => { if (props.onDeleteTab) props.onDeleteTab(props.tabKey) }}>
+        <a
+            className="delete-tab ml-2"
+            onClick={(e) => {
+                if (props.onDeleteTab) props.onDeleteTab(e, props.tabkey);
+            }}
+        >
             <FontAwesomeIcon icon="times" />
         </a>
     </Tab>
