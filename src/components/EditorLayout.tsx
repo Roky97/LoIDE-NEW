@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import ResizePanel from "react-resize-panel";
+import { OutputPositions } from "../lib/ts/constant";
 import Editor from "./Editor";
+import Output from "./Output";
 
 const EditorLayout: React.FC = () => {
     const [outputRight, setOutputRight] = useState(true);
@@ -12,26 +14,32 @@ const EditorLayout: React.FC = () => {
                     <Editor />
                 </div>
                 {outputRight && (
-                    <ResizePanel direction="w" handleClass="loide-editor-handle horizontal" borderClass="loide-editor-border horizontal">
+                    <ResizePanel
+                        direction="w"
+                        handleClass="loide-editor-handle horizontal"
+                        borderClass="loide-editor-border horizontal"
+                    >
                         <div className="panel east">
-                            <div className="content">
-                                <Button onClick={() => setOutputRight(false)}>
-                                    Split
-                                </Button>
-                            </div>
+                            <Output
+                                pos={OutputPositions.right}
+                                split={() => setOutputRight(false)}
+                            />
                         </div>
                     </ResizePanel>
                 )}
             </div>
 
             {!outputRight && (
-                <ResizePanel direction="n" handleClass="loide-editor-handle vertical" borderClass="loide-editor-border vertical">
+                <ResizePanel
+                    direction="n"
+                    handleClass="loide-editor-handle vertical"
+                    borderClass="loide-editor-border vertical"
+                >
                     <div className="panel south">
-                        <div>
-                            <Button onClick={() => setOutputRight(true)}>
-                                Split
-                            </Button>
-                        </div>
+                        <Output
+                            pos={OutputPositions.bottom}
+                            split={() => setOutputRight(true)}
+                        />
                     </div>
                 </ResizePanel>
             )}
