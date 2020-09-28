@@ -12,14 +12,12 @@ const Editor: React.FC = () => {
     const tabIndex = EditorStore.useState((e) => e.currentTab);
     const tabs = EditorStore.useState((e) => e.tabs);
 
-    console.log("tabIndex", tabIndex);
-
     useEffect(() => {
         if (tabs.size === 0) {
             EditorStore.update((e) => {
                 e.tabs = new Map<number, ILoideTab>().set(tabCountID, {
                     title: `L P ${tabCountID}`,
-                    type: "asp",
+                    type: "",
                     value: "",
                 });
                 e.currentTab = 0;
@@ -36,7 +34,6 @@ const Editor: React.FC = () => {
             let nextTabs = new Map(tabs);
             nextTabs.set(tabKey, tab);
 
-            // setTabs(nextTabs);
             EditorStore.update((e) => {
                 e.tabs = nextTabs;
             });
@@ -44,7 +41,6 @@ const Editor: React.FC = () => {
     };
 
     const onSelectTab = (index: number) => {
-        console.log("tabIndex onSelectTab", tabIndex);
         EditorStore.update((e) => {
             e.currentTab = index;
         });
@@ -60,10 +56,9 @@ const Editor: React.FC = () => {
                 setTabCountID(1);
                 let nextTabs = new Map().set(1, {
                     title: `L P 1`,
-                    type: "asp",
+                    type: "",
                     value: "",
                 });
-                // setTabs(nextTabs);
                 EditorStore.update((e) => {
                     e.tabs = nextTabs;
                     e.currentTab = 0;
@@ -72,7 +67,6 @@ const Editor: React.FC = () => {
             }
             let nextTabs = new Map(tabs);
             nextTabs.delete(tabKey);
-            // setTabs(nextTabs);
             let shift = tabs.size - 1 === tabIndex ? true : false;
             EditorStore.update((e) => {
                 e.currentTab = shift ? e.currentTab - 1 : e.currentTab;
@@ -91,8 +85,6 @@ const Editor: React.FC = () => {
             value: "",
         });
 
-        // setTabs(nextTabs);
-        console.log("gatta");
         EditorStore.update((e) => {
             e.currentTab = nextTabs.size - 1;
             e.tabs = nextTabs;
@@ -137,7 +129,6 @@ const Editor: React.FC = () => {
                         <FontAwesomeIcon icon="plus" />
                     </button>
                 </div>
-
                 {tabPanels}
             </Tabs>
         </div>

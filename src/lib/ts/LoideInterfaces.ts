@@ -26,16 +26,14 @@ export interface IRunSettingsStore {
     currentExecutor: string,
 
     currentOptions: ISolverOption[]
+
+    tabsIDToExecute: number[]
 }
 
 export interface ILoideTab {
     title: string;
     type: string;
     value: string;
-}
-
-export interface IUserOperationsStore {
-    deletingTab: boolean;
 }
 
 export interface IEditorStore {

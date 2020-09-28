@@ -3,7 +3,7 @@ import { Store } from "pullstate";
 import { enableMapSet } from "immer";
 enableMapSet();
 
-import { ILanguagesStore, ILoideTab, IEditorStore, IRunSettingsStore, IUserOperationsStore } from "./ts/LoideInterfaces";
+import { ILanguagesStore, ILoideTab, IEditorStore, IRunSettingsStore } from "./ts/LoideInterfaces";
 
 export const LanguagesDataStore = new Store<ILanguagesStore>({
   languages: []
@@ -14,12 +14,10 @@ export const RunSettingsStore = new Store<IRunSettingsStore>({
   currentSolver: "",
   currentExecutor: "",
 
-  currentOptions: []
-});
+  currentOptions: [],
 
-export const UserOperationsStore = new Store<IUserOperationsStore>({
-  deletingTab: false
-})
+  tabsIDToExecute: []
+});
 
 export const EditorStore = new Store<IEditorStore>({
   currentTab: 0,

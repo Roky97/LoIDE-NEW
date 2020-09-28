@@ -3,3 +3,4 @@ export const OutputPositions = {
     right: "right",
     bottom: "bottom",
 }
+export const CurrentTab = 'current-tab';

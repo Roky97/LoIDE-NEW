@@ -9,7 +9,8 @@ import {
     ISolverData,
 } from "../lib/ts/LoideAPIInterfaces";
 import { ISolverOption } from "../lib/ts/LoideInterfaces";
-import { RunSettingsStore } from "../lib/store";
+import { EditorStore, RunSettingsStore } from "../lib/store";
+import TabToExecute from "./TabToExecute";
 
 interface RunSettingsProps {
     languages: ILanguageData[];
@@ -20,6 +21,9 @@ const RunSettings: React.FC<RunSettingsProps> = ({ languages }) => {
     const currentSolver = RunSettingsStore.useState((l) => l.currentSolver);
     const currentExecutor = RunSettingsStore.useState((l) => l.currentExecutor);
     const currentOptions = RunSettingsStore.useState((l) => l.currentOptions);
+    const tabsIDToExecute = RunSettingsStore.useState((l) => l.tabsIDToExecute);
+
+    const editorTabs = EditorStore.useState((e) => e.tabs);
 
     useEffect(() => {
         if (languages.length > 0) {
@@ -174,6 +178,22 @@ const RunSettings: React.FC<RunSettingsProps> = ({ languages }) => {
         });
     };
 
+    const onCheckTab = (idTab: number, value: boolean) => {
+        let index = tabsIDToExecute.indexOf(idTab);
+        RunSettingsStore.update((settings) => {
+            let nextTabIDs = [...settings.tabsIDToExecute];
+            if (index === -1) nextTabIDs.push(idTab);
+            else nextTabIDs.splice(index, 1);
+            settings.tabsIDToExecute = nextTabIDs;
+        });
+    };
+    const onCheckCurrentTab = (value: boolean) => {
+        if (value)
+            RunSettingsStore.update((settings) => {
+                settings.tabsIDToExecute = [];
+            });
+    };
+
     const languagesOptions = languages.map((lang, index) => (
         <option key={`language-${index}`} value={lang.value}>
             {lang.name}
@@ -220,7 +240,7 @@ const RunSettings: React.FC<RunSettingsProps> = ({ languages }) => {
             </div>
 
             {getOptions().length > 0 && (
-                <div className="setting-container my-2">
+                <div className="setting-container mt-2">
                     <h6 className="text-center mt-2"> Options </h6>
                     {currentOptions.map((option) => (
                         <Option
@@ -237,6 +257,15 @@ const RunSettings: React.FC<RunSettingsProps> = ({ languages }) => {
                     </Button>
                 </div>
             )}
+
+            <div className="setting-container mt-2">
+                <TabToExecute
+                    tabs={editorTabs}
+                    tabsIDToExecute={tabsIDToExecute}
+                    onCheckCurrentTab={onCheckCurrentTab}
+                    onCheckTab={onCheckTab}
+                />
+            </div>
         </div>
     );
 };

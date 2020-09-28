@@ -149,6 +149,7 @@ const App: React.FC = () => {
                 <SideBar show={sidebarShow}>
                     <RunSettings languages={languages} />
                 </SideBar>
+
                 <EditorLayout />
             </div>
         </div>
