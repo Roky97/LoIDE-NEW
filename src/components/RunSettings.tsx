@@ -259,12 +259,12 @@ const RunSettings: React.FC<RunSettingsProps> = ({ languages }) => {
             )}
 
             <div className="setting-container mt-2">
-                <TabToExecute
+                {/* <TabToExecute
                     tabs={editorTabs}
                     tabsIDToExecute={tabsIDToExecute}
                     onCheckCurrentTab={onCheckCurrentTab}
                     onCheckTab={onCheckTab}
-                />
+                /> */}
             </div>
         </div>
     );

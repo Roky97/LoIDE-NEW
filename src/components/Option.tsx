@@ -19,39 +19,43 @@ const Option: React.FC<OptionProps> = (props) => {
     const [values, setValues] = useState([""]);
 
     useEffect(() => {
-        setValues([...option.values])
-    }, [props.optionData])
+        setValues([...option.values]);
+    }, [props.optionData]);
 
     const onChangeOptionType = (e: any) => {
-        if (props.onChangeOptionType) props.onChangeOptionType(e.target.value, option.id);
-    }
+        if (props.onChangeOptionType)
+            props.onChangeOptionType(e.target.value, option.id);
+    };
 
     const onChangeValues = (e: any, index: number) => {
         let newValue = e.target.value;
         let newValues = [...values];
         newValues[index] = newValue;
         setValues(newValues);
-        if (props.onChangeOptionValues) props.onChangeOptionValues(newValues, option.id);
-    }
+        if (props.onChangeOptionValues)
+            props.onChangeOptionValues(newValues, option.id);
+    };
 
     const addValue = () => {
         let newValues = [...values];
         newValues.push("");
         setValues(newValues);
-        if (props.onChangeOptionValues) props.onChangeOptionValues(newValues, option.id);
-    }
+        if (props.onChangeOptionValues)
+            props.onChangeOptionValues(newValues, option.id);
+    };
 
     const deleteValue = (index: number) => {
         let newValues = [...values];
         newValues.splice(index, 1);
         if (newValues.length === 0) newValues.push("");
         setValues(newValues);
-        if (props.onChangeOptionValues) props.onChangeOptionValues(newValues, option.id);
-    }
+        if (props.onChangeOptionValues)
+            props.onChangeOptionValues(newValues, option.id);
+    };
 
     const deleteOption = () => {
         if (props.onDeleteOption) props.onDeleteOption(option.id);
-    }
+    };
 
     const wordArgument = (): boolean => {
         for (let opt of optionsAvailable) {
@@ -60,15 +64,25 @@ const Option: React.FC<OptionProps> = (props) => {
             }
         }
         return true;
-    }
+    };
 
     const options = [...optionsAvailable].map((opt, index) => (
-        <option key={`${option.id}-option-${index}`} value={opt.value}> {opt.name}</option>
+        <option key={`${option.id}-option-${index}`} value={opt.value}>
+            {opt.name}
+        </option>
     ));
 
     const optionValues = [...values].map((opt, index) => (
-        <InputGroup key={`${option.id}-option-value-${index}`} className="loide-solver-option">
-            <Form.Control type="text" className="form-control-value option-value" onChange={e => onChangeValues(e, index)} value={opt} />
+        <InputGroup
+            key={`${option.id}-option-value-${index}`}
+            className="loide-solver-option"
+        >
+            <Form.Control
+                type="text"
+                className="form-control-value option-value"
+                onChange={(e) => onChangeValues(e, index)}
+                value={opt}
+            />
             <span className="btn-del-value" onClick={() => deleteValue(index)}>
                 <FontAwesomeIcon icon="trash" />
             </span>
@@ -76,39 +90,42 @@ const Option: React.FC<OptionProps> = (props) => {
     ));
 
     return (
-        <div className="row row-option">
-            <Form.Group className="col-sm-12">
-                <div className="badge-option mb-1">
-                    <span className="text-center badge badge-info option-number">
-                        Option {option.id + 1}
-                    </span>
-                    <span className="text-center badge badge-danger btn-del-option ml-1" onClick={deleteOption}>
-                        <FontAwesomeIcon icon="trash" />
-                    </span>
-                </div>
-                <div className="input-group opname">
-                    <Form.Control
-                        as="select"
-                        custom
-                        onChange={onChangeOptionType}
-                        className={`${wordArgument() ? "not-alone" : ""}`}
-                        value={option.name}
+        <div className="mb-2">
+            <div className="badge-option mb-1">
+                <span className="text-center badge badge-info option-number">
+                    Option {option.id + 1}
+                </span>
+                <span
+                    className="text-center badge badge-danger btn-del-option ml-1"
+                    onClick={deleteOption}
+                >
+                    <FontAwesomeIcon icon="trash" />
+                </span>
+            </div>
+            <div className="input-group opname">
+                <Form.Control
+                    as="select"
+                    custom
+                    onChange={onChangeOptionType}
+                    className={`${wordArgument() ? "not-alone" : ""}`}
+                    value={option.name}
+                >
+                    {options}
+                </Form.Control>
+            </div>
+            {wordArgument() && (
+                <>
+                    <div className="option-values">{optionValues}</div>
+                    <Button
+                        variant="light"
+                        className="btn-add btn-block"
+                        onClick={addValue}
                     >
-                        {options}
-                    </Form.Control>
-                </div>
-                {wordArgument() &&
-                    <>
-                        <div className="option-values">
-                            {optionValues}
-                        </div>
-                        <Button variant="light" className="btn-add btn-block" onClick={addValue}>
-                            <FontAwesomeIcon icon="plus" />
-                            <span> Add value </span>
-                        </Button>
-                    </>
-                }
-            </Form.Group>
+                        <FontAwesomeIcon icon="plus" />
+                        <span> Add value </span>
+                    </Button>
+                </>
+            )}
         </div>
     );
 };

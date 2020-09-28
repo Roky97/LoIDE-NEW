@@ -224,7 +224,6 @@ body {
 .option-value {
     border-top: 0;
     border-radius: 0;
-    padding-right: 37px;
 }
 
 .btn-del-value {
@@ -239,6 +238,7 @@ body {
     cursor: pointer;
     opacity: 0;
     transition: 0.5s;
+    background-color: white;
 }
 
 .input-group:hover > .btn-del-value {
