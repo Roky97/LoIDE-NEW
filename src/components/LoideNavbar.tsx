@@ -7,7 +7,7 @@ import {
     OverlayTrigger,
     Tooltip,
 } from "react-bootstrap";
-import logo from '../assets/img/logo_LoIDE.svg';
+import logo from "../assets/img/logo_LoIDE.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import InfoModal from "./InfoModal";
 import AppearanceModal from "./AppearanceModal";
@@ -37,7 +37,11 @@ const LoideNavbar: React.FC<LoideNavbarProps> = (props) => {
                             <OverlayTrigger
                                 key="run-settings-tooltip"
                                 placement="bottom"
-                                overlay={<Tooltip id="tooltip-run-settings-button">Run settings</Tooltip>}
+                                overlay={
+                                    <Tooltip id="tooltip-run-settings-button">
+                                        Run settings
+                                    </Tooltip>
+                                }
                             >
                                 <Button
                                     variant="secondary"
@@ -90,9 +94,7 @@ const LoideNavbar: React.FC<LoideNavbarProps> = (props) => {
                                 <Button
                                     variant="warning"
                                     onClick={() =>
-                                        props.topbar.toggle(
-                                            !props.topbar.show
-                                        )
+                                        props.topbar.toggle(!props.topbar.show)
                                     }
                                 >
                                     <FontAwesomeIcon

@@ -37,7 +37,7 @@ body {
 .loide-content {
     position: relative;
     display: flex; // Flexbox definition
-    // overflow: hidden; // Disable scrolling on layout
+    overflow: hidden; // Disable scrolling on layout
     width: 100%;
     height: 100%;
     flex-grow: 1;
@@ -70,22 +70,7 @@ body {
     background-color: white;
 }
 
-.sidebar {
-    transition: margin 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-    background-color: #fff5ee;
-    min-width: var(--sidebar-width);
-    overflow: auto;
-
-    &.opened {
-        margin-left: 0;
-    }
-
-    &.closed {
-        margin-left: calc(-1 * var(--sidebar-width));
-    }
-}
-
-.upbar {
+.topbar {
     width: 100%;
     transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
     background-color: rgb(202, 202, 202);
@@ -99,10 +84,42 @@ body {
     }
 }
 
+.sidebar {
+    position: relative;
+    transition: margin 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    background-color: #fff5ee;
+    min-width: var(--sidebar-width);
+    overflow: hidden;
+    height: 100%;
+
+    &.opened {
+        margin-left: 0;
+    }
+
+    &.closed {
+        margin-left: calc(-1 * var(--sidebar-width));
+    }
+}
+
 .run-settings {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
     .run-settings-title {
         border-bottom: 1px dashed #dddddd;
         background-color: rgba(255, 245, 238, 1);
+        height: 40px;
+    }
+
+    .settings {
+        min-height: 0;
+        overflow-x: hidden;
+        overflow-y: hidden;
+
+        &:hover {
+            overflow-y: visible;
+        }
     }
 }
 
@@ -226,23 +243,37 @@ body {
     border-radius: 0;
 }
 
-.btn-del-value {
-    position: absolute;
-    right: 5px;
-    top: 6px;
-    bottom: 4px;
-    z-index: 9;
-    padding-left: 10px;
-    padding-right: 10px;
-    color: red;
-    cursor: pointer;
-    opacity: 0;
-    transition: 0.5s;
-    background-color: white;
+.loide-solver-option {
+    transition: 0.2s;
+    display: flex;
 }
 
-.input-group:hover > .btn-del-value {
+.btn-del-value {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 0;
+
+    opacity: 0;
+
+    color: red;
+    cursor: pointer;
+    transition: 0.2s;
+    background-color: white;
+    border-bottom: 1px solid #ced4da;
+    border-right: 0px solid #ced4da;
+}
+
+.loide-solver-option:hover > .option-value {
+    border-right: white;
+}
+
+.loide-solver-option:hover > .btn-del-value {
+    position: relative;
+    width: 32px;
     opacity: 1;
+    border-right: 1px solid #ced4da;
 }
 
 .btn-add {

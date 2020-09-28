@@ -5,9 +5,8 @@ interface OpenLayoutProps {
 }
 
 const OpenLayout: React.FC<OpenLayoutProps> = (props) => {
-
     return (
-        <div className={`upbar ${props.show ? "opened" : "closed"}`}>
+        <div className={`topbar ${props.show ? "opened" : "closed"}`}>
             {props.children}
         </div>
     );

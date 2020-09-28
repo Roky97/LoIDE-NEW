@@ -213,58 +213,72 @@ const RunSettings: React.FC<RunSettingsProps> = ({ languages }) => {
     ));
 
     return (
-        <div className="run-settings mx-2">
-            <div className="text-center run-settings-title sticky-top pt-2 mb-2">
+        <div className="run-settings px-2">
+            <div className="text-center run-settings-title pt-2">
                 <h5>Run settings</h5>
             </div>
-            <div className="setting-container">
-                <Form.Group>
-                    <h6 className="text-center mt-2">Language</h6>
-                    <Form.Control as="select" onChange={selectLanguage} custom>
-                        {languagesOptions}
-                    </Form.Control>
-                </Form.Group>
+            <div className="settings pt-2">
+                <div className="setting-container">
+                    <Form.Group>
+                        <h6 className="text-center mt-2">Language</h6>
+                        <Form.Control
+                            as="select"
+                            onChange={selectLanguage}
+                            custom
+                        >
+                            {languagesOptions}
+                        </Form.Control>
+                    </Form.Group>
 
-                <Form.Group>
-                    <h6 className="text-center mt-2">Solver</h6>
-                    <Form.Control as="select" onChange={selectSolver} custom>
-                        {solversOptions}
-                    </Form.Control>
-                </Form.Group>
-                <Form.Group>
-                    <h6 className="text-center mt-2">Executor</h6>
-                    <Form.Control as="select" onChange={selectExecutor} custom>
-                        {executorsOptions}
-                    </Form.Control>
-                </Form.Group>
-            </div>
-
-            {getOptions().length > 0 && (
-                <div className="setting-container mt-2">
-                    <h6 className="text-center mt-2"> Options </h6>
-                    {currentOptions.map((option) => (
-                        <Option
-                            key={`solver-option-${option.id}`}
-                            optionsAvailable={getOptions()}
-                            optionData={option}
-                            onChangeOptionType={onChangeOptionType}
-                            onChangeOptionValues={onChangeOptionValues}
-                            onDeleteOption={onDeleteOption}
-                        />
-                    ))}
-                    <Button className="btn-block" onClick={addOption}>
-                        <FontAwesomeIcon icon="plus" />
-                    </Button>
+                    <Form.Group>
+                        <h6 className="text-center mt-2">Solver</h6>
+                        <Form.Control
+                            as="select"
+                            onChange={selectSolver}
+                            custom
+                        >
+                            {solversOptions}
+                        </Form.Control>
+                    </Form.Group>
+                    <Form.Group>
+                        <h6 className="text-center mt-2">Executor</h6>
+                        <Form.Control
+                            as="select"
+                            onChange={selectExecutor}
+                            custom
+                        >
+                            {executorsOptions}
+                        </Form.Control>
+                    </Form.Group>
                 </div>
-            )}
 
-            <div className="setting-container mt-2">
-                {/* <TabToExecute
-                    tabs={editorTabs}
-                    tabsIDToExecute={tabsIDToExecute}
-                    onCheckCurrentTab={onCheckCurrentTab}
-                    onCheckTab={onCheckTab}
-                /> */}
+                {getOptions().length > 0 && (
+                    <div className="setting-container mt-2">
+                        <h6 className="text-center mt-2"> Options </h6>
+                        {currentOptions.map((option) => (
+                            <Option
+                                key={`solver-option-${option.id}`}
+                                optionsAvailable={getOptions()}
+                                optionData={option}
+                                onChangeOptionType={onChangeOptionType}
+                                onChangeOptionValues={onChangeOptionValues}
+                                onDeleteOption={onDeleteOption}
+                            />
+                        ))}
+                        <Button className="btn-block" onClick={addOption}>
+                            <FontAwesomeIcon icon="plus" />
+                        </Button>
+                    </div>
+                )}
+
+                <div className="setting-container mt-2">
+                    <TabToExecute
+                        tabs={editorTabs}
+                        tabsIDToExecute={tabsIDToExecute}
+                        onCheckCurrentTab={onCheckCurrentTab}
+                        onCheckTab={onCheckTab}
+                    />
+                </div>
             </div>
         </div>
     );
