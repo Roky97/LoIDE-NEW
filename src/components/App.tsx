@@ -136,7 +136,7 @@ const App: React.FC = () => {
 
     return (
         <div className="loide-body">
-            <div className="loide-header">
+            <div className="loide-header mb-1">
                 <LoideNavbar
                     sidebar={{ toggle: setSidebarShow, show: sidebarShow }}
                     topbar={{ toggle: setOpenbarShow, show: openbarShow }}

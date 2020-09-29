@@ -79,7 +79,7 @@ const Option: React.FC<OptionProps> = (props) => {
         >
             <Form.Control
                 type="text"
-                className="form-control-value option-value"
+                className="option-value"
                 onChange={(e) => onChangeValues(e, index)}
                 value={opt}
             />

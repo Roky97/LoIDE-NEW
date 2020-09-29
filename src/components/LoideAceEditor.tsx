@@ -265,7 +265,14 @@ const LoideAceEditor: React.FC<LoideAceEditorProps> = (props) => {
                                 session: any,
                                 pos: any,
                                 prefix: any,
-                                callback: (arg0: null, arg1: { caption: string; snippet: string; meta: string; }[]) => void
+                                callback: (
+                                    arg0: null,
+                                    arg1: {
+                                        caption: string;
+                                        snippet: string;
+                                        meta: string;
+                                    }[]
+                                ) => void
                             ) {
                                 var completions = [
                                     {
@@ -342,7 +349,11 @@ const LoideAceEditor: React.FC<LoideAceEditorProps> = (props) => {
                             .length;
                         map.set(name, arities);
                     });
-                    let completions: { caption: any; snippet: string; meta: string; }[] = [];
+                    let completions: {
+                        caption: any;
+                        snippet: string;
+                        meta: string;
+                    }[] = [];
                     map.forEach(function (key, value) {
                         completions.push({
                             caption: value,
@@ -390,29 +401,31 @@ const LoideAceEditor: React.FC<LoideAceEditorProps> = (props) => {
         return par;
     };
 
-    return <AceEditor
-        height="100%"
-        width="0px"
-        mode={props.mode}
-        theme="tomorrow"
-        name={`editor-${props.tabKey}`}
-        value={props.value}
-        editorProps={{
-            $blockScrolling: true,
-        }}
-        setOptions={{
-            fontSize: 15,
-            enableBasicAutocompletion: true,
-            enableLiveAutocompletion: true,
-            enableSnippets: true,
-            cursorStyle: "smooth",
-            copyWithEmptySelection: true,
-            scrollPastEnd: true,
-        }}
-        onChange={onChange}
-        onFocus={onFocus}
-        style={{ flexGrow: 1 }}
-    />;
+    return (
+        <AceEditor
+            height="100%"
+            width="0px"
+            mode={props.mode}
+            theme="tomorrow"
+            name={`editor-${props.tabKey}`}
+            value={props.value}
+            editorProps={{
+                $blockScrolling: true,
+            }}
+            setOptions={{
+                fontSize: 15,
+                enableBasicAutocompletion: true,
+                enableLiveAutocompletion: true,
+                enableSnippets: true,
+                cursorStyle: "smooth",
+                copyWithEmptySelection: true,
+                scrollPastEnd: true,
+            }}
+            onChange={onChange}
+            onFocus={onFocus}
+            style={{ flexGrow: 1 }}
+        />
+    );
 };
 
 export default LoideAceEditor;

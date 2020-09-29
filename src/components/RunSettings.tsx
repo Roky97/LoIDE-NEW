@@ -271,7 +271,7 @@ const RunSettings: React.FC<RunSettingsProps> = ({ languages }) => {
                     </div>
                 )}
 
-                <div className="setting-container mt-2">
+                <div className="setting-container my-2">
                     <TabToExecute
                         tabs={editorTabs}
                         tabsIDToExecute={tabsIDToExecute}
