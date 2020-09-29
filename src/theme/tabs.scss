@@ -1,7 +1,8 @@
 @import "~react-tabs/style/react-tabs.scss";
 .react-tabs {
     &__tab-list {
-        margin: -1px 0 6px;
+        margin: 0px 0 6px;
+        margin-bottom: 0;
         padding: 0;
     }
 
@@ -15,12 +16,15 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        
+
+        height: var(--height-tab);
+
         transition: all 0.2s;
         display: inline-block;
         border: 1px solid var(--tabs-color);
         border-bottom: none;
         margin-right: 1px;
+        margin-top: -1px;
 
         bottom: -1px;
         position: relative;
@@ -33,7 +37,8 @@
             background: #fff;
             color: black;
             border-radius: 0;
-            border-top: 1px solid var(--tabs-color);
+            border-top: 1px solid;
+            border-color: white;
         }
 
         &--disabled {
