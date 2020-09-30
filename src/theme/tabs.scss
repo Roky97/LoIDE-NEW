@@ -5,6 +5,8 @@
         margin-bottom: 0;
         padding: 0;
 
+        border-top-left-radius: var(--border-radius);
+
         display: flex;
         overflow-x: auto;
         overflow-y: hidden;
