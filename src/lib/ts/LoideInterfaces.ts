@@ -39,4 +39,5 @@ export interface ILoideTab {
 export interface IEditorStore {
     currentTab: number;
     tabs: Map<number, ILoideTab>
+    prevTabsSize: number
 }

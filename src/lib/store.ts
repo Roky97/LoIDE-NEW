@@ -20,6 +20,7 @@ export const RunSettingsStore = new Store<IRunSettingsStore>({
 });
 
 export const EditorStore = new Store<IEditorStore>({
+  prevTabsSize: 0,
   currentTab: 0,
   tabs: new Map<number, ILoideTab>()
 });

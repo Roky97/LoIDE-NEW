@@ -9,6 +9,8 @@
     --secs: 0.4s;
     --bg-main: rgba(0, 0, 0, 0.06);
     --tabs-color: rgb(233, 230, 230);
+    --tabs-color-hover: rgb(207, 204, 204);
+    --tabs-color-active: rgb(190, 186, 186);
     --sidebar-width: 250px;
     --border-radius: 10px;
     --height-tab: 39px;
@@ -59,17 +61,40 @@ body {
 }
 
 .loide-tab-list {
-    display: flex;
     overflow: visible;
+    display: flex;
+    -webkit-box-flex: 0;
+    justify-content: space-between;
     background-color: rgb(247, 247, 247);
     min-height: var(--height-tab);
+
     .loide-tab-list-container {
+        position: relative;
+        display: inline-block;
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
-        overflow: visible;
+        -webkit-box-flex: 1;
+        -ms-flex: auto;
+        flex: auto;
+        -ms-flex-item-align: stretch;
+        align-self: stretch;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    .loide-tab-list-operation {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-item-align: stretch;
+        align-self: stretch;
+        position: relative;
     }
 }
 
-.loide-tab-panel {
+.toolbar {
+    height: var(--height-tab);
 }
 
 .loide-editor {
@@ -77,6 +102,31 @@ body {
     height: 100%;
     display: flex;
     background-color: white;
+}
+
+.loide-tab-list-bar {
+    display: flex;
+    flex-grow: 1;
+}
+
+.add-tab {
+    width: var(--height-tab);
+    transition: all 0.2s;
+    border: 1px solid var(--tabs-color);
+    margin-top: -1px;
+    bottom: -1px;
+    padding: 6px 12px;
+    background-color: var(--tabs-color);
+
+    &:hover {
+        border-color: var(--tabs-color-hover);
+        background-color: var(--tabs-color-hover);
+    }
+    &:active {
+        color: black;
+        border-color: var(--tabs-color-active);
+        background-color: var(--tabs-color-active);
+    }
 }
 
 .topbar {
@@ -151,6 +201,7 @@ body {
     .panel {
         display: flex;
         flex-grow: 1;
+        overflow: hidden;
 
         &.east {
             min-width: 250px;

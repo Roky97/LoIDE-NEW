@@ -11,6 +11,7 @@ const Editor: React.FC = () => {
     const [tabCountID, setTabCountID] = useState(InitalTabCountID);
     const tabIndex = EditorStore.useState((e) => e.currentTab);
     const tabs = EditorStore.useState((e) => e.tabs);
+    const prevTabsSize = EditorStore.useState((l) => l.prevTabsSize);
 
     useEffect(() => {
         if (tabs.size === 0) {
@@ -21,9 +22,18 @@ const Editor: React.FC = () => {
                     value: "",
                 });
                 e.currentTab = 0;
+                e.prevTabsSize = 0;
             });
+        } else {
+            if (tabs.size > prevTabsSize) {
+                console.log(tabs.size, prevTabsSize);
+                var arr = document.getElementsByClassName("react-tabs__tab");
+                arr[arr.length - 1].scrollIntoView({
+                    behavior: "smooth",
+                });
+            }
         }
-    }, []);
+    }, [tabs]);
 
     const onChange = (tabKey: number, value: string) => {
         let tab: ILoideTab = Object.assign({}, tabs.get(tabKey));
@@ -71,6 +81,7 @@ const Editor: React.FC = () => {
             EditorStore.update((e) => {
                 e.currentTab = shift ? e.currentTab - 1 : e.currentTab;
                 e.tabs = nextTabs;
+                e.prevTabsSize = tabs.size;
             });
         }
     };
@@ -88,10 +99,7 @@ const Editor: React.FC = () => {
         EditorStore.update((e) => {
             e.currentTab = nextTabs.size - 1;
             e.tabs = nextTabs;
-        });
-
-        EditorStore.update((e) => {
-            e.tabs = nextTabs;
+            e.prevTabsSize = tabs.size;
         });
 
         setTabCountID(tabCountID + 1);
@@ -125,9 +133,11 @@ const Editor: React.FC = () => {
                     <div className="loide-tab-list-container">
                         <TabList>{loideTabs}</TabList>
                     </div>
-                    <button className="ml-1 react-tabs__tab" onClick={addTab}>
-                        <FontAwesomeIcon icon="plus" />
-                    </button>
+                    <div className="loide-tab-list-operation">
+                        <button className="ml-1 add-tab" onClick={addTab}>
+                            <FontAwesomeIcon icon="plus" />
+                        </button>
+                    </div>
                 </div>
                 {tabPanels}
             </Tabs>

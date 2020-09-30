@@ -4,6 +4,11 @@
         margin: 0px 0 6px;
         margin-bottom: 0;
         padding: 0;
+
+        display: flex;
+        overflow-x: auto;
+        overflow-y: hidden;
+        flex-wrap: nowrap;
     }
 
     &__tab:last-of-type {
@@ -16,6 +21,7 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
+        white-space: nowrap;
 
         height: var(--height-tab);
 
@@ -32,6 +38,17 @@
         padding: 6px 12px;
         cursor: pointer;
         background: var(--tabs-color);
+
+        &:not(.react-tabs__tab--selected):hover {
+            border-color: var(--tabs-color-hover);
+            background-color: var(--tabs-color-hover);
+        }
+
+        &:not(.react-tabs__tab--selected):active {
+            color: black;
+            border-color: var(--tabs-color-active);
+            background-color: var(--tabs-color-active);
+        }
 
         &--selected {
             background: #fff;
