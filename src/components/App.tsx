@@ -6,8 +6,7 @@ import EditorLayout from "./EditorLayout";
 import OpenLayout from "./OpenLayout";
 import { ILanguageData } from "../lib/LoideAPIInterfaces";
 import { LanguagesDataStore } from "../lib/store";
-
-const configInitialState: Array<ILanguageData> = new Array<ILanguageData>();
+import { useIsMobile } from "../hooks/useIsMobile";
 
 const dataMock: Array<ILanguageData> = [
     {
@@ -117,12 +116,14 @@ const dataMock: Array<ILanguageData> = [
 ];
 
 const App: React.FC = () => {
+    const isMobile = useIsMobile();
     const [sidebarShow, setSidebarShow] = useState(true);
     const [openbarShow, setOpenbarShow] = useState(false);
 
     const languages = LanguagesDataStore.useState((l) => l.languages);
 
     useEffect(() => {
+        if (isMobile) setSidebarShow(false);
         let data = dataMock;
         LanguagesDataStore.update((l) => {
             l.languages = data;

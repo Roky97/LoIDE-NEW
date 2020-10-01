@@ -1,11 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ResizePanel from "react-resize-panel";
+import { useIsMobile } from "../hooks/useIsMobile";
 import { OutputPositions } from "../lib/constants";
 import Editor from "./Editor";
 import Output from "./Output";
 
 const EditorLayout: React.FC = () => {
+    const isMobile = useIsMobile();
     const [outputRight, setOutputRight] = useState(true);
+
+    useEffect(() => {
+        if (isMobile) setOutputRight(false);
+    }, []);
     return (
         <div className="editor-layout">
             <div className="orizontal">

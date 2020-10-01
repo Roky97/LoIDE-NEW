@@ -81,7 +81,7 @@ const LoideNavbar: React.FC<LoideNavbarProps> = (props) => {
 
                 <Navbar.Collapse>
                     <Nav className="mr-auto ml-auto">
-                        <Nav.Item className="mr-2">
+                        {/* <Nav.Item className="mr-sm-0 mr-md-2">
                             <Button
                                 variant="info"
                                 className="btn-block"
@@ -90,7 +90,7 @@ const LoideNavbar: React.FC<LoideNavbarProps> = (props) => {
                                 <FontAwesomeIcon icon="paint-brush" />
                                 <span className="ml-2">Appearance</span>
                             </Button>
-                        </Nav.Item>
+                        </Nav.Item> */}
                         <Nav.Item>
                             <Button
                                 variant="outline-info"
@@ -103,7 +103,7 @@ const LoideNavbar: React.FC<LoideNavbarProps> = (props) => {
                         </Nav.Item>
                     </Nav>
 
-                    <Nav>
+                    {/* <Nav>
                         <Nav.Item>
                             <ButtonGroup className="btn-block">
                                 <Button
@@ -149,7 +149,7 @@ const LoideNavbar: React.FC<LoideNavbarProps> = (props) => {
                                 </OverlayTrigger>
                             </ButtonGroup>
                         </Nav.Item>
-                    </Nav>
+                    </Nav> */}
                 </Navbar.Collapse>
             </Navbar>
 

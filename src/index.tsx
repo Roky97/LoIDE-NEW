@@ -1,10 +1,11 @@
-import * as React from "react";
-import * as ReactDOM from "react-dom";
+import React from "react";
+import ReactDOM from "react-dom";
 
 import App from "./components/App";
 
 import "./global.scss";
 import { library } from "@fortawesome/fontawesome-svg-core";
+import { ViewportProvider } from "./providers/ViewportProvider";
 import {
     faCogs,
     faPlay,
@@ -54,4 +55,9 @@ window.addEventListener("resize", () => {
 
 var root = document.getElementById("root");
 
-ReactDOM.render(<App />, root);
+ReactDOM.render(
+    <ViewportProvider>
+        <App />
+    </ViewportProvider>,
+    root
+);

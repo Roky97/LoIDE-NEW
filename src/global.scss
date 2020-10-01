@@ -177,11 +177,7 @@ body {
     .settings {
         min-height: 0;
         overflow-x: hidden;
-        overflow-y: hidden;
-
-        &:hover {
-            overflow-y: visible;
-        }
+        overflow-y: auto;
     }
 }
 

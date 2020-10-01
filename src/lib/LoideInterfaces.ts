@@ -46,3 +46,8 @@ export interface IOutputStore {
     model: string;
     error: string;
 }
+
+export interface IDimensions {
+    width: number;
+    height: number;
+}
