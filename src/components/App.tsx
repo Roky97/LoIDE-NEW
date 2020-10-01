@@ -4,7 +4,7 @@ import LoideNavbar from "./LoideNavbar";
 import SideBar from "./Sidebar";
 import EditorLayout from "./EditorLayout";
 import OpenLayout from "./OpenLayout";
-import { ILanguageData } from "../lib/ts/LoideAPIInterfaces";
+import { ILanguageData } from "../lib/LoideAPIInterfaces";
 import { LanguagesDataStore } from "../lib/store";
 
 const configInitialState: Array<ILanguageData> = new Array<ILanguageData>();
@@ -117,11 +117,6 @@ const dataMock: Array<ILanguageData> = [
 ];
 
 const App: React.FC = () => {
-    // const socket = io.connect("http://localhost:8084");
-
-    const data =
-        '{"language":"asp","engine":"dlv2","executor":"embAspServerExecutor","program":["ciao(1..10)."],"option":[{"name":""}]}';
-
     const [sidebarShow, setSidebarShow] = useState(true);
     const [openbarShow, setOpenbarShow] = useState(false);
 

@@ -1,9 +1,9 @@
 import React from "react";
 import { Button, Modal } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { ModalProps } from "../lib/ts/LoideInterfaces";
+import { ModalProps } from "../lib/LoideInterfaces";
 
-const InfoModal: React.FC<ModalProps>= (props) => {
+const InfoModal: React.FC<ModalProps> = (props) => {
     return (
         <Modal show={props.show}>
             <Modal.Header closeButton>

@@ -2,7 +2,8 @@ import React from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "react-bootstrap";
-import { OutputPositions } from "../lib/ts/constant";
+import { OutputPositions } from "../lib/constants";
+import { OutputStore } from "../lib/store";
 
 interface OutputProps {
     pos: string;
@@ -10,6 +11,9 @@ interface OutputProps {
 }
 
 const Output: React.FC<OutputProps> = (props) => {
+    const outputModel = OutputStore.useState((o) => o.model);
+    const outputError = OutputStore.useState((o) => o.error);
+
     return (
         <div className="loide-output">
             <div className="output-settings">
@@ -38,8 +42,8 @@ const Output: React.FC<OutputProps> = (props) => {
                 </div>
             </div>
             <div className="output-content">
-                <div className="output-model pb-2"></div>
-                <div className="output-error"></div>
+                <div className="output-model pb-2">{outputModel}</div>
+                <div className="output-error">{outputError}</div>
             </div>
         </div>
     );

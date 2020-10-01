@@ -1,9 +1,9 @@
 import React from "react";
 import { Button, Modal } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { ModalProps } from "../lib/ts/LoideInterfaces";
+import { ModalProps } from "../lib/LoideInterfaces";
 
-const AppearanceModal: React.FC<ModalProps>= (props) => {
+const AppearanceModal: React.FC<ModalProps> = (props) => {
     return (
         <Modal show={props.show}>
             <Modal.Header closeButton>
@@ -22,9 +22,7 @@ const AppearanceModal: React.FC<ModalProps>= (props) => {
                 </p>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="danger">
-                    Reset
-                </Button>
+                <Button variant="danger">Reset</Button>
                 <Button variant="secondary" onClick={props.onHide}>
                     Close
                 </Button>

@@ -13,7 +13,11 @@ import InfoModal from "./InfoModal";
 import AppearanceModal from "./AppearanceModal";
 import SavePopover from "./SavePopover";
 import SharePopover from "./SharePopover";
-import { IToggleItem } from "../lib/ts/LoideInterfaces";
+import { IToggleItem } from "../lib/LoideInterfaces";
+import { OutputStore } from "../lib/store";
+import { runProject } from "../lib/api";
+import { useLoideData } from "../hooks/useLoideData";
+import { IOutputData } from "../lib/LoideAPIInterfaces";
 
 interface LoideNavbarProps {
     sidebar: IToggleItem;
@@ -23,6 +27,17 @@ interface LoideNavbarProps {
 const LoideNavbar: React.FC<LoideNavbarProps> = (props) => {
     const [appearanceModalShow, setAppearanceModalShow] = React.useState(false);
     const [infoModalShow, setInfoModalShow] = React.useState(false);
+
+    const dataToRun = useLoideData();
+
+    const onRun = () => {
+        runProject(dataToRun, (output: IOutputData) => {
+            OutputStore.update((o) => {
+                o.model = output.model;
+                o.error = output.error;
+            });
+        });
+    };
 
     return (
         <>
@@ -54,7 +69,7 @@ const LoideNavbar: React.FC<LoideNavbarProps> = (props) => {
                                     <FontAwesomeIcon icon="cogs" />
                                 </Button>
                             </OverlayTrigger>
-                            <Button variant="success">
+                            <Button variant="success" onClick={onRun}>
                                 <FontAwesomeIcon icon="play" />
                                 <span className="ml-2">Run</span>
                             </Button>

@@ -25,3 +25,20 @@ export interface IOptionsData {
     word_argument: boolean;
     description: string;
 }
+
+export interface ILoideRunData {
+    language: string;
+    engine: string;
+    executor: string;
+    program: string[];
+    option?: { name: string, value: string[] }[];
+}
+
+export interface IOutputData {
+    model: string;
+    error: string;
+}
+
+export interface IOutputProblemData {
+    reason: string;
+}

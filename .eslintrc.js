@@ -23,7 +23,6 @@ module.exports = {
     globals: {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly",
-        "io": "readonly",
         "module": "readonly",
         "ace": "readonly"
     },

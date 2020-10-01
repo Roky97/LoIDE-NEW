@@ -41,3 +41,8 @@ export interface IEditorStore {
     tabs: Map<number, ILoideTab>
     prevTabsSize: number
 }
+
+export interface IOutputStore {
+    model: string;
+    error: string;
+}

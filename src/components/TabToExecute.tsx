@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, ListGroup } from "react-bootstrap";
-import { CurrentTab } from "../lib/ts/constant";
-import { ILoideTab } from "../lib/ts/LoideInterfaces";
+import { CurrentTab } from "../lib/constants";
+import { ILoideTab } from "../lib/LoideInterfaces";
 
 interface TabToExecuteProps {
     tabs: Map<number, ILoideTab>;

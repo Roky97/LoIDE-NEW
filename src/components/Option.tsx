@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { ISolverOption } from "../lib/ts/LoideInterfaces";
-import { IOptionsData } from "../lib/ts/LoideAPIInterfaces";
+import { ISolverOption } from "../lib/LoideInterfaces";
+import { IOptionsData } from "../lib/LoideAPIInterfaces";
 import { Button, Form, InputGroup } from "react-bootstrap";
 
 interface OptionProps {

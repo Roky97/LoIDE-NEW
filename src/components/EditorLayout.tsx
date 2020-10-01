@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { Button } from "react-bootstrap";
 import ResizePanel from "react-resize-panel";
-import { OutputPositions } from "../lib/ts/constant";
+import { OutputPositions } from "../lib/constants";
 import Editor from "./Editor";
 import Output from "./Output";
 

@@ -1,9 +1,8 @@
 import { Store } from "pullstate";
-
+import { ILanguagesStore, ILoideTab, IEditorStore, IRunSettingsStore, IOutputStore } from "./LoideInterfaces";
 import { enableMapSet } from "immer";
-enableMapSet();
 
-import { ILanguagesStore, ILoideTab, IEditorStore, IRunSettingsStore } from "./ts/LoideInterfaces";
+enableMapSet();
 
 export const LanguagesDataStore = new Store<ILanguagesStore>({
   languages: []
@@ -24,3 +23,8 @@ export const EditorStore = new Store<IEditorStore>({
   currentTab: 0,
   tabs: new Map<number, ILoideTab>()
 });
+
+export const OutputStore = new Store<IOutputStore>({
+  model: "",
+  error: ""
+})

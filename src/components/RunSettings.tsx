@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Button, Form } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Option from "./Option";
@@ -7,8 +7,8 @@ import {
     ILanguageData,
     IOptionsData,
     ISolverData,
-} from "../lib/ts/LoideAPIInterfaces";
-import { ISolverOption } from "../lib/ts/LoideInterfaces";
+} from "../lib/LoideAPIInterfaces";
+import { ISolverOption } from "../lib/LoideInterfaces";
 import { EditorStore, RunSettingsStore } from "../lib/store";
 import TabToExecute from "./TabToExecute";
 
@@ -19,7 +19,6 @@ interface RunSettingsProps {
 const RunSettings: React.FC<RunSettingsProps> = ({ languages }) => {
     const currentLanguage = RunSettingsStore.useState((l) => l.currentLanguage);
     const currentSolver = RunSettingsStore.useState((l) => l.currentSolver);
-    const currentExecutor = RunSettingsStore.useState((l) => l.currentExecutor);
     const currentOptions = RunSettingsStore.useState((l) => l.currentOptions);
     const tabsIDToExecute = RunSettingsStore.useState((l) => l.tabsIDToExecute);
 

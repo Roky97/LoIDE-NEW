@@ -3,9 +3,9 @@ import LoideAceEditor from "./LoideAceEditor";
 import LoideTab from "./LoideTab";
 import { Tabs, TabList, TabPanel } from "react-tabs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { EditorStore, RunSettingsStore } from "../lib/store";
-import { ILoideTab } from "../lib/ts/LoideInterfaces";
-import { InitalTabCountID } from "../lib/ts/constant";
+import { EditorStore } from "../lib/store";
+import { ILoideTab } from "../lib/LoideInterfaces";
+import { InitalTabCountID } from "../lib/constants";
 
 const Editor: React.FC = () => {
     const [tabCountID, setTabCountID] = useState(InitalTabCountID);
@@ -26,7 +26,6 @@ const Editor: React.FC = () => {
             });
         } else {
             if (tabs.size > prevTabsSize) {
-                console.log(tabs.size, prevTabsSize);
                 var arr = document.getElementsByClassName("react-tabs__tab");
                 arr[arr.length - 1].scrollIntoView({
                     behavior: "smooth",
