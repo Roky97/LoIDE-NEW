@@ -9,7 +9,7 @@ import {
 } from "react-bootstrap";
 import logo from "../assets/img/logo_LoIDE.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import InfoModal from "./InfoModal";
+import AboutModal from "./AboutModal";
 import AppearanceModal from "./AppearanceModal";
 import SavePopover from "./SavePopover";
 import SharePopover from "./SharePopover";
@@ -26,7 +26,7 @@ interface LoideNavbarProps {
 
 const LoideNavbar: React.FC<LoideNavbarProps> = (props) => {
     const [appearanceModalShow, setAppearanceModalShow] = React.useState(false);
-    const [infoModalShow, setInfoModalShow] = React.useState(false);
+    const [aboutModalShow, setAboutModalShow] = React.useState(false);
 
     const dataToRun = useLoideData();
 
@@ -44,9 +44,10 @@ const LoideNavbar: React.FC<LoideNavbarProps> = (props) => {
             <Navbar expand="sm" style={{ backgroundColor: "white" }}>
                 <Navbar.Brand>
                     <img className="navbar-logo" src={logo} alt="LoIDE logo" />
+                    <span className="ml-1 font-pwa">(PWA)</span>
                 </Navbar.Brand>
 
-                <Nav className="ml-4">
+                <Nav className="ml-md-4">
                     <Nav.Item>
                         <ButtonGroup>
                             <OverlayTrigger
@@ -95,10 +96,10 @@ const LoideNavbar: React.FC<LoideNavbarProps> = (props) => {
                             <Button
                                 variant="outline-info"
                                 className="btn-block"
-                                onClick={() => setInfoModalShow(true)}
+                                onClick={() => setAboutModalShow(true)}
                             >
                                 <FontAwesomeIcon icon="info" />
-                                <span className="ml-2">Info </span>
+                                <span className="ml-2">About </span>
                             </Button>
                         </Nav.Item>
                     </Nav>
@@ -157,9 +158,9 @@ const LoideNavbar: React.FC<LoideNavbarProps> = (props) => {
                 show={appearanceModalShow}
                 onHide={() => setAppearanceModalShow(false)}
             />
-            <InfoModal
-                show={infoModalShow}
-                onHide={() => setInfoModalShow(false)}
+            <AboutModal
+                show={aboutModalShow}
+                onHide={() => setAboutModalShow(false)}
             />
         </>
     );

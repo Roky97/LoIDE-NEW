@@ -16,3 +16,5 @@ export const screenBreakpoints = {
     medium: 992,
     large: 1200
 }
+
+export const LoideVersion = "0.1.0 beta"

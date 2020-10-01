@@ -21,6 +21,7 @@ import {
     faEraser,
     faChevronDown,
     faChevronUp,
+    faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -37,7 +38,8 @@ library.add(
     faDownload,
     faEraser,
     faChevronDown,
-    faChevronUp
+    faChevronUp,
+    faInfoCircle
 );
 
 declare const module: any;

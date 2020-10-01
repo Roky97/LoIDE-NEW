@@ -16,6 +16,17 @@
     --height-tab: 39px;
 }
 
+.font-pwa {
+    font-family: "Dancing Script", cursive;
+    &.about-modal {
+        font-size: 2rem;
+    }
+}
+
+.version {
+    color: #337ab7;
+}
+
 body {
     background-color: var(--bg-main);
     overflow: hidden;
