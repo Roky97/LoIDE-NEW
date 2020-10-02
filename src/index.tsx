@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import "regenerator-runtime/runtime";
 
 import App from "./components/App";
 
@@ -47,13 +48,6 @@ declare const module: any;
 if (module.hot) {
     module.hot.accept();
 }
-
-let vh = window.innerHeight * 0.01;
-document.documentElement.style.setProperty("--vh", `${vh}px`);
-window.addEventListener("resize", () => {
-    let vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty("--vh", `${vh}px`);
-});
 
 var root = document.getElementById("root");
 
