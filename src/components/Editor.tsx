@@ -26,13 +26,14 @@ const Editor: React.FC = () => {
             });
         } else {
             if (tabs.size > prevTabsSize) {
+                console.log(tabs.size, prevTabsSize);
                 var arr = document.getElementsByClassName("react-tabs__tab");
                 arr[arr.length - 1].scrollIntoView({
                     behavior: "smooth",
                 });
             }
         }
-    }, [prevTabsSize, tabCountID, tabs]);
+    }, [prevTabsSize, tabCountID, tabs.size]);
 
     const onChange = (tabKey: number, value: string) => {
         let tab: ILoideTab = Object.assign({}, tabs.get(tabKey));

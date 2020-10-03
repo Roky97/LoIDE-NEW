@@ -4,7 +4,6 @@ ace.define('ace/mode/asp', [], function (require, exports, module) {
 
     var oop = require("ace/lib/oop");
     var TextMode = require("ace/mode/text").Mode;
-    var Tokenizer = require("ace/tokenizer").Tokenizer;
     var aspHighlightRules = require("ace/mode/asp_highlight_rules").aspHighlightRules;
 
     var Mode = function () {

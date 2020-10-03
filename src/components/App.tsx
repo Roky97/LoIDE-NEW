@@ -124,6 +124,9 @@ const App: React.FC = () => {
 
     useEffect(() => {
         if (isMobile) setSidebarShow(false);
+    }, [isMobile]);
+
+    useEffect(() => {
         let data = dataMock;
         LanguagesDataStore.update((l) => {
             l.languages = data;

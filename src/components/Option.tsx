@@ -19,7 +19,7 @@ const Option: React.FC<OptionProps> = (props) => {
     const [values, setValues] = useState([""]);
 
     useEffect(() => {
-        setValues([...option.values]);
+        setValues([...props.optionData.values]);
     }, [props.optionData]);
 
     const onChangeOptionType = (e: any) => {

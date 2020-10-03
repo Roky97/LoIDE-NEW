@@ -80,7 +80,7 @@ const RunSettings: React.FC<RunSettingsProps> = ({ languages }) => {
         let value = e.target.value;
         let languageSelected: ILanguageData | undefined = undefined;
         for (let lang of languages) {
-            if (lang.value == value) {
+            if (lang.value === value) {
                 languageSelected = lang;
                 break;
             }
@@ -139,9 +139,7 @@ const RunSettings: React.FC<RunSettingsProps> = ({ languages }) => {
         ); // clone current options
 
         nextOptions.splice(id, 1);
-        nextOptions.map((opt, index) => {
-            opt.id = index;
-        });
+        nextOptions.map((opt, index) => (opt.id = index));
         RunSettingsStore.update((settings) => {
             settings.currentOptions = nextOptions;
         });

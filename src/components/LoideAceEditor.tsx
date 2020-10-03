@@ -35,8 +35,6 @@ const LoideAceEditor: React.FC<LoideAceEditorProps> = (props) => {
     };
 
     const inizializeSnippets = () => {
-        // console.log("langTools", langTools);
-
         langTools.setCompleters([]); // reset completers.
 
         // completer that include snippets and some keywords
