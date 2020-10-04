@@ -22,5 +22,5 @@ app.post('/version', function (req, res) { // send the version (and take it in p
 });
 
 app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`)
+    console.log(`LoIDE-PWA ${pckg.version} is listening at http://localhost:${port}`)
 })

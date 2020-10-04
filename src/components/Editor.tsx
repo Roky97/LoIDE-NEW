@@ -19,7 +19,7 @@ const Editor: React.FC = () => {
                 e.tabs = new Map<number, ILoideTab>().set(tabCountID, {
                     title: `L P ${tabCountID}`,
                     type: "",
-                    value: "ciao(1,2).",
+                    value: "",
                 });
                 e.currentTab = 0;
                 e.prevTabsSize = 0;
