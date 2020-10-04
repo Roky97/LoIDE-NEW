@@ -5,9 +5,11 @@ import AceEditor from "react-ace";
 import "../lib/ace/mode-asp";
 import "ace-builds/src-noconflict/theme-tomorrow";
 import "ace-builds/src-noconflict/ext-language_tools";
+import { LoideLanguages, LoideSolvers } from "../lib/constants";
 
 interface LoideAceEditorProps {
     mode: string;
+    solver: string;
     tabKey: number;
     value: string;
 
@@ -16,11 +18,13 @@ interface LoideAceEditorProps {
 }
 
 const LoideAceEditor: React.FC<LoideAceEditorProps> = (props) => {
+    const ace = require("ace-builds/src-noconflict/ace");
+
     var langTools = ace.require("ace/ext/language_tools");
 
     var languageChosen = props.mode;
 
-    var solverChosen = "dlv2";
+    var solverChosen = props.solver;
 
     const onChange = (value: any) => {
         inizializeAutoComplete(value);
@@ -40,9 +44,9 @@ const LoideAceEditor: React.FC<LoideAceEditorProps> = (props) => {
         var completer;
 
         switch (languageChosen) {
-            case "asp":
+            case LoideLanguages.ASP:
                 switch (solverChosen) {
-                    case "dlv":
+                    case LoideSolvers.DLV:
                         completer = {
                             identifierRegexps: [
                                 /[a-zA-Z_0-9#$\-\u00A2-\uFFFF]/,
@@ -252,8 +256,7 @@ const LoideAceEditor: React.FC<LoideAceEditorProps> = (props) => {
                         };
                         langTools.addCompleter(completer);
                         break;
-
-                    case "dlv2":
+                    case LoideSolvers.DLV2:
                         completer = {
                             identifierRegexps: [
                                 /[a-zA-Z_0-9#$\-\u00A2-\uFFFF]/,
@@ -322,8 +325,9 @@ const LoideAceEditor: React.FC<LoideAceEditorProps> = (props) => {
                         };
                         langTools.addCompleter(completer);
                         break;
-                    case "clingo":
-                    // add snippets
+                    case LoideSolvers.Clingo:
+                        // add snippets
+                        break;
                 }
                 break;
 
@@ -336,7 +340,7 @@ const LoideAceEditor: React.FC<LoideAceEditorProps> = (props) => {
         inizializeSnippets();
 
         switch (languageChosen) {
-            case "asp": {
+            case LoideLanguages.ASP: {
                 let splitRegex = /(([a-zA-Z_]+[0-9]*)*)(\(.+?\))/gi;
                 let words = editorText.match(splitRegex);
                 if (words != null) {

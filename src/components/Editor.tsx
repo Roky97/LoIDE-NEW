@@ -3,15 +3,17 @@ import LoideAceEditor from "./LoideAceEditor";
 import LoideTab from "./LoideTab";
 import { Tabs, TabList, TabPanel } from "react-tabs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { EditorStore } from "../lib/store";
+import { EditorStore, RunSettingsStore } from "../lib/store";
 import { ILoideTab } from "../lib/LoideInterfaces";
-import { InitalTabCountID } from "../lib/constants";
+import { InitalTabCountID, WindowConfirmMessages } from "../lib/constants";
 
 const Editor: React.FC = () => {
     const [tabCountID, setTabCountID] = useState(InitalTabCountID);
     const tabIndex = EditorStore.useState((e) => e.currentTab);
     const tabs = EditorStore.useState((e) => e.tabs);
     const prevTabsSize = EditorStore.useState((l) => l.prevTabsSize);
+    const currentLanguage = RunSettingsStore.useState((s) => s.currentLanguage);
+    const currentSolver = RunSettingsStore.useState((s) => s.currentSolver);
 
     useEffect(() => {
         if (tabs.size === 0) {
@@ -57,9 +59,7 @@ const Editor: React.FC = () => {
 
     const onDeleteTab = (e: any, tabKey: number) => {
         e.stopPropagation();
-        let r = window.confirm(
-            "Are you sure you want to delete this tab? This cannot be undone."
-        );
+        let r = window.confirm(WindowConfirmMessages.DeleteTab);
         if (r) {
             if (tabs.size === 1) {
                 setTabCountID(1);
@@ -91,7 +91,7 @@ const Editor: React.FC = () => {
         let nextTabs = new Map(tabs);
         nextTabs.set(nextID, {
             title: `L P ${nextID}`,
-            type: "asp",
+            type: "",
             value: "",
         });
 
@@ -114,7 +114,8 @@ const Editor: React.FC = () => {
         <TabPanel key={`tabpanel-${key}`}>
             <LoideAceEditor
                 tabKey={key}
-                mode="asp"
+                mode={currentLanguage}
+                solver={currentSolver}
                 value={tabs.get(key)!.value}
                 onChange={onChange}
             />
