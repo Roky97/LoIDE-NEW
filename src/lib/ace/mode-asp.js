@@ -1,8 +1,9 @@
+const ace = require('ace-builds/src-noconflict/ace');
+
 ace.define('ace/mode/asp', [], function (require, exports, module) {
 
     var oop = require("ace/lib/oop");
     var TextMode = require("ace/mode/text").Mode;
-    var Tokenizer = require("ace/tokenizer").Tokenizer;
     var aspHighlightRules = require("ace/mode/asp_highlight_rules").aspHighlightRules;
 
     var Mode = function () {
@@ -34,39 +35,39 @@ ace.define('ace/mode/asp_highlight_rules', [], function (require, exports, modul
 
         this.$rules = {
             "start": [{
-                    token: "keyword",
-                    regex: "[\\(]+",
-                    next: "blocktag"
+                token: "keyword",
+                regex: "[\\(]+",
+                next: "blocktag"
 
-                }, {
-                    token: keywordMapper,
-                    regex: "[a-z]+",
+            }, {
+                token: keywordMapper,
+                regex: "[a-z]+",
 
-                }, {
-                    token: "keyword.operator",
-                    regex: "\\-|\\+|\\*|\\/|\\<|\\<=|\\>|\\>=|\\=|\\!="
-                }, {
-                    token: "constant.numeric",
-                    regex: "[0-9]+"
-                },
+            }, {
+                token: "keyword.operator",
+                regex: "\\-|\\+|\\*|\\/|\\<|\\<=|\\>|\\>=|\\=|\\!="
+            }, {
+                token: "constant.numeric",
+                regex: "[0-9]+"
+            },
 
-                {
-                    token: keywordAggr,
-                    regex: "\\#[a-z]+",
-                    next: "blocktag"
+            {
+                token: keywordAggr,
+                regex: "\\#[a-z]+",
+                next: "blocktag"
 
-                }, {
-                    token: "keyword",
-                    regex: ":-|:~"
+            }, {
+                token: "keyword",
+                regex: ":-|:~"
 
-                },
-                {
-                    token: "text",
-                    regex: "s+"
-                }, {
-                    token: "comment",
-                    regex: "%.+"
-                }
+            },
+            {
+                token: "text",
+                regex: "s+"
+            }, {
+                token: "comment",
+                regex: "%.+"
+            }
             ],
             "blocktag": [{
                 token: "string",
@@ -78,14 +79,14 @@ ace.define('ace/mode/asp_highlight_rules', [], function (require, exports, modul
             }],
 
             "blocktagproperties": [{
-                    token: "string",
-                    regex: "[A-Za-z0-9_][a-zA-Z0-9_]*",
-                    next: "blocknext"
-                }, {
-                    token: "keyword",
-                    regex: "[\\)]*",
-                    next: "start"
-                }
+                token: "string",
+                regex: "[A-Za-z0-9_][a-zA-Z0-9_]*",
+                next: "blocknext"
+            }, {
+                token: "keyword",
+                regex: "[\\)]*",
+                next: "start"
+            }
 
             ],
             "blocknext": [{

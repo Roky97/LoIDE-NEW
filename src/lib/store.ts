@@ -1,8 +1,5 @@
 import { Store } from "pullstate";
 import { ILanguagesStore, ILoideTab, IEditorStore, IRunSettingsStore, IOutputStore } from "./LoideInterfaces";
-import { enableMapSet } from "immer";
-
-enableMapSet();
 
 export const LanguagesDataStore = new Store<ILanguagesStore>({
   languages: []

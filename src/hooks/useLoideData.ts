@@ -34,13 +34,13 @@ export const useLoideData = (): ILoideRunData => {
         if (tabsIDToExecute.length === 0) {
 
             let program = tabs.get(currentTabID + 1)?.value;
-            if (program != undefined) {
+            if (program !== undefined) {
                 data.program.push(program);
             }
         } else {
             for (let tabID of tabsIDToExecute) {
                 let program = tabs.get(tabID)?.value;
-                if (program != undefined) {
+                if (program !== undefined) {
                     data.program.push(program);
                 }
             }

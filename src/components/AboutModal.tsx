@@ -48,7 +48,7 @@ const AboutModal: React.FC<ModalProps> = (props) => {
                     Checkout the LoIDE project website: <br />
                     <a
                         href="https://demacs-unical.github.io/LoIDE/"
-                        rel="noopener"
+                        rel="noopener noreferrer"
                         target="_blank"
                     >
                         demacs-unical.github.io/LoIDE
@@ -56,7 +56,7 @@ const AboutModal: React.FC<ModalProps> = (props) => {
                 </p>
                 <p>
                     LoIDE is an Open Source project available on{" "}
-                    <a href="#" rel="noopener" target="_blank">
+                    <a href="#" rel="noopener noreferrer" target="_blank">
                         Github <i className="fa fa-github"></i>
                     </a>
                 </p>
@@ -64,7 +64,7 @@ const AboutModal: React.FC<ModalProps> = (props) => {
                     It's released under{" "}
                     <a
                         href="https://github.com/DeMaCS-UNICAL/LoIDE/blob/master/LICENSE"
-                        rel="noopener"
+                        rel="noopener noreferrer"
                         target="_blank"
                     >
                         MIT License

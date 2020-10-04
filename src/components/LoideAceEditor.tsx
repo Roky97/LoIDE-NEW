@@ -1,3 +1,4 @@
+/* eslint-disable no-template-curly-in-string */
 import React from "react";
 import AceEditor from "react-ace";
 
@@ -34,8 +35,6 @@ const LoideAceEditor: React.FC<LoideAceEditorProps> = (props) => {
     };
 
     const inizializeSnippets = () => {
-        // console.log("langTools", langTools);
-
         langTools.setCompleters([]); // reset completers.
 
         // completer that include snippets and some keywords

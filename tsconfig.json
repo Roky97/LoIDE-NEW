@@ -1,26 +1,19 @@
 {
     "compilerOptions": {
-        "outDir": "./dist/",
-        "rootDir": "./src/",
-        "lib": ["es6", "dom"],
-        "sourceMap": true,
-        "strict": true,
-        "noImplicitReturns": false,
-        "noImplicitAny": true,
-        "module": "es6",
-        "moduleResolution": "node",
         "target": "es6",
+        "lib": ["es6", "dom", "dom.iterable", "esnext"],
         "allowJs": true,
-        "jsx": "react",
+        "skipLibCheck": true,
+        "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
-        "plugins": [
-            {
-                "name": "typescript-eslint-language-service"
-            }
-        ]
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "module": "esnext",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noEmit": true,
+        "jsx": "react"
     },
-    "include": ["./src/**/*", "./types/**/*"],
-    "typeAcquisition": {
-        "enable": true
-    }
+    "include": ["src"]
 }
