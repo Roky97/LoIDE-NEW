@@ -23,7 +23,6 @@ const LoideAceEditor: React.FC<LoideAceEditorProps> = (props) => {
     var solverChosen = "dlv2";
 
     const onChange = (value: any) => {
-        // console.log(props.mode);
         inizializeAutoComplete(value);
         if (props.onChange) props.onChange(props.tabKey, value);
     };

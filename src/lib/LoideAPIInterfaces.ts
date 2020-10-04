@@ -11,12 +11,8 @@ export interface ISolverData {
 };
 
 export interface IExecutorData {
-    protocol?: string;
-    url?: string;
     name: string;
     value: string;
-    path?: string;
-    port?: number;
 }
 
 export interface IOptionsData {
