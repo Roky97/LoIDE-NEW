@@ -21,6 +21,11 @@
     &.about-modal {
         font-size: 2rem;
     }
+    &.on-navbar {
+        @media (max-width: 366px) {
+            display: none;
+        }
+    }
 }
 
 .version {

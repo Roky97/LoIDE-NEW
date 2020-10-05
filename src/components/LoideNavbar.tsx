@@ -44,7 +44,7 @@ const LoideNavbar: React.FC<LoideNavbarProps> = (props) => {
             <Navbar expand="sm" style={{ backgroundColor: "white" }}>
                 <Navbar.Brand>
                     <img className="navbar-logo" src={logo} alt="LoIDE logo" />
-                    <span className="ml-1 font-pwa">(PWA)</span>
+                    <span className="ml-1 font-pwa on-navbar">(PWA)</span>
                 </Navbar.Brand>
 
                 <Nav className="ml-md-4">
