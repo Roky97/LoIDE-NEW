@@ -3,9 +3,9 @@ import { Button, Modal } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ModalProps } from "../lib/LoideInterfaces";
 import logo from "../assets/img/logo_LoIDE.svg";
-import { LoideVersion } from "../lib/constants";
 
 const AboutModal: React.FC<ModalProps> = (props) => {
+    const loideVersion = process.env.REACT_APP_LOIDE_VERSION;
     return (
         <Modal show={props.show} onHide={props.onHide} scrollable={true}>
             <Modal.Header closeButton>
@@ -32,7 +32,7 @@ const AboutModal: React.FC<ModalProps> = (props) => {
                     <p className="mt-2">
                         <em>
                             Version:
-                            <span className="version"> {LoideVersion}</span>
+                            <span className="version"> {loideVersion}</span>
                         </em>
                     </p>
                 </div>

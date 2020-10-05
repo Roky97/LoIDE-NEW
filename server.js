@@ -13,12 +13,8 @@ app.use(compression());
 
 app.use(express.static(path.join(__dirname, 'build')));
 
-app.get('/*', function (req, res) {
+app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
-
-app.post('/version', function (req, res) { // send the version (and take it in package.json) of the application
-    res.send('{"version":"' + pckg.version + '"}');
 });
 
 app.listen(port, () => {
