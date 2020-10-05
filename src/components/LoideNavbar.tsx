@@ -17,8 +17,7 @@ import { IToggleItem } from "../lib/LoideInterfaces";
 import { OutputStore } from "../lib/store";
 import { runProject } from "../lib/api";
 import { useLoideData } from "../hooks/useLoideData";
-import { IOutputData, IOutputProblemData } from "../lib/LoideAPIInterfaces";
-import { toast } from "react-toastify";
+import { IOutputData } from "../lib/LoideAPIInterfaces";
 
 interface LoideNavbarProps {
     sidebar: IToggleItem;

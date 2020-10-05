@@ -1,5 +1,5 @@
 /* eslint-disable no-template-curly-in-string */
-import React from "react";
+import React, { useRef } from "react";
 import AceEditor from "react-ace";
 
 import "../lib/ace/mode-asp";
@@ -20,6 +20,8 @@ interface LoideAceEditorProps {
 const LoideAceEditor: React.FC<LoideAceEditorProps> = (props) => {
     const ace = require("ace-builds/src-noconflict/ace");
 
+    var reactAce = useRef<AceEditor>(null);
+
     var langTools = ace.require("ace/ext/language_tools");
 
     var languageChosen = props.mode;
@@ -28,6 +30,14 @@ const LoideAceEditor: React.FC<LoideAceEditorProps> = (props) => {
 
     const onChange = (value: any) => {
         inizializeAutoComplete(value);
+        let lastCharacter = value[value.length - 1];
+        if (lastCharacter === "'") {
+            let edt = reactAce.current;
+            if (edt) {
+                edt.editor.replaceAll('"', { needle: "'" });
+                value = edt.editor.getValue();
+            }
+        }
         if (props.onChange) props.onChange(props.tabKey, value);
     };
 
@@ -405,6 +415,7 @@ const LoideAceEditor: React.FC<LoideAceEditorProps> = (props) => {
 
     return (
         <AceEditor
+            ref={reactAce}
             height="100%"
             width="0px"
             mode={props.mode}
