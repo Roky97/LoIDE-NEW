@@ -24,7 +24,7 @@ export const WindowConfirmMessages = {
 }
 
 export const LoideLanguages = {
-    ASP: "asp"
+    ASP: { name: "asp", highlightSupport: true }
 }
 
 export const LoideSolvers = {

@@ -1,5 +1,5 @@
 /* eslint-disable no-template-curly-in-string */
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import AceEditor from "react-ace";
 
 import "../lib/ace/mode-asp";
@@ -21,6 +21,23 @@ const LoideAceEditor: React.FC<LoideAceEditorProps> = (props) => {
     const ace = require("ace-builds/src-noconflict/ace");
 
     var reactAce = useRef<AceEditor>(null);
+
+    useEffect(() => {
+        let edt = reactAce.current;
+        if (edt) {
+            let isInAndSupported = Object.values(LoideLanguages).find(
+                (lang) => {
+                    return lang.name === props.mode && lang.highlightSupport;
+                }
+            );
+
+            if (isInAndSupported) {
+                edt.editor.getSession().setMode("ace/mode/" + props.mode);
+            } else {
+                edt.editor.getSession().setMode("ace/mode/text");
+            }
+        }
+    }, [reactAce, props.mode]);
 
     var langTools = ace.require("ace/ext/language_tools");
 
@@ -54,7 +71,7 @@ const LoideAceEditor: React.FC<LoideAceEditorProps> = (props) => {
         var completer;
 
         switch (languageChosen) {
-            case LoideLanguages.ASP:
+            case LoideLanguages.ASP.name:
                 switch (solverChosen) {
                     case LoideSolvers.DLV:
                         completer = {
@@ -350,7 +367,7 @@ const LoideAceEditor: React.FC<LoideAceEditorProps> = (props) => {
         inizializeSnippets();
 
         switch (languageChosen) {
-            case LoideLanguages.ASP: {
+            case LoideLanguages.ASP.name: {
                 let splitRegex = /(([a-zA-Z_]+[0-9]*)*)(\(.+?\))/gi;
                 let words = editorText.match(splitRegex);
                 if (words != null) {
@@ -418,7 +435,8 @@ const LoideAceEditor: React.FC<LoideAceEditorProps> = (props) => {
             ref={reactAce}
             height="100%"
             width="0px"
-            mode={props.mode}
+            // mode={props.mode}
+            mode="text"
             theme="tomorrow"
             name={`editor-${props.tabKey}`}
             value={props.value}
