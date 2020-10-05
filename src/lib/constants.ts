@@ -16,7 +16,7 @@ export const APIWSEvents = {
 
 export const Errors = {
     RunConnectError: "Falied to run the project. Maybe the server or you are offline. \n Try it later.",
-    GetLanguagesError: "Falied to get the languages. Maybe the server or you are offline. \n I'm trying to reconnect."
+    GetLanguagesError: "Falied to get the languages. Maybe the server or you are offline. \n Try it later."
 }
 
 export const WindowConfirmMessages = {

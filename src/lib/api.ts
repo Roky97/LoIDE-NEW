@@ -1,12 +1,13 @@
 import { APIUrl, APIWSEvents, Errors } from "./constants";
 import { ILanguageData, ILoideRunData, IOutputData, IOutputProblemData } from "./LoideAPIInterfaces";
 import io from "socket.io-client"
+import { toast } from "react-toastify";
 
-export const runProject = (data: ILoideRunData, callbackOutput: (output: IOutputData) => void, callbackProblem?: (problem: IOutputProblemData) => void) => {
+export const runProject = (data: ILoideRunData, callbackOutput: (output: IOutputData) => void) => {
     let socket = io.connect(APIUrl);
-
     socket.on(APIWSEvents.on.connectError, (error: any) => {
         console.error(Errors.RunConnectError);
+        toast.error(Errors.RunConnectError);
         socket.disconnect();
     });
 
@@ -14,8 +15,8 @@ export const runProject = (data: ILoideRunData, callbackOutput: (output: IOutput
 
     socket.on(APIWSEvents.on.problem, (response: IOutputProblemData) => {
         console.error(response)
+        toast.error(response.reason);
         socket.disconnect();
-        if (callbackProblem) callbackProblem(response);
     });
 
     socket.on(APIWSEvents.on.output, (response: IOutputData) => {
@@ -28,8 +29,8 @@ export const getLanguages = (callbackLanguages: (output: ILanguageData[]) => voi
     let socket = io.connect(APIUrl);
     socket.on(APIWSEvents.on.connectError, (error: any) => {
         console.error(Errors.GetLanguagesError);
+        toast.error(Errors.GetLanguagesError);
         socket.disconnect();
-
     });
 
     socket.emit(APIWSEvents.emit.getLanguages);

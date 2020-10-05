@@ -7,6 +7,7 @@ import OpenLayout from "./OpenLayout";
 import { LanguagesDataStore } from "../lib/store";
 import { useIsMobile } from "../hooks/useIsMobile";
 import { getLanguages } from "../lib/api";
+import { Slide, ToastContainer } from "react-toastify";
 
 const App: React.FC = () => {
     const isMobile = useIsMobile();
@@ -45,6 +46,11 @@ const App: React.FC = () => {
 
                 <EditorLayout />
             </div>
+            <ToastContainer
+                limit={5}
+                transition={Slide}
+                draggablePercent={50}
+            />
         </div>
     );
 };

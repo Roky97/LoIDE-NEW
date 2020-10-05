@@ -4,11 +4,13 @@ import * as serviceWorker from "./serviceWorker";
 
 import "regenerator-runtime/runtime";
 
-import App from "./components/App";
-
+import "react-toastify/dist/ReactToastify.min.css";
 import "./global.scss";
+
+import App from "./components/App";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { ViewportProvider } from "./providers/ViewportProvider";
+
 import {
     faCogs,
     faPlay,
