@@ -11,6 +11,7 @@ const EditorLayout: React.FC = () => {
 
     useEffect(() => {
         if (isMobile) setOutputRight(false);
+        else if (!outputRight) setOutputRight(true);
     }, [isMobile]);
 
     return (
