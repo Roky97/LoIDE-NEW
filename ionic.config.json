@@ -1,0 +1,7 @@
+{
+  "name": "loide-ionic",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
