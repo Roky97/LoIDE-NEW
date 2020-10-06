@@ -14,7 +14,6 @@ export const runProject = (data: ILoideRunData, callbackOutput: (output: IOutput
     socket.emit(APIWSEvents.emit.run, JSON.stringify(data));
 
     socket.on(APIWSEvents.on.problem, (response: IOutputProblemData) => {
-        console.error(response)
         toast.error(response.reason);
         socket.disconnect();
     });
@@ -28,7 +27,6 @@ export const runProject = (data: ILoideRunData, callbackOutput: (output: IOutput
 export const getLanguages = (callbackLanguages: (output: ILanguageData[]) => void) => {
     let socket = io.connect(APIUrl);
     socket.on(APIWSEvents.on.connectError, (error: any) => {
-        console.error(Errors.GetLanguagesError);
         toast.error(Errors.GetLanguagesError);
         socket.disconnect();
     });

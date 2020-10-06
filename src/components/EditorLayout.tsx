@@ -12,7 +12,7 @@ const EditorLayout: React.FC = () => {
     useEffect(() => {
         if (isMobile) setOutputRight(false);
         else if (!outputRight) setOutputRight(true);
-    }, [isMobile]);
+    }, [isMobile, outputRight]);
 
     return (
         <div className="editor-layout">
