@@ -16,6 +16,7 @@ import { runProject } from "../lib/api";
 import { IOutputData } from "../lib/LoideAPIInterfaces";
 import { OutputStore } from "../lib/store";
 import { useLoideData } from "../hooks/useLoideData";
+import logo from "../assets/img/logo_LoIDE.svg";
 
 const MainTab: React.FC = () => {
     // const isMobile = useIsMobile();
@@ -41,7 +42,14 @@ const MainTab: React.FC = () => {
         <IonPage>
             <IonHeader>
                 <IonToolbar>
-                    <IonTitle>LoIDE</IonTitle>
+                    <IonTitle>
+                        <img
+                            style={{ marginTop: "6px" }}
+                            height="30px"
+                            src={logo}
+                        />
+                    </IonTitle>
+
                     <IonButtons slot="start">
                         <IonButton color="success" onClick={onRun}>
                             <IonIcon icon={play} />
