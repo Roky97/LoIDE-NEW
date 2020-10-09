@@ -11,9 +11,9 @@
 
     --bg-main: rgba(0, 0, 0, 0.06);
     --tabs-color: #ebebeb;
-    --tabs-color-hover: rgb(207, 204, 204);
+    --tabs-color-hover: rgb(221, 221, 221);
     --tabs-color-active: rgb(190, 186, 186);
-    --tab-background-color-selected: white;
+    --tab-background-color-selected: rgb(247, 247, 247);
     --tab-text-color-selected: black;
     --tab-border-color-selected: white;
 
@@ -119,10 +119,11 @@
 
 .add-tab {
     width: var(--height-tab);
+    height: var(--height-tab);
+
     transition: all 0.2s;
     border: 1px solid var(--tabs-color);
-    margin-top: -1px;
-    bottom: -1px;
+    margin-left: 5px;
     background-color: var(--tabs-color);
 
     &:hover {

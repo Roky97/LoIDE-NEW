@@ -1,8 +1,10 @@
 import React from "react";
 import {
+    IonCol,
     IonContent,
     IonHeader,
     IonPage,
+    IonRow,
     IonTitle,
     IonToolbar,
 } from "@ionic/react";
@@ -17,7 +19,17 @@ const AboutTab: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen className="ion-padding">
-                <About />
+                <IonRow>
+                    <IonCol
+                        size-md="8"
+                        offset-md="2"
+                        size-xl="6"
+                        offset-xl="3"
+                        className="ion-no-padding"
+                    >
+                        <About />
+                    </IonCol>
+                </IonRow>
             </IonContent>
         </IonPage>
     );

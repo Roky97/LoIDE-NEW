@@ -1,8 +1,10 @@
 import React from "react";
 import {
+    IonCol,
     IonContent,
     IonHeader,
     IonPage,
+    IonRow,
     IonTitle,
     IonToolbar,
 } from "@ionic/react";
@@ -19,7 +21,17 @@ const RunSettingsTab: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
             <IonContent forceOverscroll={true}>
-                <RunSettings languages={languages} />
+                <IonRow>
+                    <IonCol
+                        size-md="8"
+                        offset-md="2"
+                        size-xl="6"
+                        offset-xl="3"
+                        className="ion-no-padding"
+                    >
+                        <RunSettings languages={languages} />
+                    </IonCol>
+                </IonRow>
             </IonContent>
         </IonPage>
     );
