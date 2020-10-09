@@ -40,9 +40,15 @@ const Output: React.FC<OutputProps> = (props) => {
                     )}
                 </div>
             </div> */}
-            <div className="output-content">
-                <div className="output-model pb-2">{props.model}</div>
-                <div className="output-error">{props.error}</div>
+            <div className="output-content ion-padding">
+                <div className="output-model">{props.model}</div>
+                <div
+                    className={`output-error ${
+                        props.error.length === 0 ? "" : "ion-margin-top"
+                    }`}
+                >
+                    {props.error}
+                </div>
             </div>
         </div>
     );

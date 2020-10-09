@@ -7,8 +7,6 @@
 
         border-bottom: 0;
 
-        border-top-left-radius: var(--border-radius);
-
         display: flex;
         overflow-x: auto;
         overflow-y: hidden;
@@ -57,11 +55,11 @@
         }
 
         &--selected {
-            background: #fff;
-            color: black;
+            background: var(--tab-background-color-selected);
+            color: var(--tab-text-color-selected);
             border-radius: 0;
             border-top: 1px solid;
-            border-color: white;
+            border-color: var(--tab-border-color-selected);
         }
 
         &--disabled {

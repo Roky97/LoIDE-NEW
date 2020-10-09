@@ -42,7 +42,6 @@ const OptionTextValue: React.FC<OptionTextValueProp> = (props) => {
                 <IonInput
                     ref={inputText}
                     type="text"
-                    className="option-value"
                     onIonChange={(e) =>
                         props.onChangeValues(e, props.indexItemOnArray)
                     }

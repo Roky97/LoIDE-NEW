@@ -43,7 +43,7 @@ const OutputTab: React.FC = () => {
                     </IonButtons>
                 </IonToolbar>
             </IonHeader>
-            <IonContent>
+            <IonContent scrollY={false} className="tab-content-of-hidden">
                 <Output model={outputModel} error={outputError} />
             </IonContent>
         </IonPage>

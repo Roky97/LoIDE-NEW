@@ -206,8 +206,8 @@ const RunSettings: React.FC<RunSettingsProps> = ({ languages }) => {
     ));
 
     return (
-        <IonRow>
-            <IonCol size="12">
+        <IonRow className="ion-no-padding">
+            <IonCol size="12" className="ion-no-padding ion-margin-bottom">
                 <IonList>
                     <IonListHeader>
                         <IonLabel>Language, Solver and Executor</IonLabel>

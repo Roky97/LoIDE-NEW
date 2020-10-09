@@ -44,6 +44,7 @@ const MainTab: React.FC = () => {
                 <IonToolbar>
                     <IonTitle>
                         <img
+                            className="logo"
                             style={{ marginTop: "6px" }}
                             height="30px"
                             src={logo}
@@ -58,7 +59,7 @@ const MainTab: React.FC = () => {
                     </IonButtons>
                 </IonToolbar>
             </IonHeader>
-            <IonContent scrollY={false}>
+            <IonContent scrollY={false} className="tab-content-of-hidden">
                 <EditorLayout />
             </IonContent>
         </IonPage>

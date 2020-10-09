@@ -10,12 +10,7 @@ const About: React.FC = () => {
                     style={{ display: "flex" }}
                     className="ion-justify-content-center ion-align-items-center"
                 >
-                    <img
-                        src={logo}
-                        className="about-logo"
-                        width="150"
-                        alt="logo"
-                    />
+                    <img src={logo} className="logo" width="150" alt="logo" />
                     <span className="font-pwa about-modal">(PWA)</span>
                 </div>
 

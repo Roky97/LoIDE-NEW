@@ -1,17 +1,54 @@
 @import "./style/tabs.scss";
-@import "./style/toast.scss";
 
 :root {
     --landscape-width: 25; // % OR vw for responsive window resizing!
     --portrait-width: 80vw;
     --secs: 0.4s;
+
+    --sidebar-width: 250px;
+    --border-radius: 10px;
+    --height-tab: 39px;
+
     --bg-main: rgba(0, 0, 0, 0.06);
     --tabs-color: #ebebeb;
     --tabs-color-hover: rgb(207, 204, 204);
     --tabs-color-active: rgb(190, 186, 186);
-    --sidebar-width: 250px;
-    --border-radius: 10px;
-    --height-tab: 39px;
+    --tab-background-color-selected: white;
+    --tab-text-color-selected: black;
+    --tab-border-color-selected: white;
+
+    --version-color: #337ab7;
+    --sidebar-background-color: #fff5ee;
+    --run-settings-background-color: rgba(255, 245, 238, 1);
+    --output-border-color: #e0edfd;
+    --output-background-color: #f4f9ff;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-main: rgba(0, 0, 0, 0);
+        --tabs-color: #2d2c2c;
+        --tabs-color-hover: #424040;
+        --tabs-color-active: #565454;
+        --tab-background-color-selected: #636363;
+        --tab-text-color-selected: white;
+        --tab-border-color-selected: var(--tab-list-background-color);
+        --tab-list-background-color: #242424;
+
+        --version-color: #337ab7;
+        --sidebar-background-color: #fff5ee;
+        --run-settings-background-color: rgba(255, 245, 238, 1);
+        --output-border-color: #292929;
+        --output-background-color: #292929;
+    }
+
+    .logo {
+        filter: invert(100%);
+    }
+
+    .add-tab {
+        color: white;
+    }
 }
 
 .font-pwa {
@@ -27,49 +64,7 @@
 }
 
 .version {
-    color: #337ab7;
-}
-
-body {
-    background-color: var(--bg-main);
-    overflow: hidden;
-}
-
-.loide-body {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    height: calc(var(--vh, 1vh) * 100);
-    padding: 0.3%;
-}
-
-.checkbox-item {
-    overflow: hidden;
-}
-
-.navbar-logo {
-    cursor: pointer;
-    width: 84px;
-}
-
-.loide-header {
-    flex-grow: 1;
-    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
-
-    border-radius: var(--border-radius);
-
-    .navbar {
-        border-radius: var(--border-radius);
-    }
-}
-
-.loide-content {
-    position: relative;
-    display: flex; // Flexbox definition
-    overflow: hidden; // Disable scrolling on layout
-    width: 100%;
-    height: 100%;
-    flex-grow: 1;
+    color: var(--version-color);
 }
 
 .loide-tabs {
@@ -84,7 +79,7 @@ body {
     display: flex;
     -webkit-box-flex: 0;
     justify-content: space-between;
-    background-color: rgb(247, 247, 247);
+    background-color: var(--tab-list-background-color);
     min-height: var(--height-tab);
 
     .loide-tab-list-container {
@@ -120,12 +115,6 @@ body {
     width: 100%;
     height: 100%;
     display: flex;
-    background-color: white;
-}
-
-.loide-tab-list-bar {
-    display: flex;
-    flex-grow: 1;
 }
 
 .add-tab {
@@ -134,7 +123,6 @@ body {
     border: 1px solid var(--tabs-color);
     margin-top: -1px;
     bottom: -1px;
-    padding: 6px 12px;
     background-color: var(--tabs-color);
 
     &:hover {
@@ -142,30 +130,15 @@ body {
         background-color: var(--tabs-color-hover);
     }
     &:active {
-        color: black;
         border-color: var(--tabs-color-active);
         background-color: var(--tabs-color-active);
-    }
-}
-
-.topbar {
-    width: 100%;
-    transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-    background-color: rgb(202, 202, 202);
-
-    &.opened {
-        height: 300px;
-    }
-
-    &.closed {
-        height: 0;
     }
 }
 
 .sidebar {
     position: relative;
     transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-    background-color: #fff5ee;
+    background-color: var(--sidebar-background-color);
     overflow: hidden;
     height: 100%;
     border-radius: var(--border-radius);
@@ -189,7 +162,7 @@ body {
 
     .run-settings-title {
         border-bottom: 1px dashed #dddddd;
-        background-color: rgba(255, 245, 238, 1);
+        background-color: var(--run-settings-background-color);
         height: 40px;
     }
 
@@ -205,7 +178,6 @@ body {
     height: 100%;
     display: flex;
     flex-flow: column nowrap;
-    // border-radius: var(--border-radius);
     overflow: hidden;
 
     .orizontal {
@@ -234,6 +206,7 @@ body {
     }
 }
 
+// react-panel-resize
 .loide-editor-border {
     background-color: var(--bg-main);
     cursor: ew-resize;
@@ -253,6 +226,7 @@ body {
     }
 }
 
+// react-panel-resize
 .loide-editor-handle {
     background: white;
     border: 2px solid lightgray;
@@ -299,94 +273,20 @@ body {
     color: red;
 }
 
-.custom-select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-}
-
-.setting-container {
-    border-radius: 0.25rem;
-    background-color: antiquewhite;
-    border: 0;
-    padding: 0.375rem 0.75rem;
-}
-
-.not-alone {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-}
-
-.option-value {
-    border-top: 0;
-    border-bottom: 0;
-    border-radius: 0;
-    border-right: none;
-}
-
-.loide-solver-option {
-    transition: 0.2s;
-    background-color: white;
-    border-right: 1px solid #ced4da;
-    overflow: hidden;
-}
-
-.btn-del-value {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 0;
-
-    opacity: 0;
-
-    color: red;
-    cursor: pointer;
-    transition: 0.2s;
-    background-color: white;
-    border-right: 0px solid #ced4da;
-}
-
-.loide-solver-option:hover > .option-value {
-    border-right: white;
-}
-
-.loide-solver-option:hover > .btn-del-value {
-    position: relative;
-    width: 32px;
-    opacity: 1;
-}
-
-.btn-add {
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    border-top: 1px solid #ced4da;
-    border-bottom: 1px solid #ced4da;
-    border-left: 1px solid #ced4da;
-    border-right: 1px solid #ced4da;
-}
-
-.btn-del-option {
-    --padding-bottom: 2px;
-    margin-left: 5px;
-    cursor: pointer;
-    &.badge-danger:hover {
-        background-color: rgb(212, 0, 0);
-    }
-}
-
-select {
-    cursor: pointer;
-}
-
 .loide-output {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+
     width: 100%;
     height: 100%;
     overflow: hidden;
     display: flex;
     flex-direction: column;
 
-    background: #fff;
+    font-size: 25px;
+
     padding: 10px;
 
     .output-settings {
@@ -407,11 +307,12 @@ select {
         width: 100%;
         flex-grow: 1;
         overflow: auto;
-        border: 1px #d9dee4 dotted;
+        border: 1px var(--output-border-color) solid;
         border-radius: 8px;
-        background: #f4f9ff;
+        background: var(--output-background-color);
         margin-top: 10px;
-        padding: 5px 5px 5px 5px;
+        // padding: 5px 5px 5px 5px;
+        line-height: 1.5;
         white-space: pre-wrap;
 
         .output-error {
@@ -420,27 +321,6 @@ select {
     }
 }
 
-.tab-to-execute-list {
-    .list-group-item {
-        padding: 0;
-        .checkbox-item {
-            label {
-                width: 100%;
-                margin: 0.375rem 0.75rem;
-            }
-        }
-    }
-
-    .list-divider {
-        background-color: #f6f6f6;
-        padding: 2px 1px;
-        width: 100%;
-        height: 5px;
-
-        .divider {
-            width: 100%;
-            height: 1px;
-            border-top: #ddd dashed 1px;
-        }
-    }
+.tab-content-of-hidden {
+    --overflow: hidden;
 }
