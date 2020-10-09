@@ -22,17 +22,11 @@ interface OptionTextValueProp {
 
 const OptionTextValue: React.FC<OptionTextValueProp> = (props) => {
     const slideOptions = useRef<HTMLIonItemSlidingElement>(null);
-    const inputText = useRef<HTMLIonInputElement>(null);
-
-    useEffect(() => {
-        if (inputText.current) {
-            inputText.current.setFocus();
-        }
-    }, []);
 
     const onSwipe = (e: any) => {
         props.onDeleteValue(props.indexItemOnArray);
     };
+
     return (
         <IonItemSliding ref={slideOptions}>
             <IonItem>
@@ -40,8 +34,12 @@ const OptionTextValue: React.FC<OptionTextValueProp> = (props) => {
                     Option <b> value </b>
                 </IonLabel>
                 <IonInput
-                    ref={inputText}
-                    type="text"
+                    autofocus={true}
+                    clearInput={true}
+                    enterkeyhint="done"
+                    color="tertiary"
+                    inputMode="text"
+                    placeholder="Insert a value"
                     onIonChange={(e) =>
                         props.onChangeValues(e, props.indexItemOnArray)
                     }
