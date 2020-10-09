@@ -48,6 +48,7 @@ const MainTab: React.FC = () => {
                             style={{ marginTop: "6px" }}
                             height="30px"
                             src={logo}
+                            alt="loide-logo"
                         />
                     </IonTitle>
 

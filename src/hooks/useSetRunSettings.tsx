@@ -5,7 +5,6 @@ export const useSetRunSettings = () => {
     const languages = LanguagesDataStore.useState((l) => l.languages);
 
     useEffect(() => {
-        console.log("lang", languages);
         if (languages.length > 0) {
             let firstLanguage = languages[0];
 

@@ -100,7 +100,7 @@ const Option: React.FC<OptionProps> = (props) => {
     return (
         <IonList className="ion-margin-bottom">
             <IonItem>
-                <IonBadge>Option {option.id + 1}</IonBadge>
+                <IonBadge slot="start">Option {option.id + 1}</IonBadge>
                 <IonButton slot="end" color="danger" onClick={deleteOption}>
                     <IonIcon icon={trashOutline} />
                     Delete option

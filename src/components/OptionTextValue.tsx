@@ -9,7 +9,7 @@ import {
     IonItemOption,
 } from "@ionic/react";
 import { addOutline } from "ionicons/icons";
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 
 interface OptionTextValueProp {
     value: string;
