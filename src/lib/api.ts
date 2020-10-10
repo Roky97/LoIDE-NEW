@@ -1,7 +1,6 @@
 import { APIUrl, APIWSEvents, Errors } from "./constants";
 import { ILanguageData, ILoideRunData, IOutputData, IOutputProblemData } from "./LoideAPIInterfaces";
 import io from "socket.io-client"
-// import { toast } from "react-toastify";
 import { toastController } from "@ionic/core";
 
 export const runProject = (data: ILoideRunData, callbackOutput: (output: IOutputData) => void) => {
