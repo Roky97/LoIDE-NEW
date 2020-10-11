@@ -1,5 +1,5 @@
 // LoIDE Web Server API URL
-export const APIUrl = "192.168.1.38:8084";
+export const APIUrl = "localhost:8084";
 
 export const APIWSEvents = {
     emit: {

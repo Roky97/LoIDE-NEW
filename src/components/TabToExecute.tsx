@@ -56,7 +56,7 @@ const TabToExecute: React.FC<TabToExecuteProps> = (props) => {
                     />
                 </IonItem>
 
-                <IonItemDivider mode="ios" />
+                <IonItemDivider mode="ios" className="tab-to-execute-divider" />
 
                 {[...props.tabs.keys()].map((key) => (
                     <IonItem key={`item-tab-${key}`}>

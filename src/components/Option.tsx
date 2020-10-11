@@ -108,7 +108,7 @@ const Option: React.FC<OptionProps> = (props) => {
             </IonItem>
             <IonItem>
                 <IonLabel>
-                    Option <b>name</b>
+                    <b>Name</b>
                 </IonLabel>
 
                 <IonSelect onIonChange={onChangeOptionType} value={option.name}>

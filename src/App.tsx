@@ -87,7 +87,11 @@ const App: React.FC = () => {
                             <IonLabel>Editor</IonLabel>
                         </IonTabButton>
 
-                        <IonTabButton tab="run-settings" href="/run-settings">
+                        <IonTabButton
+                            tab="run-settings"
+                            href="/run-settings"
+                            className="ion-hide-lg-up"
+                        >
                             <IonIcon icon={cog} />
                             <IonLabel>Run Settings</IonLabel>
                         </IonTabButton>

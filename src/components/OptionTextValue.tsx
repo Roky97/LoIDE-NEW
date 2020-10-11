@@ -31,7 +31,7 @@ const OptionTextValue: React.FC<OptionTextValueProp> = (props) => {
         <IonItemSliding ref={slideOptions}>
             <IonItem>
                 <IonLabel>
-                    Option <b> value </b>
+                    <b> Value </b>
                 </IonLabel>
                 <IonInput
                     autofocus={true}
