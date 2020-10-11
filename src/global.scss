@@ -126,6 +126,10 @@
     min-height: 20px;
 }
 
+.side-toolbar {
+    --min-height: var(--height-tab);
+}
+
 .add-tab {
     width: var(--height-tab);
     height: var(--height-tab);

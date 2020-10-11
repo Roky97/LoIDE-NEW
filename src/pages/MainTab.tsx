@@ -68,7 +68,7 @@ const MainTab: React.FC = () => {
                     {/*--  the side menu  --*/}
                     <IonMenu contentId="main">
                         <IonHeader>
-                            <IonToolbar>
+                            <IonToolbar className="side-toolbar">
                                 <IonTitle>Run settings</IonTitle>
                             </IonToolbar>
                         </IonHeader>
