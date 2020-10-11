@@ -7,7 +7,11 @@ import {
     ISolverData,
 } from "../lib/LoideAPIInterfaces";
 import { ISolverOption } from "../lib/LoideInterfaces";
-import { EditorStore, RunSettingsStore } from "../lib/store";
+import {
+    EditorStore,
+    LanguagesDataStore,
+    RunSettingsStore,
+} from "../lib/store";
 import {
     IonButton,
     IonCol,
@@ -23,11 +27,9 @@ import {
 import { addOutline } from "ionicons/icons";
 import TabToExecute from "./TabToExecute";
 
-interface RunSettingsProps {
-    languages: ILanguageData[];
-}
+const RunSettings: React.FC = () => {
+    const languages = LanguagesDataStore.useState((l) => l.languages);
 
-const RunSettings: React.FC<RunSettingsProps> = ({ languages }) => {
     const currentLanguage = RunSettingsStore.useState((l) => l.currentLanguage);
     const currentSolver = RunSettingsStore.useState((l) => l.currentSolver);
     const currentExecutor = RunSettingsStore.useState((l) => l.currentExecutor);

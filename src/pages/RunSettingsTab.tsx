@@ -9,10 +9,8 @@ import {
     IonToolbar,
 } from "@ionic/react";
 import RunSettings from "../components/RunSettings";
-import { LanguagesDataStore } from "../lib/store";
 
 const RunSettingsTab: React.FC = () => {
-    const languages = LanguagesDataStore.useState((l) => l.languages);
     return (
         <IonPage>
             <IonHeader>
@@ -29,7 +27,7 @@ const RunSettingsTab: React.FC = () => {
                         offset-xl="3"
                         className="ion-no-padding"
                     >
-                        <RunSettings languages={languages} />
+                        <RunSettings />
                     </IonCol>
                 </IonRow>
             </IonContent>

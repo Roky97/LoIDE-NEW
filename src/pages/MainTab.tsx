@@ -1,47 +1,20 @@
 import React from "react";
 import {
-    IonButton,
     IonButtons,
     IonContent,
     IonHeader,
-    IonIcon,
     IonMenu,
     IonPage,
     IonSplitPane,
     IonTitle,
     IonToolbar,
 } from "@ionic/react";
-// import { useIsMobile } from "../hooks/useIsMobile";
-import { play } from "ionicons/icons";
 import EditorLayout from "../components/EditorLayout";
-import { runProject } from "../lib/api";
-import { IOutputData } from "../lib/LoideAPIInterfaces";
-import { LanguagesDataStore, OutputStore } from "../lib/store";
-import { useLoideData } from "../hooks/useLoideData";
 import logo from "../assets/img/logo_LoIDE.svg";
 import RunSettings from "../components/RunSettings";
+import LoideRunNavButton from "../components/LoideRunNavButton";
 
 const MainTab: React.FC = () => {
-    // const isMobile = useIsMobile();
-    // const [sidebarShow, setSidebarShow] = useState(true);
-    // const [openbarShow, setOpenbarShow] = useState(false);
-
-    // useEffect(() => {
-    //     if (isMobile) setSidebarShow(false);
-    // }, [isMobile]);
-
-    const dataToRun = useLoideData();
-    const languages = LanguagesDataStore.useState((l) => l.languages);
-
-    const onRun = () => {
-        runProject(dataToRun, (output: IOutputData) => {
-            OutputStore.update((o) => {
-                o.model = output.model;
-                o.error = output.error;
-            });
-        });
-    };
-
     return (
         <IonPage>
             <IonHeader>
@@ -56,10 +29,7 @@ const MainTab: React.FC = () => {
                         />
                     </IonTitle>
                     <IonButtons slot="start">
-                        <IonButton color="success" onClick={onRun}>
-                            <IonIcon icon={play} />
-                            Run
-                        </IonButton>
+                        <LoideRunNavButton />
                     </IonButtons>
                 </IonToolbar>
             </IonHeader>
@@ -73,7 +43,7 @@ const MainTab: React.FC = () => {
                             </IonToolbar>
                         </IonHeader>
                         <IonContent forceOverscroll={true}>
-                            <RunSettings languages={languages} />
+                            <RunSettings />
                         </IonContent>
                     </IonMenu>
 
