@@ -41,19 +41,35 @@ import "./theme/variables.scss";
 
 import "./global.scss";
 import AboutTab from "./pages/AboutTab";
-import { getLanguages } from "./lib/api";
-import { LanguagesDataStore } from "./lib/store";
+import { LanguagesDataStore, OutputStore } from "./lib/store";
 import { useSetRunSettings } from "./hooks/useSetRunSettings";
+import API from "./lib/api";
+import { IOutputData } from "./lib/LoideAPIInterfaces";
 
 const App: React.FC = () => {
     useSetRunSettings();
 
     useEffect(() => {
-        getLanguages((output) => {
+        API.createSocket();
+
+        API.setGetLanguagesListener((output) => {
             LanguagesDataStore.update((l) => {
                 l.languages = output;
             });
         });
+
+        API.setRunProjectListener((output: IOutputData) => {
+            OutputStore.update((o) => {
+                o.model = output.model;
+                o.error = output.error;
+            });
+        });
+
+        return () => API.disconnectAndClearSocket();
+    }, []);
+
+    useEffect(() => {
+        API.emitGetLanguages();
     }, []);
 
     return (

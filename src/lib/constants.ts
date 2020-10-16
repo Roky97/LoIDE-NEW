@@ -15,6 +15,7 @@ export const APIWSEvents = {
 }
 
 export const Errors = {
+    ConnectionError: "Error to connect to the server",
     RunConnectError: "Falied to run the project. Maybe the server or you are offline.\nTry it later.",
     GetLanguagesError: "Falied to get the languages. Maybe the server or you are offline.\nTry it later."
 }

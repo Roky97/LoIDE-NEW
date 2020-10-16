@@ -1,70 +1,95 @@
 import { APIUrl, APIWSEvents, Errors } from "./constants";
-import { ILanguageData, ILoideRunData, IOutputData, IOutputProblemData } from "./LoideAPIInterfaces";
 import io from "socket.io-client"
 import { toastController } from "@ionic/core";
+import { ILanguageData, ILoideRunData, IOutputData, IOutputProblemData } from "./LoideAPIInterfaces";
 
-export const runProject = (data: ILoideRunData, callbackOutput: (output: IOutputData) => void) => {
-    let socket = io.connect(APIUrl);
-    socket.on(APIWSEvents.on.connectError, (error: any) => {
-        console.log('gatta')
-        toastController.create({
-            position: "top",
-            header: "Error",
-            message: Errors.RunConnectError,
-            color: "danger",
-            duration: 3000,
-            buttons: ["OK"]
-        })
-            .then(toast => {
-                toast.present()
-            });
-        console.error(Errors.RunConnectError);
-        socket.disconnect();
-    });
+var socket: SocketIOClient.Socket | undefined = undefined;
 
-    socket.emit(APIWSEvents.emit.run, JSON.stringify(data));
+const createSocket = () => {
+    if (!socket) {
+        socket = io(APIUrl, { reconnection: false });
 
-    socket.on(APIWSEvents.on.problem, (response: IOutputProblemData) => {
-        toastController.create({
-            position: "top",
-            header: "Error",
-            message: response.reason,
-            color: "danger",
-            duration: 3000,
-            buttons: ["OK"]
-        })
-            .then(toast => {
-                toast.present()
-            });
-        socket.disconnect();
-    });
-
-    socket.on(APIWSEvents.on.output, (response: IOutputData) => {
-        // FIX: put `socket.disconnect();`
-        callbackOutput(response);
-    });
+        socket.on(APIWSEvents.on.connectError, (error: any) => {
+            toastController.create({
+                position: "top",
+                header: "Error",
+                message: Errors.ConnectionError,
+                color: "danger",
+                duration: 3000,
+                buttons: ["OK"]
+            })
+                .then(toast => {
+                    toast.present()
+                });
+            console.error(Errors.ConnectionError);
+        });
+    }
 }
 
-export const getLanguages = (callbackLanguages: (output: ILanguageData[]) => void) => {
-    let socket = io.connect(APIUrl);
-    socket.on(APIWSEvents.on.connectError, (error: any) => {
-        toastController.create({
-            position: "top",
-            header: "Error",
-            message: Errors.GetLanguagesError,
-            color: "danger",
-            duration: 3000,
-            buttons: ["OK"]
-        })
-            .then(toast => toast.present());
-        socket.disconnect();
-    });
+const setRunProjectListener = (callbackOutput: (output: IOutputData) => void) => {
+    if (socket) {
+        socket.off(APIWSEvents.on.problem);
+        socket.off(APIWSEvents.on.output);
 
-    socket.emit(APIWSEvents.emit.getLanguages);
+        socket.on(APIWSEvents.on.problem, (response: IOutputProblemData) => {
+            toastController.create({
+                position: "top",
+                header: "Execution error",
+                message: response.reason,
+                color: "danger",
+                duration: 3000,
+                buttons: ["OK"]
+            })
+                .then(toast => {
+                    toast.present()
+                });
+        });
 
-    socket.on(APIWSEvents.on.languages, (response: string) => {
-        let data: ILanguageData[] = Array.from(JSON.parse(response));
-        socket.disconnect();
-        callbackLanguages(data);
-    })
+        socket.on(APIWSEvents.on.output, (response: IOutputData) => {
+            callbackOutput(response);
+        });
+    }
 }
+
+const setGetLanguagesListener = (callbackLanguages: (output: ILanguageData[]) => void) => {
+    if (socket) {
+        socket.off(APIWSEvents.on.languages);
+        socket.on(APIWSEvents.on.languages, (response: string) => {
+            let data: ILanguageData[] = Array.from(JSON.parse(response));
+            callbackLanguages(data);
+        })
+    }
+}
+
+const emitGetLanguages = () => {
+    if (socket) {
+        if (socket.disconnected) socket.connect();
+        socket.emit(APIWSEvents.emit.getLanguages);
+    }
+}
+
+const emitRunProject = (data: ILoideRunData) => {
+    if (socket) {
+        if (socket.disconnected) socket.connect();
+        socket.emit(APIWSEvents.emit.run, JSON.stringify(data));
+    }
+}
+
+const isConnected = (): boolean => {
+    if (socket) {
+        return socket.connected;
+    }
+    return false;
+}
+
+
+const disconnectAndClearSocket = () => {
+    if (socket) {
+        socket.removeAllListeners();
+        socket.disconnect();
+    }
+}
+
+const API = { createSocket, isConnected, disconnectAndClearSocket, setRunProjectListener, setGetLanguagesListener, emitRunProject, emitGetLanguages }
+
+export default API;
