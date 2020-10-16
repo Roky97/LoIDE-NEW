@@ -89,12 +89,12 @@ const App: React.FC = () => {
                         />
                         <Route path="/output" component={OutputTab} />
                         <Route path="/about" component={AboutTab} />
-
                         <Route
                             path="/"
                             render={() => <Redirect to="/editor" />}
                             exact={true}
                         />
+                        <Route component={MainTab} />
                     </IonRouterOutlet>
 
                     <IonTabBar slot="bottom">
