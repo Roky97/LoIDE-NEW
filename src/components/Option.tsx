@@ -17,7 +17,6 @@ import OptionTextValue from "./OptionTextValue";
 interface OptionProps {
     optionsAvailable: IOptionsData[];
     optionData: ISolverOption;
-    onDelete?: () => void;
     onChangeOptionType?: (newValue: string, id: number) => void;
     onChangeOptionValues?: (newValues: string[], id: number) => void;
     onDeleteOption?: (id: number) => void;
@@ -39,7 +38,6 @@ const Option: React.FC<OptionProps> = (props) => {
 
     const onChangeValues = (e: any, index: number) => {
         let newValue = e.target.value;
-        console.log("values", e);
         let newValues = [...values];
         newValues[index] = newValue;
         setValues(newValues);
@@ -101,7 +99,12 @@ const Option: React.FC<OptionProps> = (props) => {
         <IonList className="ion-margin-bottom">
             <IonItem>
                 <IonBadge slot="start">Option {option.id + 1}</IonBadge>
-                <IonButton slot="end" color="danger" onClick={deleteOption}>
+                <IonButton
+                    slot="end"
+                    color="danger"
+                    title="Delete option"
+                    onClick={deleteOption}
+                >
                     <IonIcon icon={trashOutline} />
                     Delete option
                 </IonButton>
@@ -111,7 +114,11 @@ const Option: React.FC<OptionProps> = (props) => {
                     <b>Name</b>
                 </IonLabel>
 
-                <IonSelect onIonChange={onChangeOptionType} value={option.name}>
+                <IonSelect
+                    data-testid="select-name-options"
+                    onIonChange={onChangeOptionType}
+                    value={option.name}
+                >
                     {options}
                 </IonSelect>
             </IonItem>

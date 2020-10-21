@@ -51,11 +51,7 @@ const About: React.FC = () => {
             </p>
             <p className="ion-text-justify">
                 It's released under{" "}
-                <a
-                    href="https://github.com/DeMaCS-UNICAL/LoIDE/blob/master/LICENSE"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                >
+                <a href="#" rel="noopener noreferrer" target="_blank">
                     MIT License
                 </a>
             </p>

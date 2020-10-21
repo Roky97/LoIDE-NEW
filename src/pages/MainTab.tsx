@@ -9,10 +9,10 @@ import {
     IonTitle,
     IonToolbar,
 } from "@ionic/react";
-import EditorLayout from "../components/EditorLayout";
 import logo from "../assets/img/logo_LoIDE.svg";
 import RunSettings from "../components/RunSettings";
 import LoideRunNavButton from "../components/LoideRunNavButton";
+import Editor from "../components/Editor";
 
 const MainTab: React.FC = () => {
     return (
@@ -49,7 +49,7 @@ const MainTab: React.FC = () => {
 
                     {/*-- the main content --*/}
                     <div id="main" className="main-side-editor">
-                        <EditorLayout />
+                        <Editor />
                     </div>
                 </IonSplitPane>
             </IonContent>

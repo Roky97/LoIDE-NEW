@@ -45,10 +45,10 @@ import { LanguagesDataStore, OutputStore } from "./lib/store";
 import { useSetRunSettings } from "./hooks/useSetRunSettings";
 import API from "./lib/api";
 import { IOutputData } from "./lib/LoideAPIInterfaces";
+import { LoidePath } from "./lib/constants";
 
 const App: React.FC = () => {
     useSetRunSettings();
-
     useEffect(() => {
         API.createSocket();
 
@@ -78,45 +78,59 @@ const App: React.FC = () => {
                 <IonTabs>
                     <IonRouterOutlet>
                         <Route
-                            path="/editor"
+                            path={`/${LoidePath.Editor}`}
                             component={MainTab}
                             exact={true}
                         />
                         <Route
-                            path="/run-settings"
+                            path={`/${LoidePath.RunSettings}`}
                             component={RunSettingsTab}
                             exact={true}
                         />
-                        <Route path="/output" component={OutputTab} />
-                        <Route path="/about" component={AboutTab} />
+                        <Route
+                            path={`/${LoidePath.Output}`}
+                            component={OutputTab}
+                        />
+                        <Route
+                            path={`/${LoidePath.About}`}
+                            component={AboutTab}
+                        />
                         <Route
                             path="/"
-                            render={() => <Redirect to="/editor" />}
+                            render={() => (
+                                <Redirect to={`/${LoidePath.Editor}`} />
+                            )}
                             exact={true}
                         />
                         <Route component={MainTab} />
                     </IonRouterOutlet>
 
                     <IonTabBar slot="bottom">
-                        <IonTabButton tab="editor" href="/editor">
+                        <IonTabButton
+                            tab="editor"
+                            href={`/${LoidePath.Editor}`}
+                        >
                             <IonIcon icon={codeSlashOutline} />
                             <IonLabel>Editor</IonLabel>
                         </IonTabButton>
 
                         <IonTabButton
                             tab="run-settings"
-                            href="/run-settings"
+                            href={`/${LoidePath.RunSettings}`}
                             className="ion-hide-lg-up"
                         >
                             <IonIcon icon={cog} />
                             <IonLabel>Run Settings</IonLabel>
                         </IonTabButton>
 
-                        <IonTabButton tab="output" href="/output">
+                        <IonTabButton
+                            tab="output"
+                            href={`/${LoidePath.Output}`}
+                        >
                             <IonIcon icon={documentTextOutline} />
                             <IonLabel>Output</IonLabel>
                         </IonTabButton>
-                        <IonTabButton tab="about" href="/about">
+                        <IonTabButton tab="about" href={`/${LoidePath.About}`}>
                             <IonIcon icon={informationCircleOutline} />
                             <IonLabel>About</IonLabel>
                         </IonTabButton>

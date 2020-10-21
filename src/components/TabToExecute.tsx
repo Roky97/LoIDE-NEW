@@ -21,15 +21,12 @@ const TabToExecute: React.FC<TabToExecuteProps> = (props) => {
     const onChange = (event: any) => {
         const name: string = event.target.name;
         const value: boolean = event.target.checked;
-
         if (name === CurrentTab) {
             props.onCheckCurrentTab(value);
             return;
         }
         let idTab = Number(name);
-
         if (isNaN(idTab)) throw new Error("Can't cast name into a number!");
-
         props.onCheckTab(idTab, value);
     };
 

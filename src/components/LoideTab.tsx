@@ -1,18 +1,29 @@
 import { IonButton, IonIcon } from "@ionic/react";
 import { closeOutline } from "ionicons/icons";
 import React from "react";
+import { ReactNode } from "react";
 import { Tab } from "react-tabs";
 
-const LoideTab = (props: any) => (
-    <Tab {...props}>
-        <span>{props.children}</span>
+interface LoideTabProps {
+    children: ReactNode;
+    tabkey: number;
+    onDeleteTab: (e: any, key: number) => void;
+}
+const LoideTab = ({
+    children,
+    tabkey,
+    onDeleteTab,
+    ...otherProps
+}: LoideTabProps) => (
+    <Tab {...otherProps}>
+        <span>{children}</span>
         <IonButton
-            // className="delete-tab"
+            title="Delete tab"
             size="small"
             color="danger"
             fill="clear"
             onClick={(e) => {
-                if (props.onDeleteTab) props.onDeleteTab(e, props.tabkey);
+                if (onDeleteTab) onDeleteTab(e, tabkey);
             }}
         >
             <IonIcon icon={closeOutline} />

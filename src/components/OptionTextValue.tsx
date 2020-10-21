@@ -48,6 +48,7 @@ const OptionTextValue: React.FC<OptionTextValueProp> = (props) => {
                 {props.lastItem && (
                     <IonButton
                         color="light"
+                        title="Add value"
                         onClick={(e) => {
                             e.stopPropagation();
 
@@ -60,8 +61,13 @@ const OptionTextValue: React.FC<OptionTextValueProp> = (props) => {
                 )}
             </IonItem>
 
-            <IonItemOptions side="end" onIonSwipe={onSwipe}>
+            <IonItemOptions
+                data-testid="swipe-delete"
+                side="end"
+                onIonSwipe={onSwipe}
+            >
                 <IonItemOption
+                    title="Delete option value"
                     expandable={true}
                     color="danger"
                     onClick={(e) => {

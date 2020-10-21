@@ -12,7 +12,7 @@ const LoideRunNavButton: React.FC = () => {
     };
 
     return (
-        <IonButton color="success" onClick={onRun}>
+        <IonButton title="run" color="success" onClick={onRun}>
             <IonIcon icon={play} />
             Run
         </IonButton>

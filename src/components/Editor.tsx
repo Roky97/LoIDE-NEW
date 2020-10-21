@@ -151,7 +151,11 @@ const Editor: React.FC = () => {
                         <TabList>{loideTabs}</TabList>
                     </div>
                     <div className="loide-tab-list-operation">
-                        <button className="add-tab" onClick={addTab}>
+                        <button
+                            title="Add tab"
+                            className="add-tab"
+                            onClick={addTab}
+                        >
                             <IonIcon
                                 style={{ fontSize: "20px" }}
                                 icon={addOutline}

@@ -248,7 +248,7 @@ const RunSettings: React.FC = () => {
                 {getOptions().length > 0 && (
                     <>
                         <IonListHeader>
-                            <IonLabel>Options</IonLabel>
+                            <IonLabel>Solver options</IonLabel>
                         </IonListHeader>
                         {currentOptions.map((option) => (
                             <Option
@@ -262,6 +262,7 @@ const RunSettings: React.FC = () => {
                         ))}
                         <IonButton
                             className="ion-padding-start ion-padding-end"
+                            title="Add option"
                             expand="block"
                             onClick={addOption}
                         >

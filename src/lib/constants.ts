@@ -1,5 +1,12 @@
 // LoIDE Web Server API URL
-export const APIUrl = "localhost:8084";
+export const APIUrl = "192.168.1.25:8084";
+
+export const LoidePath = {
+    Editor: "editor",
+    RunSettings: "run-settings",
+    Output: "output",
+    About: "about"
+};
 
 export const APIWSEvents = {
     emit: {
@@ -15,7 +22,7 @@ export const APIWSEvents = {
 }
 
 export const Errors = {
-    ConnectionError: "Error to connect to the server",
+    ConnectionError: "Unable to connect to the server, try it later.",
     RunConnectError: "Falied to run the project. Maybe the server or you are offline.\nTry it later.",
     GetLanguagesError: "Falied to get the languages. Maybe the server or you are offline.\nTry it later."
 }
