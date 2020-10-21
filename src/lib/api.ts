@@ -1,7 +1,10 @@
-import { APIUrl, APIWSEvents, Errors } from "./constants";
+import { APIWSEvents, Errors } from "./constants";
 import io from "socket.io-client"
 import { toastController } from "@ionic/core";
 import { ILanguageData, ILoideRunData, IOutputData, IOutputProblemData } from "./LoideAPIInterfaces";
+
+// LoIDE Web Server API URL
+const APIUrl = "localhost:8084";
 
 var socket: SocketIOClient.Socket | undefined = undefined;
 
