@@ -15,6 +15,7 @@ interface OptionTextValueProp {
     value: string;
     indexItemOnArray: number;
     lastItem: boolean;
+    disabled: boolean;
     onChangeValues: (e: any, index: number) => void;
     onAddValue: () => void;
     onDeleteValue: (index: number) => void;
@@ -30,7 +31,7 @@ const OptionTextValue: React.FC<OptionTextValueProp> = (props) => {
     return (
         <IonItemSliding ref={slideOptions}>
             <IonItem>
-                <IonLabel>
+                <IonLabel style={props.disabled ? { opacity: 0.3 } : {}}>
                     <b> Value </b>
                 </IonLabel>
                 <IonInput
@@ -44,11 +45,13 @@ const OptionTextValue: React.FC<OptionTextValueProp> = (props) => {
                         props.onChangeValues(e, props.indexItemOnArray)
                     }
                     value={props.value}
+                    disabled={props.disabled}
                 />
                 {props.lastItem && (
                     <IonButton
                         color="light"
                         title="Add value"
+                        disabled={props.disabled}
                         onClick={(e) => {
                             e.stopPropagation();
 

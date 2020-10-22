@@ -17,19 +17,35 @@ import OptionTextValue from "./OptionTextValue";
 interface OptionProps {
     optionsAvailable: IOptionsData[];
     optionData: ISolverOption;
+    disabled: boolean;
     onChangeOptionType?: (newValue: string, id: number) => void;
     onChangeOptionValues?: (newValues: string[], id: number) => void;
     onDeleteOption?: (id: number) => void;
+    onChangeDisableOption: (id: number, value: boolean) => void;
 }
 
 const Option: React.FC<OptionProps> = (props) => {
     var option = props.optionData;
     var optionsAvailable = props.optionsAvailable;
+
     const [values, setValues] = useState([""]);
 
+    const incompatibleCurrenOptionName = (): boolean => {
+        for (let i = 0; i < optionsAvailable.length; i++) {
+            if (optionsAvailable[i].name === option.name) return false;
+        }
+        return true;
+    };
+
     useEffect(() => {
-        setValues([...props.optionData.values]);
+        setValues(props.optionData.values);
     }, [props.optionData]);
+
+    useEffect(() => {
+        if (incompatibleCurrenOptionName() && props.onChangeOptionType) {
+            props.onChangeOptionType(optionsAvailable[0].value, option.id);
+        }
+    }, [props.optionsAvailable]);
 
     const onChangeOptionType = (e: any) => {
         if (props.onChangeOptionType)
@@ -75,6 +91,10 @@ const Option: React.FC<OptionProps> = (props) => {
         return true;
     };
 
+    const onDisableOption = () => {
+        props.onChangeDisableOption(option.id, !props.disabled);
+    };
+
     const options = [...optionsAvailable].map((opt, index) => (
         <IonSelectOption key={`${option.id}-option-${index}`} value={opt.value}>
             {opt.name}
@@ -87,6 +107,7 @@ const Option: React.FC<OptionProps> = (props) => {
                 value={opt}
                 indexItemOnArray={index}
                 lastItem={index === values.length - 1}
+                disabled={props.disabled}
                 onDeleteValue={deleteValue}
                 onAddValue={addValue}
                 onChangeValues={onChangeValues}
@@ -98,7 +119,15 @@ const Option: React.FC<OptionProps> = (props) => {
     return (
         <IonList className="ion-margin-bottom">
             <IonItem>
-                <IonBadge slot="start">Option {option.id + 1}</IonBadge>
+                <IonBadge
+                    slot="start"
+                    color={props.disabled ? "medium" : "primary"}
+                    onClick={onDisableOption}
+                    style={{ cursor: "pointer" }}
+                >
+                    Option {option.id + 1}
+                </IonBadge>
+
                 <IonButton
                     slot="end"
                     color="danger"
@@ -109,6 +138,7 @@ const Option: React.FC<OptionProps> = (props) => {
                     Delete option
                 </IonButton>
             </IonItem>
+
             <IonItem>
                 <IonLabel>
                     <b>Name</b>
@@ -118,6 +148,7 @@ const Option: React.FC<OptionProps> = (props) => {
                     data-testid="select-name-options"
                     onIonChange={onChangeOptionType}
                     value={option.name}
+                    disabled={props.disabled}
                 >
                     {options}
                 </IonSelect>

@@ -24,7 +24,7 @@ import {
     IonSelect,
     IonSelectOption,
 } from "@ionic/react";
-import { addOutline } from "ionicons/icons";
+import { addOutline, options } from "ionicons/icons";
 import TabToExecute from "./TabToExecute";
 
 const RunSettings: React.FC = () => {
@@ -75,7 +75,6 @@ const RunSettings: React.FC = () => {
 
     const selectLanguage = (e: any) => {
         let value = e.target.value;
-        console.log(value);
         let languageSelected: ILanguageData | undefined = undefined;
         for (let lang of languages) {
             if (lang.value === value) {
@@ -123,6 +122,7 @@ const RunSettings: React.FC = () => {
                     id: currentOptions.length,
                     name: optionsAvailable[0].value,
                     values: [""],
+                    disabled: false,
                 },
             ];
             RunSettingsStore.update((settings) => {
@@ -138,6 +138,21 @@ const RunSettings: React.FC = () => {
 
         nextOptions.splice(id, 1);
         nextOptions.map((opt, index) => (opt.id = index));
+        RunSettingsStore.update((settings) => {
+            settings.currentOptions = nextOptions;
+        });
+    };
+
+    const onChangeDisableOption = (id: number, value: boolean) => {
+        let nextOptions: ISolverOption[] = JSON.parse(
+            JSON.stringify(currentOptions)
+        ); // clone current options
+        for (let i = 0; i < nextOptions.length; i++) {
+            if (nextOptions[i].id === id) {
+                nextOptions[i].disabled = value;
+                break;
+            }
+        }
         RunSettingsStore.update((settings) => {
             settings.currentOptions = nextOptions;
         });
@@ -255,9 +270,11 @@ const RunSettings: React.FC = () => {
                                 key={`solver-option-${option.id}`}
                                 optionsAvailable={getOptions()}
                                 optionData={option}
+                                disabled={option.disabled}
                                 onChangeOptionType={onChangeOptionType}
                                 onChangeOptionValues={onChangeOptionValues}
                                 onDeleteOption={onDeleteOption}
+                                onChangeDisableOption={onChangeDisableOption}
                             />
                         ))}
                         <IonButton

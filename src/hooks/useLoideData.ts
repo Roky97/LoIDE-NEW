@@ -25,7 +25,7 @@ export const useLoideData = (): ILoideRunData => {
         } else {
             for (let option of currentOptions) {
                 data.option = [];
-                data.option.push({ name: option.name, value: option.values });
+                if (!option.disabled) data.option.push({ name: option.name, value: option.values });
             }
         }
 

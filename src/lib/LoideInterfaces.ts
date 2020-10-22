@@ -4,6 +4,7 @@ export interface ISolverOption {
     id: number;
     name: string;
     values: string[];
+    disabled: boolean;
 }
 
 export interface ModalProps {
