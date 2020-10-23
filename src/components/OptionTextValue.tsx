@@ -35,7 +35,6 @@ const OptionTextValue: React.FC<OptionTextValueProp> = (props) => {
                     <b> Value </b>
                 </IonLabel>
                 <IonInput
-                    autofocus={true}
                     clearInput={true}
                     enterkeyhint="done"
                     color="tertiary"
@@ -52,9 +51,9 @@ const OptionTextValue: React.FC<OptionTextValueProp> = (props) => {
                         color="light"
                         title="Add value"
                         disabled={props.disabled}
+                        onMouseDown={(e) => e.preventDefault()}
                         onClick={(e) => {
-                            e.stopPropagation();
-
+                            e.preventDefault();
                             props.onAddValue();
                         }}
                     >
