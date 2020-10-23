@@ -13,6 +13,7 @@ import {
 } from "@ionic/react";
 import { trashOutline } from "ionicons/icons";
 import OptionTextValue from "./OptionTextValue";
+import { useCallback } from "react";
 
 interface OptionProps {
     optionsAvailable: IOptionsData[];
@@ -30,12 +31,12 @@ const Option: React.FC<OptionProps> = (props) => {
 
     const [values, setValues] = useState([""]);
 
-    const incompatibleCurrenOptionName = (): boolean => {
+    const incompatibleCurrenOptionName = useCallback((): boolean => {
         for (let i = 0; i < optionsAvailable.length; i++) {
-            if (optionsAvailable[i].name === option.name) return false;
+            if (optionsAvailable[i].value === option.name) return false;
         }
         return true;
-    };
+    }, [optionsAvailable, option.name]);
 
     useEffect(() => {
         setValues(props.optionData.values);
@@ -45,7 +46,7 @@ const Option: React.FC<OptionProps> = (props) => {
         if (incompatibleCurrenOptionName() && props.onChangeOptionType) {
             props.onChangeOptionType(optionsAvailable[0].value, option.id);
         }
-    }, [props.optionsAvailable]);
+    }, [optionsAvailable, props, option.id, incompatibleCurrenOptionName]);
 
     const onChangeOptionType = (e: any) => {
         if (props.onChangeOptionType)

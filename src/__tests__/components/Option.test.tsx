@@ -19,7 +19,12 @@ const optionsAvailable: IOptionsData[] = [
         description: "Missing description",
     },
 ];
-const optionData: ISolverOption = { id: 0, name: "free choice", values: [""] };
+const optionData: ISolverOption = {
+    id: 0,
+    name: "free choice",
+    values: [""],
+    disabled: false,
+};
 
 describe("Option component tests", () => {
     test("renders without crashing", () => {
@@ -27,6 +32,8 @@ describe("Option component tests", () => {
             <Option
                 optionsAvailable={optionsAvailable}
                 optionData={optionData}
+                disabled={false}
+                onChangeDisableOption={jest.fn()}
             />
         );
         expect(baseElement).toBeDefined();
@@ -39,6 +46,8 @@ describe("Option component tests", () => {
                 optionsAvailable={optionsAvailable}
                 optionData={optionData}
                 onDeleteOption={onDeleteOption}
+                disabled={false}
+                onChangeDisableOption={jest.fn()}
             />
         );
         const button = screen.getByTitle("Delete option");
@@ -51,6 +60,8 @@ describe("Option component tests", () => {
             <Option
                 optionsAvailable={optionsAvailable}
                 optionData={optionData}
+                disabled={false}
+                onChangeDisableOption={jest.fn()}
             />
         );
         screen.getByText("Name");
@@ -64,6 +75,8 @@ describe("Option component tests", () => {
                 optionsAvailable={optionsAvailable}
                 optionData={optionData}
                 onChangeOptionType={onChangeOptionType}
+                disabled={false}
+                onChangeDisableOption={jest.fn()}
             />
         );
         expect(screen.getByText(optionsAvailable[0].name)).toBeInTheDocument();
@@ -87,6 +100,8 @@ describe("Option component tests", () => {
             <Option
                 optionsAvailable={newOptionsAvailable}
                 optionData={optionData}
+                disabled={false}
+                onChangeDisableOption={jest.fn()}
             />
         );
         expect(queryByText("Value")).toBeInTheDocument();
@@ -105,9 +120,28 @@ describe("Option component tests", () => {
             <Option
                 optionsAvailable={newOptionsAvailable}
                 optionData={optionData}
+                disabled={false}
+                onChangeDisableOption={jest.fn()}
             />
         );
         expect(queryByText("Value")).not.toBeInTheDocument();
+    });
+
+    test("test disable option", async () => {
+        const onChangeDisableOption = jest.fn();
+        const onChangeOptionType = jest.fn();
+        render(
+            <Option
+                optionsAvailable={optionsAvailable}
+                optionData={optionData}
+                disabled={false}
+                onChangeDisableOption={onChangeDisableOption}
+                onChangeOptionType={onChangeOptionType}
+            />
+        );
+        const badge = await screen.findByText("Option 1");
+        fireEvent.click(badge);
+        expect(onChangeDisableOption).toBeCalledTimes(1);
     });
 });
 
@@ -129,6 +163,8 @@ describe("OptionTextValue component tests", () => {
                 optionsAvailable={newOptionsAvailable}
                 optionData={optionData}
                 onChangeOptionValues={onChangeOptionValues}
+                disabled={false}
+                onChangeDisableOption={jest.fn()}
             />
         );
 
@@ -156,6 +192,8 @@ describe("OptionTextValue component tests", () => {
                 optionsAvailable={newOptionsAvailable}
                 optionData={optionData}
                 onChangeOptionValues={onChangeOptionValues}
+                disabled={false}
+                onChangeDisableOption={jest.fn()}
             />
         );
 
@@ -179,6 +217,8 @@ describe("OptionTextValue component tests", () => {
                 optionsAvailable={optionsAvailable}
                 optionData={optionData}
                 onChangeOptionValues={onChangeOptionValues}
+                disabled={false}
+                onChangeDisableOption={jest.fn()}
             />
         );
 

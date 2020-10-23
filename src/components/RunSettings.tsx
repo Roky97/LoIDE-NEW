@@ -24,7 +24,7 @@ import {
     IonSelect,
     IonSelectOption,
 } from "@ionic/react";
-import { addOutline, options } from "ionicons/icons";
+import { addOutline } from "ionicons/icons";
 import TabToExecute from "./TabToExecute";
 
 const RunSettings: React.FC = () => {
