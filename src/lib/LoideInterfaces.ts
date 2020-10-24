@@ -48,7 +48,15 @@ export interface IOutputStore {
     error: string;
 }
 
+export interface IUIStatusStore {
+    connectingToTheServer: boolean;
+}
+
 export interface IDimensions {
     width: number;
     height: number;
+}
+
+export interface ISocketStatusStore {
+    connected: boolean;
 }
