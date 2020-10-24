@@ -1,12 +1,12 @@
-import { useEffect } from "react";
-import { LanguagesDataStore, RunSettingsStore } from "../lib/store";
+import { useEffect, useState } from "react";
+import { LanguagesDataStore } from "../lib/store";
 
 export const useLanguageAvailable = (): boolean => {
     const languages = LanguagesDataStore.useState((l) => l.languages);
-    var available = languages.length > 0 ? true : false;
+    const [available, setAvailable] = useState(false);
 
     useEffect(() => {
-        available = languages.length > 0 ? true : false;
+        setAvailable(languages.length > 0 ? true : false);
     }, [languages]);
 
     return available;
