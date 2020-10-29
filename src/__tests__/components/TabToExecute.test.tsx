@@ -90,10 +90,9 @@ test("test click the current tab item", async () => {
     const item = await (await screen.findByText("Current tab"))
         .nextElementSibling;
 
-    createEvent.change(item!, { target: { name: CurrentTab } });
-    fireEvent.ionChange(item!, "");
+    fireEvent.click(item!, "");
 
-    expect(onCheckCurrentTab).toBeCalledTimes(1);
+    expect(item).toHaveProperty("checked", true);
 });
 
 test("test click the tab items", async () => {
@@ -109,8 +108,7 @@ test("test click the tab items", async () => {
     const item = await (await screen.findByText(tabs.get(1)!.title))
         .nextElementSibling;
 
-    createEvent.change(item!, { target: { name: 1 } });
-    fireEvent.ionChange(item!, "");
+    fireEvent.click(item!, "");
 
-    expect(onCheckTab).toBeCalledTimes(1);
+    expect(item).toHaveProperty("checked", true);
 });

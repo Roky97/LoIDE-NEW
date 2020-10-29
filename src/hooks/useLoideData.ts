@@ -8,7 +8,7 @@ export const useLoideData = (): ILoideRunData => {
     const currentSolver = RunSettingsStore.useState((s) => s.currentSolver);
     const currentExecutor = RunSettingsStore.useState((s) => s.currentExecutor);
     const currentOptions = RunSettingsStore.useState((s) => s.currentOptions);
-    const tabsIDToExecute = RunSettingsStore.useState((s) => s.tabsIDToExecute);
+    const tabsIDToExecute = RunSettingsStore.useState((s) => s.IDTabsToExecute);
     const tabs = EditorStore.useState((e) => e.tabs);
     const currentTabID = EditorStore.useState((e) => e.currentTab);
 

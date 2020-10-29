@@ -338,3 +338,25 @@
 .tab-content-of-hidden {
     --overflow: hidden;
 }
+
+.margin-button {
+    &-left {
+        margin-left: 5px;
+    }
+    &-right {
+        margin-right: 5px;
+    }
+}
+
+.loading-files {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dropzone-text {
+    color: #b3b3b3;
+    font-size: 20px;
+    cursor: pointer;
+}

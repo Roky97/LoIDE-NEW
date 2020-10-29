@@ -28,7 +28,9 @@ export interface IRunSettingsStore {
 
     currentOptions: ISolverOption[]
 
-    tabsIDToExecute: number[]
+    IDTabsToExecute: number[]
+
+    runAuto: boolean;
 }
 
 export interface ILoideTab {
@@ -38,6 +40,7 @@ export interface ILoideTab {
 }
 
 export interface IEditorStore {
+    tabCountID: number;
     currentTab: number;
     tabs: Map<number, ILoideTab>
     prevTabsSize: number
@@ -50,6 +53,7 @@ export interface IOutputStore {
 
 export interface IUIStatusStore {
     connectingToTheServer: boolean;
+    loadingFiles: boolean;
 }
 
 export interface IDimensions {
@@ -59,4 +63,20 @@ export interface IDimensions {
 
 export interface ISocketStatusStore {
     connected: boolean;
+}
+
+export interface ILoideProject {
+    language: string;
+    solver: string;
+    executor: string;
+    options: ISolverOption[];
+
+    IDTabsToExecute: number[];
+
+    tabs: ILoideTab[]
+    IDTabs: number[];
+
+    runAuto: boolean;
+    outputError: string;
+    outputModel: string;
 }

@@ -19,8 +19,11 @@ interface TabToExecuteProps {
 
 const TabToExecute: React.FC<TabToExecuteProps> = (props) => {
     const onChange = (event: any) => {
-        const name: string = event.target.name;
-        const value: boolean = event.target.checked;
+        const name: string = event.target?.name;
+        const value: boolean = event.target?.checked;
+
+        if (!name) return;
+
         if (name === CurrentTab) {
             props.onCheckCurrentTab(value);
             return;

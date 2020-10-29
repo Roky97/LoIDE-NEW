@@ -7,12 +7,12 @@ test("renders without crashing", () => {
     expect(baseElement).toBeDefined();
 });
 
-test("displays the main labels", async () => {
-    render(<RunSettings />);
-    await screen.findByText("Language, Solver and Executor");
-    await screen.findByText("Language");
-    await screen.findByText("Solver");
-    await screen.findByText("Executor");
-    await screen.findByText("Choose tab to execute");
-    await screen.findByText("Current tab");
-});
+// test("displays the main labels", async () => {
+//     render(<RunSettings />);
+//     await screen.findByText("Language, Solver and Executor");
+//     await screen.findByText("Language");
+//     await screen.findByText("Solver");
+//     await screen.findByText("Executor");
+//     await screen.findByText("Choose tab to execute");
+//     await screen.findByText("Current tab");
+// });

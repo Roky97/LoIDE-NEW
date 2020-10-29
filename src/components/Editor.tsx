@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import LoideAceEditor from "./LoideAceEditor";
 import { Tabs, TabList, TabPanel } from "react-tabs";
 import { EditorStore, RunSettingsStore } from "../lib/store";
@@ -10,7 +10,7 @@ import LoideTab from "./LoideTab";
 import { alertController } from "@ionic/core";
 
 const Editor: React.FC = () => {
-    const [tabCountID, setTabCountID] = useState(InitalTabCountID);
+    const tabCountID = EditorStore.useState((e) => e.tabCountID);
     const tabIndex = EditorStore.useState((e) => e.currentTab);
     const tabs = EditorStore.useState((e) => e.tabs);
     const prevTabsSize = EditorStore.useState((l) => l.prevTabsSize);
@@ -72,7 +72,6 @@ const Editor: React.FC = () => {
                         text: "Delete",
                         handler: () => {
                             if (tabs.size === 1) {
-                                setTabCountID(1);
                                 let nextTabs = new Map().set(1, {
                                     title: `L P 1`,
                                     type: "",
@@ -81,6 +80,7 @@ const Editor: React.FC = () => {
                                 EditorStore.update((e) => {
                                     e.tabs = nextTabs;
                                     e.currentTab = 0;
+                                    e.tabCountID = InitalTabCountID;
                                 });
                                 return;
                             }
@@ -116,9 +116,8 @@ const Editor: React.FC = () => {
             e.currentTab = nextTabs.size - 1;
             e.tabs = nextTabs;
             e.prevTabsSize = tabs.size;
+            e.tabCountID = nextID;
         });
-
-        setTabCountID(tabCountID + 1);
     };
 
     const loideTabs = [...tabs.keys()].map((key) => (

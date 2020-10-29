@@ -21,7 +21,7 @@ const LoideRunNavButton: React.FC = () => {
             onClick={onRun}
         >
             <IonIcon icon={play} />
-            Run
+            <span className="margin-button-left">Run</span>
         </IonButton>
     );
 };

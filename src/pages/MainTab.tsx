@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import {
+    IonButton,
     IonButtons,
     IonContent,
     IonHeader,
+    IonIcon,
     IonMenu,
     IonPage,
     IonSplitPane,
@@ -13,8 +15,12 @@ import logo from "../assets/img/logo_LoIDE.svg";
 import RunSettings from "../components/RunSettings";
 import LoideRunNavButton from "../components/LoideRunNavButton";
 import Editor from "../components/Editor";
+import OpenFileModal from "../components/OpenFileModal";
+import { folderOpenOutline } from "ionicons/icons";
 
 const MainTab: React.FC = () => {
+    const [showOpenModal, setShowOpenModal] = useState(false);
+
     return (
         <IonPage>
             <IonHeader>
@@ -30,6 +36,16 @@ const MainTab: React.FC = () => {
                     </IonTitle>
                     <IonButtons slot="start">
                         <LoideRunNavButton />
+                    </IonButtons>
+                    <IonButtons slot="end">
+                        <IonButton
+                            title="Open"
+                            color="warning"
+                            onClick={() => setShowOpenModal(true)}
+                        >
+                            <IonIcon icon={folderOpenOutline} />
+                            <span className="margin-button-left">Open</span>
+                        </IonButton>
                     </IonButtons>
                 </IonToolbar>
             </IonHeader>
@@ -52,6 +68,10 @@ const MainTab: React.FC = () => {
                         <Editor />
                     </div>
                 </IonSplitPane>
+                <OpenFileModal
+                    isOpen={showOpenModal}
+                    onDismiss={setShowOpenModal}
+                />
             </IonContent>
         </IonPage>
     );

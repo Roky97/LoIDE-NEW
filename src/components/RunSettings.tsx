@@ -36,7 +36,7 @@ const RunSettings: React.FC = () => {
     const currentSolver = RunSettingsStore.useState((l) => l.currentSolver);
     const currentExecutor = RunSettingsStore.useState((l) => l.currentExecutor);
     const currentOptions = RunSettingsStore.useState((l) => l.currentOptions);
-    const tabsIDToExecute = RunSettingsStore.useState((l) => l.tabsIDToExecute);
+    const tabsIDToExecute = RunSettingsStore.useState((l) => l.IDTabsToExecute);
 
     const editorTabs = EditorStore.useState((e) => e.tabs);
 
@@ -195,16 +195,16 @@ const RunSettings: React.FC = () => {
     const onCheckTab = (idTab: number, value: boolean) => {
         let index = tabsIDToExecute.indexOf(idTab);
         RunSettingsStore.update((settings) => {
-            let nextTabIDs = [...settings.tabsIDToExecute];
+            let nextTabIDs = [...settings.IDTabsToExecute];
             if (index === -1) nextTabIDs.push(idTab);
             else nextTabIDs.splice(index, 1);
-            settings.tabsIDToExecute = nextTabIDs;
+            settings.IDTabsToExecute = nextTabIDs;
         });
     };
     const onCheckCurrentTab = (value: boolean) => {
         if (value)
             RunSettingsStore.update((settings) => {
-                settings.tabsIDToExecute = [];
+                settings.IDTabsToExecute = [];
             });
     };
 
@@ -225,7 +225,6 @@ const RunSettings: React.FC = () => {
             {executor.name}
         </IonSelectOption>
     ));
-
     return (
         <>
             {!languageAvailable && <NoLanguageAvailable />}
