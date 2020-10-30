@@ -10,10 +10,10 @@
     --height-tab: 45px;
 
     --bg-main: rgba(0, 0, 0, 0.06);
-    --tabs-color: #ebebeb;
+    --tabs-color: rgb(247, 247, 247);
     --tabs-color-hover: rgb(221, 221, 221);
     --tabs-color-active: rgb(190, 186, 186);
-    --tab-background-color-selected: rgb(247, 247, 247);
+    --tab-background-color-selected: #ebebeb;
     --tab-text-color-selected: black;
     --tab-border-color-selected: white;
 
@@ -320,7 +320,7 @@
 
         width: 100%;
         flex-grow: 1;
-        overflow: auto;
+        overflow: scroll;
         border: 1px var(--output-border-color) solid;
         border-radius: 8px;
         background: var(--output-background-color);

@@ -42,6 +42,7 @@
         padding: 6px 2px 6px 12px;
         cursor: pointer;
         background: var(--tabs-color);
+        border: 0;
 
         &:not(.react-tabs__tab--selected):hover {
             border-color: var(--tabs-color-hover);

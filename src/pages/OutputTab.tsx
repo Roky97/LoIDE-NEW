@@ -53,6 +53,7 @@ const OutputTab: React.FC = () => {
                         size-xl="6"
                         offset-xl="3"
                         className="ion-no-padding"
+                        style={{ height: "100%" }}
                     >
                         <Output model={outputModel} error={outputError} />
                     </IonCol>
