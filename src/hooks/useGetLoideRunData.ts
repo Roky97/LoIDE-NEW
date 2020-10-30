@@ -3,12 +3,12 @@ import { useEffect, useState } from "react"
 import { RunSettingsStore, EditorStore } from "../lib/store";
 import { ILoideRunData } from "../lib/LoideAPIInterfaces";
 
-export const useLoideData = (): ILoideRunData => {
+export const useGetLoideRunData = (): ILoideRunData => {
     const currentLanguage = RunSettingsStore.useState((s) => s.currentLanguage);
     const currentSolver = RunSettingsStore.useState((s) => s.currentSolver);
     const currentExecutor = RunSettingsStore.useState((s) => s.currentExecutor);
     const currentOptions = RunSettingsStore.useState((s) => s.currentOptions);
-    const tabsIDToExecute = RunSettingsStore.useState((s) => s.IDTabsToExecute);
+    const IDTabsToExecute = RunSettingsStore.useState((s) => s.IDTabsToExecute);
     const tabs = EditorStore.useState((e) => e.tabs);
     const currentTabID = EditorStore.useState((e) => e.currentTab);
 
@@ -31,14 +31,14 @@ export const useLoideData = (): ILoideRunData => {
 
         data.program = [];
 
-        if (tabsIDToExecute.length === 0) {
+        if (IDTabsToExecute.length === 0) {
 
             let program = tabs.get(currentTabID + 1)?.value;
             if (program !== undefined) {
                 data.program.push(program);
             }
         } else {
-            for (let tabID of tabsIDToExecute) {
+            for (let tabID of IDTabsToExecute) {
                 let program = tabs.get(tabID)?.value;
                 if (program !== undefined) {
                     data.program.push(program);
@@ -47,7 +47,7 @@ export const useLoideData = (): ILoideRunData => {
         }
 
         setLoideData(data)
-    }, [currentLanguage, currentSolver, currentExecutor, currentOptions, tabsIDToExecute, tabs, currentTabID]);
+    }, [currentLanguage, currentSolver, currentExecutor, currentOptions, IDTabsToExecute, tabs, currentTabID]);
 
     return loideData;
 }

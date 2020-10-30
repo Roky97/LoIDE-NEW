@@ -53,143 +53,147 @@ interface LoideFileDropzoneProps {
 const LoideFileDropzone: React.FC<LoideFileDropzoneProps> = (props) => {
     const languages = LanguagesDataStore.useState((l) => l.languages);
 
-    const setJSONInput = (config: any) => {
-        if (Utils.hasRightProperty(config)) {
-            let project: ILoideProject = config;
+    const setJSONInput = useCallback(
+        (config: any) => {
+            if (Utils.hasRightProperty(config)) {
+                let project: ILoideProject = config;
 
-            let valuesNotSupported: string[] = [];
-            let optionsSupported: ISolverOption[] = [];
-            let optionsNotSupported: boolean = false;
+                let valuesNotSupported: string[] = [];
+                let optionsSupported: ISolverOption[] = [];
+                let optionsNotSupported: boolean = false;
 
-            // set the current language
-            if (Utils.canSetLanguage(project.language, languages)) {
-                RunSettingsStore.update((s) => {
-                    s.currentLanguage = project.language;
-                });
-
-                // set the current solver
-                if (
-                    Utils.canSetSolver(
-                        project.solver,
-                        project.language,
-                        languages
-                    )
-                ) {
+                // set the current language
+                if (Utils.canSetLanguage(project.language, languages)) {
                     RunSettingsStore.update((s) => {
-                        s.currentSolver = project.solver;
+                        s.currentLanguage = project.language;
                     });
 
-                    // set the current executor
+                    // set the current solver
                     if (
-                        Utils.canSetExecutor(
-                            project.executor,
+                        Utils.canSetSolver(
                             project.solver,
                             project.language,
                             languages
                         )
                     ) {
                         RunSettingsStore.update((s) => {
-                            s.currentExecutor = project.executor;
+                            s.currentSolver = project.solver;
                         });
+
+                        // set the current executor
+                        if (
+                            Utils.canSetExecutor(
+                                project.executor,
+                                project.solver,
+                                project.language,
+                                languages
+                            )
+                        ) {
+                            RunSettingsStore.update((s) => {
+                                s.currentExecutor = project.executor;
+                            });
+                        } else {
+                            valuesNotSupported.push("• Executor");
+                        }
                     } else {
+                        valuesNotSupported.push("• Solver");
                         valuesNotSupported.push("• Executor");
                     }
                 } else {
+                    valuesNotSupported.push("• Language");
                     valuesNotSupported.push("• Solver");
                     valuesNotSupported.push("• Executor");
                 }
-            } else {
-                valuesNotSupported.push("• Language");
-                valuesNotSupported.push("• Solver");
-                valuesNotSupported.push("• Executor");
-            }
 
-            for (let option of project.options) {
-                if (
-                    Utils.canSetOption(
-                        option,
-                        project.solver,
-                        project.language,
-                        languages
+                for (let option of project.options) {
+                    if (
+                        Utils.canSetOption(
+                            option,
+                            project.solver,
+                            project.language,
+                            languages
+                        )
                     )
-                )
-                    optionsSupported.push(option);
-                else optionsNotSupported = true;
-            }
+                        optionsSupported.push(option);
+                    else optionsNotSupported = true;
+                }
 
-            // set the ID tabs to execute, the options supported and the runAuto option
-            RunSettingsStore.update((s) => {
-                s.currentOptions = optionsSupported;
-                s.IDTabsToExecute = project.IDTabsToExecute;
-                s.runAuto = project.runAuto;
-            });
-
-            // set the tabs and their IDs
-            let newTabs = new Map<number, ILoideTab>();
-
-            project.tabs.forEach((program, index) => {
-                newTabs.set(project.IDTabs[index], {
-                    title: program.title,
-                    type: program.type,
-                    value: program.value,
+                // set the ID tabs to execute, the options supported and the runAuto option
+                RunSettingsStore.update((s) => {
+                    s.currentOptions = optionsSupported;
+                    s.IDTabsToExecute = project.IDTabsToExecute;
+                    s.runAuto = project.runAuto;
                 });
-            });
 
-            EditorStore.update((e) => {
-                e.tabs = newTabs;
-                e.tabCountID = project.IDTabs[project.IDTabs.length - 1]; // set the last ID
-            });
+                // set the tabs and their IDs
+                let newTabs = new Map<number, ILoideTab>();
 
-            // set the output
-            OutputStore.update((o) => {
-                o.model = project.outputModel;
-                o.error = project.outputError;
-            });
+                project.tabs.forEach((program, index) => {
+                    newTabs.set(project.IDTabs[index], {
+                        title: program.title,
+                        type: program.type,
+                        value: program.value,
+                    });
+                });
 
-            if (valuesNotSupported.length > 0) {
-                Utils.generateGeneralToast(
-                    `The following values cannot be setted:\n<b>${valuesNotSupported.join(
-                        ",\n"
-                    )}\n${
-                        optionsNotSupported
-                            ? "<br>Found solver options that cannot be setted due above."
-                            : ""
-                    } <b/>`,
-                    "File not opened properly",
-                    "warning",
-                    10000
-                );
+                EditorStore.update((e) => {
+                    e.tabs = newTabs;
+                    e.tabCountID = project.IDTabs[project.IDTabs.length - 1]; // set the last ID
+                });
 
-                if (props.onFinishLoad) props.onFinishLoad(true);
-            } else if (optionsNotSupported) {
-                Utils.generateGeneralToast(
-                    "Found solver options that cannot be setted due the incompatibility of the solver loaded.",
-                    "File not opened properly.",
-                    "warning",
-                    7000
-                );
-                if (props.onFinishLoad) props.onFinishLoad(true);
+                // set the output
+                OutputStore.update((o) => {
+                    o.model = project.outputModel;
+                    o.error = project.outputError;
+                });
+
+                if (valuesNotSupported.length > 0) {
+                    Utils.generateGeneralToast(
+                        `The following values cannot be setted:\n<b>${valuesNotSupported.join(
+                            ",\n"
+                        )}\n${
+                            optionsNotSupported
+                                ? "<br>Found solver options that cannot be setted due above."
+                                : ""
+                        } <b/>`,
+                        "File not opened properly",
+                        "warning",
+                        10000
+                    );
+
+                    if (props.onFinishLoad) props.onFinishLoad(true);
+                } else if (optionsNotSupported) {
+                    Utils.generateGeneralToast(
+                        "Found solver options that cannot be setted due the incompatibility of the solver loaded.",
+                        "File not opened properly.",
+                        "warning",
+                        7000
+                    );
+                    if (props.onFinishLoad) props.onFinishLoad(true);
+                } else {
+                    Utils.generateGeneralToast(
+                        "File opened successfully.",
+                        "",
+                        "success"
+                    );
+                    if (props.onFinishLoad) props.onFinishLoad(true);
+                }
             } else {
                 Utils.generateGeneralToast(
-                    "File opened successfully.",
-                    "",
-                    "success"
+                    "Config file not recognized",
+                    "Error open file",
+                    "danger"
                 );
-                if (props.onFinishLoad) props.onFinishLoad(true);
+                if (props.onFinishLoad) props.onFinishLoad(false);
             }
-        } else {
-            Utils.generateGeneralToast(
-                "Config file not recognized",
-                "Error open file",
-                "danger"
-            );
-            if (props.onFinishLoad) props.onFinishLoad(false);
-        }
-        UIStatusStore.update((u) => {
-            u.loadingFiles = false;
-        });
-    };
-    const setTabsFromFiles = (textsTabs: string[]) => {
+            UIStatusStore.update((u) => {
+                u.loadingFiles = false;
+            });
+        },
+        [props, languages]
+    );
+
+    const setTabsFromFiles = useCallback((textsTabs: string[]) => {
         let newTabs = new Map<number, ILoideTab>();
         let indexTab = InitalTabCountID;
         textsTabs.forEach((text) => {
@@ -209,7 +213,7 @@ const LoideFileDropzone: React.FC<LoideFileDropzoneProps> = (props) => {
         });
         Utils.generateGeneralToast("File opened successfully.", "", "success");
         if (props.onFinishLoad) props.onFinishLoad(true);
-    };
+    }, []);
 
     const {
         acceptedFiles,
@@ -289,7 +293,7 @@ const LoideFileDropzone: React.FC<LoideFileDropzoneProps> = (props) => {
                 reader.readAsText(file);
             }
         }
-    }, [acceptedFiles]);
+    }, [acceptedFiles, setJSONInput, setTabsFromFiles]);
 
     const style = useMemo(
         () => ({

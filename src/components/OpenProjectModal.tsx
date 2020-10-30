@@ -3,7 +3,6 @@ import {
     IonButtons,
     IonContent,
     IonHeader,
-    IonLoading,
     IonModal,
     IonSpinner,
     IonTitle,
@@ -18,7 +17,7 @@ interface OpenFileModalModalProps {
     onDismiss: (value: boolean) => void;
 }
 
-const OpenFileModal: React.FC<OpenFileModalModalProps> = (props) => {
+const OpenProjectModal: React.FC<OpenFileModalModalProps> = (props) => {
     const [showModal, setShowModal] = useState(false);
 
     const loadingFiles = UIStatusStore.useState((u) => u.loadingFiles);
@@ -64,4 +63,4 @@ const OpenFileModal: React.FC<OpenFileModalModalProps> = (props) => {
     );
 };
 
-export default OpenFileModal;
+export default OpenProjectModal;
