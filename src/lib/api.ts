@@ -5,7 +5,7 @@ import { ILanguageData, ILoideRunData, IOutputData, IOutputProblemData } from ".
 import { SocketStatusStore, UIStatusStore } from "./store";
 
 // LoIDE Web Server API URL
-const APIUrl = "localhost:8084";
+const APIUrl = "192.168.1.67:8084";
 
 var socket: SocketIOClient.Socket | undefined = undefined;
 

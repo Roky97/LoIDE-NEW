@@ -1,4 +1,10 @@
-import { IonButton, IonCol, IonRow, IonSpinner } from "@ionic/react";
+import {
+    IonButton,
+    IonCol,
+    IonProgressBar,
+    IonRow,
+    IonSpinner,
+} from "@ionic/react";
 import React from "react";
 import API from "../lib/api";
 import { SocketStatusStore, UIStatusStore } from "../lib/store";
@@ -14,6 +20,10 @@ const NoLanguageAvailable: React.FC = () => {
     };
     return (
         <>
+            <IonProgressBar
+                type="indeterminate"
+                style={reconnecting ? {} : { opacity: 0 }}
+            ></IonProgressBar>
             <IonRow>
                 <IonCol className="ion-text-center ion-padding">
                     <h4 className="ion-margin-bottom">No language available</h4>
@@ -22,18 +32,35 @@ const NoLanguageAvailable: React.FC = () => {
                             <>
                                 <h5
                                     className="ion-margin-bottom"
-                                    style={{ opacity: 0.6 }}
+                                    style={{ opacity: 0.6, minHeight: "50px" }}
                                 >
-                                    You are disconnect from the server, try to
-                                    reconnect
+                                    {!reconnecting && !connectedFromServer && (
+                                        <span>
+                                            You are disconnect from the server,
+                                            try to reconnect
+                                        </span>
+                                    )}
+
+                                    {reconnecting && (
+                                        <span>
+                                            Reconnecting to the server...
+                                        </span>
+                                    )}
                                 </h5>
-                                <IonButton
-                                    onClick={onReconnect}
-                                    disabled={reconnecting}
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                    }}
                                 >
-                                    {reconnecting && <IonSpinner />}
-                                    {!reconnecting && <>Reconnect</>}
-                                </IonButton>
+                                    <IonButton
+                                        onClick={onReconnect}
+                                        // disabled={reconnecting}
+                                    >
+                                        Reconnect
+                                    </IonButton>
+                                </div>
                             </>
                         )}
                     </Online>

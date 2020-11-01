@@ -43,7 +43,8 @@ if (key.length !== 0 && cert.length !== 0) {
 app.use(helmet({
     hsts: {
         maxAge: maxAge
-    }
+    },
+    contentSecurityPolicy: false,
 }));
 
 app.use(compression());
