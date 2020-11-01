@@ -130,7 +130,7 @@
     --min-height: var(--height-tab);
 }
 
-.add-tab {
+.tab-button {
     width: var(--height-tab);
     height: var(--height-tab);
 
@@ -147,6 +147,11 @@
         border-color: var(--tabs-color-active);
         background-color: var(--tabs-color-active);
     }
+}
+
+.tab-button:focus {
+    outline: none;
+    box-shadow: none;
 }
 
 .sidebar {

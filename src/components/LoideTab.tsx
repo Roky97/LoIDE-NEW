@@ -16,7 +16,7 @@ const LoideTab = ({
     ...otherProps
 }: LoideTabProps) => (
     <Tab {...otherProps}>
-        <span>{children}</span>
+        <span className="unselectable">{children}</span>
         <IonButton
             title="Delete tab"
             size="small"

@@ -152,7 +152,7 @@ const Editor: React.FC = () => {
                     <div className="loide-tab-list-operation">
                         <button
                             title="Add tab"
-                            className="add-tab"
+                            className="tab-button"
                             onClick={addTab}
                         >
                             <IonIcon
