@@ -6,7 +6,7 @@ import { ViewportProvider } from "./providers/ViewportProvider";
 import * as serviceWorker from "./serviceWorker";
 
 setupConfig({
-    mode: "ios",
+    // mode: "ios",
 });
 
 ReactDOM.render(
