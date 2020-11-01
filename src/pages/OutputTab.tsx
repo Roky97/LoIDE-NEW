@@ -40,7 +40,7 @@ const OutputTab: React.FC = () => {
                             onClick={clearOutput}
                         >
                             <IonIcon icon={backspaceOutline} />
-                            Clear
+                            <span className="margin-button-left"> Clear </span>
                         </IonButton>
                     </IonButtons>
                 </IonToolbar>

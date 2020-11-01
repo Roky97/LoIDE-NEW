@@ -1,10 +1,9 @@
 import React from "react";
-import { createEvent, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import TabToExecute from "../../components/TabToExecute";
 import { ionFireEvent as fireEvent } from "@ionic/react-test-utils";
 
 import { ILoideTab } from "../../lib/LoideInterfaces";
-import { CurrentTab } from "../../lib/constants";
 
 import { mockIonicReact } from "@ionic/react-test-utils";
 mockIonicReact();

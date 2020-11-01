@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import RunSettings from "../../components/RunSettings";
 
 test("renders without crashing", () => {

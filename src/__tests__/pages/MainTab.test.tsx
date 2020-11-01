@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import MainTab from "../../pages/MainTab";
