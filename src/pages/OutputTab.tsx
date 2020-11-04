@@ -13,11 +13,7 @@ import {
 } from "@ionic/react";
 import Output from "../components/Output";
 import { OutputStore } from "../lib/store";
-import {
-    backspaceOutline,
-    cloudDownloadOutline,
-    downloadOutline,
-} from "ionicons/icons";
+import { backspaceOutline, downloadOutline } from "ionicons/icons";
 
 const OutputTab: React.FC = () => {
     const outputModel = OutputStore.useState((o) => o.model);
@@ -53,6 +49,7 @@ const OutputTab: React.FC = () => {
                         <IonButton
                             color="primary"
                             className="ion-hide-sm-up"
+                            title="Download"
                             disabled={
                                 outputModel.length === 0 &&
                                 outputError.length === 0
@@ -67,6 +64,7 @@ const OutputTab: React.FC = () => {
                         <IonButton
                             color="primary"
                             className="ion-hide-sm-down"
+                            title="Download"
                             disabled={
                                 outputModel.length === 0 &&
                                 outputError.length === 0
@@ -79,6 +77,7 @@ const OutputTab: React.FC = () => {
                         <IonButton
                             size="small"
                             color="medium"
+                            title="Clear"
                             disabled={
                                 outputModel.length === 0 &&
                                 outputError.length === 0
