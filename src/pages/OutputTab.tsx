@@ -13,7 +13,11 @@ import {
 } from "@ionic/react";
 import Output from "../components/Output";
 import { OutputStore } from "../lib/store";
-import { backspaceOutline } from "ionicons/icons";
+import {
+    backspaceOutline,
+    cloudDownloadOutline,
+    downloadOutline,
+} from "ionicons/icons";
 
 const OutputTab: React.FC = () => {
     const outputModel = OutputStore.useState((o) => o.model);
@@ -25,14 +29,56 @@ const OutputTab: React.FC = () => {
             o.error = "";
         });
     };
+
+    const downloadOutput = () => {
+        let fileContent = `${outputModel} ${
+            outputModel.length > 0 ? "\n\n" : ""
+        } ${outputError}`;
+
+        const element = document.createElement("a");
+        const file = new Blob([fileContent], {
+            type: "text/plain",
+        });
+        element.href = URL.createObjectURL(file);
+        element.download = "LoIDE_Output";
+        document.body.appendChild(element);
+        element.click();
+    };
     return (
         <IonPage>
             <IonHeader>
                 <IonToolbar>
                     <IonTitle>Output</IonTitle>
+                    <IonButtons slot="start">
+                        <IonButton
+                            color="primary"
+                            className="ion-hide-sm-up"
+                            disabled={
+                                outputModel.length === 0 &&
+                                outputError.length === 0
+                            }
+                            onClick={downloadOutput}
+                        >
+                            <IonIcon icon={downloadOutline} />
+                            <span className="margin-button-left">Download</span>
+                        </IonButton>
+                    </IonButtons>
                     <IonButtons slot="end">
                         <IonButton
+                            color="primary"
+                            className="ion-hide-sm-down"
+                            disabled={
+                                outputModel.length === 0 &&
+                                outputError.length === 0
+                            }
+                            onClick={downloadOutput}
+                        >
+                            <IonIcon icon={downloadOutline} />
+                            <span className="margin-button-left">Download</span>
+                        </IonButton>
+                        <IonButton
                             size="small"
+                            color="medium"
                             disabled={
                                 outputModel.length === 0 &&
                                 outputError.length === 0

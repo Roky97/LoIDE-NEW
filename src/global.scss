@@ -22,6 +22,13 @@
     --run-settings-background-color: rgba(255, 245, 238, 1);
     --output-border-color: #e0edfd;
     --output-background-color: #f4f9ff;
+
+    --ion-color-medium: #424242;
+    --ion-color-medium-rgb: 66, 66, 66;
+    --ion-color-medium-contrast: #ffffff;
+    --ion-color-medium-contrast-rgb: 255, 255, 255;
+    --ion-color-medium-shade: #3a3a3a;
+    --ion-color-medium-tint: #555555;
 }
 
 @media (prefers-color-scheme: dark) {
