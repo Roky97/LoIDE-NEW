@@ -143,8 +143,16 @@
 
     transition: all 0.2s;
     border: 1px solid var(--tabs-color);
-    margin-left: 5px;
+    margin-left: 1px;
     background-color: var(--tabs-color);
+
+    &.space-left {
+        margin-left: 5px;
+    }
+
+    &.space-right {
+        margin-right: 5px;
+    }
 
     &:hover {
         border-color: var(--tabs-color-hover);

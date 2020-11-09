@@ -141,6 +141,10 @@ const Editor: React.FC = () => {
         undoManager?.redo(editorsRef.current?.editor.session!);
     };
 
+    const search = () => {
+        editorsRef.current?.editor.execCommand("find");
+    };
+
     const onSaveSession = (tabKey: number, session: any) => {
         let newSessions = [...editorSessions];
         newSessions[tabKey] = session;
@@ -190,7 +194,11 @@ const Editor: React.FC = () => {
                                 icon={addOutline}
                             />
                         </button>
-                        <LoideToolbarEditor onUndo={undo} onRedo={redo} />
+                        <LoideToolbarEditor
+                            onUndo={undo}
+                            onRedo={redo}
+                            onSearch={search}
+                        />
                     </div>
                 </div>
                 {tabPanels}

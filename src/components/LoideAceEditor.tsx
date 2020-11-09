@@ -5,6 +5,7 @@ import AceEditor from "react-ace";
 import "../lib/ace/mode-asp";
 import "ace-builds/src-noconflict/theme-tomorrow";
 import "ace-builds/src-noconflict/ext-language_tools";
+import "ace-builds/src-min-noconflict/ext-searchbox";
 import { LoideLanguages, LoideSolvers } from "../lib/constants";
 import { EditSession } from "ace-builds";
 
