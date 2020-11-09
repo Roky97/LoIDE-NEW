@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import LoideAceEditor from "./LoideAceEditor";
 import { Tabs, TabList, TabPanel } from "react-tabs";
 import { EditorStore, RunSettingsStore } from "../lib/store";
@@ -8,6 +8,8 @@ import { IonIcon } from "@ionic/react";
 import { addOutline } from "ionicons/icons";
 import LoideTab from "./LoideTab";
 import { alertController } from "@ionic/core";
+import LoideToolbarEditor from "./LoideToolbarEditor";
+import AceEditor from "react-ace";
 
 const Editor: React.FC = () => {
     const tabCountID = EditorStore.useState((e) => e.tabCountID);
@@ -16,6 +18,10 @@ const Editor: React.FC = () => {
     const prevTabsSize = EditorStore.useState((l) => l.prevTabsSize);
     const currentLanguage = RunSettingsStore.useState((s) => s.currentLanguage);
     const currentSolver = RunSettingsStore.useState((s) => s.currentSolver);
+
+    const editorsRef = useRef<AceEditor>(null);
+
+    const [editorSessions, setEditorSessions] = useState<any[]>([]);
 
     useEffect(() => {
         if (tabs.size === 0) {
@@ -71,6 +77,11 @@ const Editor: React.FC = () => {
                     {
                         text: "Delete",
                         handler: () => {
+                            // delete tab session
+                            let newSessions = [...editorSessions];
+                            delete newSessions[tabKey];
+                            setEditorSessions(newSessions);
+
                             if (tabs.size === 1) {
                                 let nextTabs = new Map().set(1, {
                                     title: `L P 1`,
@@ -120,6 +131,22 @@ const Editor: React.FC = () => {
         });
     };
 
+    const undo = () => {
+        let undoManager = editorsRef.current?.editor.session.getUndoManager();
+        undoManager?.undo(editorsRef.current?.editor.session!);
+    };
+
+    const redo = () => {
+        let undoManager = editorsRef.current?.editor.session.getUndoManager();
+        undoManager?.redo(editorsRef.current?.editor.session!);
+    };
+
+    const onSaveSession = (tabKey: number, session: any) => {
+        let newSessions = [...editorSessions];
+        newSessions[tabKey] = session;
+        setEditorSessions(newSessions);
+    };
+
     const loideTabs = [...tabs.keys()].map((key) => (
         <LoideTab key={`tab-${key}`} tabkey={key} onDeleteTab={onDeleteTab}>
             {tabs.get(key)!.title}
@@ -129,11 +156,14 @@ const Editor: React.FC = () => {
     const tabPanels = [...tabs.keys()].map((key) => (
         <TabPanel key={`tabpanel-${key}`}>
             <LoideAceEditor
+                ref={editorsRef}
                 tabKey={key}
+                session={editorSessions[key]}
                 mode={currentLanguage}
                 solver={currentSolver}
                 value={tabs.get(key)!.value}
                 onChange={onChange}
+                onSaveSession={onSaveSession}
             />
         </TabPanel>
     ));
@@ -160,6 +190,7 @@ const Editor: React.FC = () => {
                                 icon={addOutline}
                             />
                         </button>
+                        <LoideToolbarEditor onUndo={undo} onRedo={redo} />
                     </div>
                 </div>
                 {tabPanels}
