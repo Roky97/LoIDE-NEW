@@ -244,24 +244,43 @@ const Editor: React.FC = () => {
                         <button
                             title="Add tab"
                             className="tab-button"
+                            style={{ marginLeft: "1px" }}
                             onClick={addTab}
                         >
                             <IonIcon
                                 style={{ fontSize: "20px" }}
+                                color="dark"
                                 icon={addOutline}
                             />
                         </button>
-                        <LoideToolbarEditor
-                            onUndo={undo}
-                            onRedo={redo}
-                            onSearch={search}
-                            onCut={cut}
-                            onCopy={copy}
-                            onPaste={paste}
-                            onDownloadTab={downloadTab}
-                            onDeleteAllTabs={deleteAllTabs}
-                        />
+                        <div
+                            className="ion-hide-sm-down"
+                            style={{ marginLeft: "5px" }}
+                        >
+                            <LoideToolbarEditor
+                                onUndo={undo}
+                                onRedo={redo}
+                                onSearch={search}
+                                onCut={cut}
+                                onCopy={copy}
+                                onPaste={paste}
+                                onDownloadTab={downloadTab}
+                                onDeleteAllTabs={deleteAllTabs}
+                            />
+                        </div>
                     </div>
+                </div>
+                <div className="loide-tab-list only-toolbar ion-hide-sm-up">
+                    <LoideToolbarEditor
+                        onUndo={undo}
+                        onRedo={redo}
+                        onSearch={search}
+                        onCut={cut}
+                        onCopy={copy}
+                        onPaste={paste}
+                        onDownloadTab={downloadTab}
+                        onDeleteAllTabs={deleteAllTabs}
+                    />
                 </div>
                 {tabPanels}
             </Tabs>

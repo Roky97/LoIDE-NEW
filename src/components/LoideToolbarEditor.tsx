@@ -30,13 +30,14 @@ const LoideToolbarEditor: React.FC<LoideToolbarEditorProps> = (props) => {
         setPasteSupported(Utils.isClipboardSupported);
     }, []);
     return (
-        <>
+        <div>
             <button
                 title="Delete all tabs"
-                className="tab-button space-left"
+                className="tab-button"
                 onClick={props.onDeleteAllTabs}
             >
                 <IonIcon
+                    color="dark"
                     style={{ fontSize: "20px" }}
                     icon={closeCircleOutline}
                 />
@@ -46,7 +47,11 @@ const LoideToolbarEditor: React.FC<LoideToolbarEditorProps> = (props) => {
                 className="tab-button space-left"
                 onClick={props.onDownloadTab}
             >
-                <IonIcon style={{ fontSize: "20px" }} icon={downloadOutline} />
+                <IonIcon
+                    color="dark"
+                    style={{ fontSize: "20px" }}
+                    icon={downloadOutline}
+                />
             </button>
 
             <button
@@ -54,10 +59,18 @@ const LoideToolbarEditor: React.FC<LoideToolbarEditorProps> = (props) => {
                 className="tab-button space-left"
                 onClick={props.onCut}
             >
-                <IonIcon style={{ fontSize: "20px" }} icon={cutOutline} />
+                <IonIcon
+                    color="dark"
+                    style={{ fontSize: "20px" }}
+                    icon={cutOutline}
+                />
             </button>
             <button title="Copy" className="tab-button" onClick={props.onCopy}>
-                <IonIcon style={{ fontSize: "20px" }} icon={copyOutline} />
+                <IonIcon
+                    color="dark"
+                    style={{ fontSize: "20px" }}
+                    icon={copyOutline}
+                />
             </button>
             {pasteSupported && (
                 <button
@@ -66,6 +79,7 @@ const LoideToolbarEditor: React.FC<LoideToolbarEditorProps> = (props) => {
                     onClick={props.onPaste}
                 >
                     <IonIcon
+                        color="dark"
                         style={{ fontSize: "20px" }}
                         icon={clipboardOutline}
                     />
@@ -77,19 +91,31 @@ const LoideToolbarEditor: React.FC<LoideToolbarEditorProps> = (props) => {
                 className="tab-button space-left"
                 onClick={props.onSearch}
             >
-                <IonIcon style={{ fontSize: "20px" }} icon={searchOutline} />
+                <IonIcon
+                    color="dark"
+                    style={{ fontSize: "20px" }}
+                    icon={searchOutline}
+                />
             </button>
             <button
                 title="Undo"
                 className="tab-button space-left"
                 onClick={props.onUndo}
             >
-                <IonIcon style={{ fontSize: "20px" }} icon={arrowUndoOutline} />
+                <IonIcon
+                    color="dark"
+                    style={{ fontSize: "20px" }}
+                    icon={arrowUndoOutline}
+                />
             </button>
             <button title="Redo" className="tab-button" onClick={props.onRedo}>
-                <IonIcon style={{ fontSize: "20px" }} icon={arrowRedoOutline} />
+                <IonIcon
+                    color="dark"
+                    style={{ fontSize: "20px" }}
+                    icon={arrowRedoOutline}
+                />
             </button>
-        </>
+        </div>
     );
 };
 

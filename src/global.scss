@@ -89,6 +89,12 @@
     background-color: var(--tab-list-background-color);
     min-height: var(--height-tab);
 
+    &.only-toolbar {
+        justify-content: center;
+        padding-top: 1px;
+        padding-bottom: 9px;
+    }
+
     .loide-tab-list-container {
         position: relative;
         display: inline-block;
@@ -105,13 +111,14 @@
     }
 
     .loide-tab-list-operation {
-        display: -webkit-box;
-        display: -ms-flexbox;
         display: flex;
-        -ms-flex-item-align: stretch;
         align-self: stretch;
         position: relative;
+        flex: none;
     }
+}
+
+.second-tab {
 }
 
 .toolbar {
@@ -145,6 +152,10 @@
     border: 1px solid var(--tabs-color);
     margin-left: 1px;
     background-color: var(--tabs-color);
+
+    &:first-of-type {
+        margin-left: 0;
+    }
 
     &.space-left {
         margin-left: 5px;

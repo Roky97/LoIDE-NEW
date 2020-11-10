@@ -151,7 +151,7 @@ const copyStringToClipboard = (str: string) => {
 }
 
 const isClipboardSupported = (): boolean => {
-    return typeof (navigator.clipboard.readText) == 'undefined' ? false : true;;
+    return typeof (navigator.clipboard) === 'undefined' ? false : true;
 }
 
 const getTextFromClipboard = (callback: (text: string) => void): void => {
