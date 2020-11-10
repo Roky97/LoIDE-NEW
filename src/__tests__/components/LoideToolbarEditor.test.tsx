@@ -2,16 +2,22 @@ import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import LoideToolbarEditor from "../../components/LoideToolbarEditor";
 
-test("renders without crashing", () => {
-    const onUndo = jest.fn();
-    const onRedo = jest.fn();
-    const onSearch = jest.fn();
+Object.defineProperty(navigator, "clipboard", {
+    value: {
+        readText: jest.fn(),
+    },
+});
 
+test("renders without crashing", () => {
     const { baseElement } = render(
         <LoideToolbarEditor
-            onUndo={onUndo}
-            onRedo={onRedo}
-            onSearch={onSearch}
+            onUndo={jest.fn()}
+            onRedo={jest.fn()}
+            onSearch={jest.fn()}
+            onCopy={jest.fn()}
+            onCut={jest.fn()}
+            onDownloadTab={jest.fn()}
+            onDeleteAllTabs={jest.fn()}
         />
     );
     expect(baseElement).toBeDefined();
@@ -19,14 +25,16 @@ test("renders without crashing", () => {
 
 test("test undo button", async () => {
     const onUndo = jest.fn();
-    const onRedo = jest.fn();
-    const onSearch = jest.fn();
 
     render(
         <LoideToolbarEditor
             onUndo={onUndo}
-            onRedo={onRedo}
-            onSearch={onSearch}
+            onRedo={jest.fn()}
+            onSearch={jest.fn()}
+            onCopy={jest.fn()}
+            onCut={jest.fn()}
+            onDownloadTab={jest.fn()}
+            onDeleteAllTabs={jest.fn()}
         />
     );
 
@@ -37,15 +45,17 @@ test("test undo button", async () => {
 });
 
 test("test redo button", async () => {
-    const onUndo = jest.fn();
     const onRedo = jest.fn();
-    const onSearch = jest.fn();
 
     render(
         <LoideToolbarEditor
-            onUndo={onUndo}
             onRedo={onRedo}
-            onSearch={onSearch}
+            onUndo={jest.fn()}
+            onSearch={jest.fn()}
+            onCopy={jest.fn()}
+            onCut={jest.fn()}
+            onDownloadTab={jest.fn()}
+            onDeleteAllTabs={jest.fn()}
         />
     );
 
@@ -56,15 +66,17 @@ test("test redo button", async () => {
 });
 
 test("test search button", async () => {
-    const onUndo = jest.fn();
-    const onRedo = jest.fn();
     const onSearch = jest.fn();
 
     render(
         <LoideToolbarEditor
-            onUndo={onUndo}
-            onRedo={onRedo}
             onSearch={onSearch}
+            onUndo={jest.fn()}
+            onRedo={jest.fn()}
+            onCopy={jest.fn()}
+            onCut={jest.fn()}
+            onDownloadTab={jest.fn()}
+            onDeleteAllTabs={jest.fn()}
         />
     );
 
@@ -72,4 +84,114 @@ test("test search button", async () => {
     fireEvent.click(button);
 
     expect(onSearch).toBeCalledTimes(1);
+});
+
+test("test paste button", async () => {
+    const onPaste = jest.fn();
+
+    render(
+        <LoideToolbarEditor
+            onUndo={jest.fn()}
+            onRedo={jest.fn()}
+            onSearch={jest.fn()}
+            onPaste={onPaste}
+            onCopy={jest.fn()}
+            onCut={jest.fn()}
+            onDownloadTab={jest.fn()}
+            onDeleteAllTabs={jest.fn()}
+        />
+    );
+
+    const button = await screen.findByTitle("Paste");
+    fireEvent.click(button);
+
+    expect(onPaste).toBeCalledTimes(1);
+});
+
+test("test copy button", async () => {
+    const onCopy = jest.fn();
+
+    render(
+        <LoideToolbarEditor
+            onUndo={jest.fn()}
+            onRedo={jest.fn()}
+            onSearch={jest.fn()}
+            onPaste={jest.fn()}
+            onCopy={onCopy}
+            onCut={jest.fn()}
+            onDownloadTab={jest.fn()}
+            onDeleteAllTabs={jest.fn()}
+        />
+    );
+
+    const button = await screen.findByTitle("Copy");
+    fireEvent.click(button);
+
+    expect(onCopy).toBeCalledTimes(1);
+});
+
+test("test cut button", async () => {
+    const onCut = jest.fn();
+
+    render(
+        <LoideToolbarEditor
+            onUndo={jest.fn()}
+            onRedo={jest.fn()}
+            onSearch={jest.fn()}
+            onPaste={jest.fn()}
+            onCopy={jest.fn()}
+            onCut={onCut}
+            onDownloadTab={jest.fn()}
+            onDeleteAllTabs={jest.fn()}
+        />
+    );
+
+    const button = await screen.findByTitle("Cut");
+    fireEvent.click(button);
+
+    expect(onCut).toBeCalledTimes(1);
+});
+
+test("test donwload content tab button", async () => {
+    const onDownloadTab = jest.fn();
+
+    render(
+        <LoideToolbarEditor
+            onUndo={jest.fn()}
+            onRedo={jest.fn()}
+            onSearch={jest.fn()}
+            onPaste={jest.fn()}
+            onCopy={jest.fn()}
+            onCut={jest.fn()}
+            onDownloadTab={onDownloadTab}
+            onDeleteAllTabs={jest.fn()}
+        />
+    );
+
+    const button = await screen.findByTitle("Download content");
+    fireEvent.click(button);
+
+    expect(onDownloadTab).toBeCalledTimes(1);
+});
+
+test("test delete all the tabs button", async () => {
+    const onDeleteAllTabs = jest.fn();
+
+    render(
+        <LoideToolbarEditor
+            onUndo={jest.fn()}
+            onRedo={jest.fn()}
+            onSearch={jest.fn()}
+            onPaste={jest.fn()}
+            onCopy={jest.fn()}
+            onCut={jest.fn()}
+            onDownloadTab={jest.fn()}
+            onDeleteAllTabs={onDeleteAllTabs}
+        />
+    );
+
+    const button = await screen.findByTitle("Delete all tabs");
+    fireEvent.click(button);
+
+    expect(onDeleteAllTabs).toBeCalledTimes(1);
 });

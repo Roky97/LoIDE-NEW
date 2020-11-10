@@ -2,6 +2,12 @@ import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import Editor from "../../components/Editor";
 
+Object.defineProperty(navigator, "clipboard", {
+    value: {
+        readText: jest.fn(),
+    },
+});
+
 test("Editor renders without crashing", () => {
     window.HTMLElement.prototype.scrollIntoView = jest.fn();
     const { baseElement } = render(<Editor />);

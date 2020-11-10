@@ -4,6 +4,12 @@ import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import MainTab from "../../pages/MainTab";
 
+Object.defineProperty(navigator, "clipboard", {
+    value: {
+        readText: jest.fn(),
+    },
+});
+
 test("MainTab renders without crashing", () => {
     window.HTMLElement.prototype.scrollIntoView = jest.fn();
     const { baseElement } = render(<MainTab />);

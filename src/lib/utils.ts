@@ -133,6 +133,65 @@ const getPropName = (obj: any) => new Proxy(obj, {
     }
 });
 
+const copyStringToClipboard = (str: string) => {
+    // Create new element
+    var el = document.createElement('textarea');
+    // Set value (string to be copied)
+    el.value = str;
+    // Set non-editable to avoid focus and move outside of view
+    el.setAttribute('readonly', '');
+    // el.style = { position: 'absolute', left: '-9999px' };
+    document.body.appendChild(el);
+    // Select text inside element
+    el.select();
+    // Copy text to clipboard
+    document.execCommand('copy');
+    // Remove temporary element
+    document.body.removeChild(el);
+}
+
+const isClipboardSupported = (): boolean => {
+    return typeof (navigator.clipboard.readText) == 'undefined' ? false : true;;
+}
+
+const getTextFromClipboard = (callback: (text: string) => void): void => {
+
+    if (isClipboardSupported()) {
+        navigator.clipboard
+            .readText()
+            .then((text) => {
+                callback(text)
+            })
+            .catch((err) => {
+                // error because maybe the user didn't grant access to read from clipboard
+                Utils.generateGeneralToast(
+                    "Clipboard read error, maybe you didn't grant the access to read from the clipboard",
+                    "Clipboard error",
+                    "danger"
+                );
+                console.error(err);
+            });
+    }
+    else
+        Utils.generateGeneralToast(
+            "Clipboard not supported",
+            "Clipboard error",
+            "danger"
+        );
+}
+
+const downloadTextFile = (title: string, text: string) => {
+
+    const element = document.createElement("a");
+    const file = new Blob([text], {
+        type: "text/plain",
+    });
+    element.href = URL.createObjectURL(file);
+    element.download = title;
+    document.body.appendChild(element);
+    element.click();
+}
+
 const Utils = {
     isJSON,
     hasRightProperty,
@@ -141,7 +200,11 @@ const Utils = {
     getPropName,
     canSetSolver,
     canSetExecutor,
-    canSetOption
+    canSetOption,
+    copyStringToClipboard,
+    isClipboardSupported,
+    getTextFromClipboard,
+    downloadTextFile
 }
 
 export default Utils;

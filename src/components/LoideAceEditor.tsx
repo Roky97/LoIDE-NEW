@@ -84,6 +84,7 @@ const LoideAceEditor = React.forwardRef<AceEditor, LoideAceEditorProps>(
             // eslint-disable-next-line react-hooks/exhaustive-deps
         }, []);
 
+        // set the forwardRef from AceEditor ref
         useEffect(() => {
             if (typeof forwardRef === "function" && reactAce) {
                 forwardRef(reactAce.current);
@@ -92,6 +93,7 @@ const LoideAceEditor = React.forwardRef<AceEditor, LoideAceEditorProps>(
             }
         }, [reactAce, forwardRef]);
 
+        // set the AceEditor mode
         useEffect(() => {
             let edt = reactAce?.current;
             if (edt) {

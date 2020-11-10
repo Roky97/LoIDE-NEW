@@ -14,6 +14,7 @@ import {
 import Output from "../components/Output";
 import { OutputStore } from "../lib/store";
 import { backspaceOutline, downloadOutline } from "ionicons/icons";
+import Utils from "../lib/utils";
 
 const OutputTab: React.FC = () => {
     const outputModel = OutputStore.useState((o) => o.model);
@@ -31,14 +32,9 @@ const OutputTab: React.FC = () => {
             outputModel.length > 0 ? "\n\n" : ""
         } ${outputError}`;
 
-        const element = document.createElement("a");
-        const file = new Blob([fileContent], {
-            type: "text/plain",
-        });
-        element.href = URL.createObjectURL(file);
-        element.download = "LoIDE_Output";
-        document.body.appendChild(element);
-        element.click();
+        let fileTitle = "LoIDE_Output";
+
+        Utils.downloadTextFile(fileTitle, fileContent);
     };
     return (
         <IonPage>

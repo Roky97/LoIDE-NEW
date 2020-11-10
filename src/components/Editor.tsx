@@ -10,6 +10,7 @@ import LoideTab from "./LoideTab";
 import { alertController } from "@ionic/core";
 import LoideToolbarEditor from "./LoideToolbarEditor";
 import AceEditor from "react-ace";
+import Utils from "../lib/utils";
 
 const Editor: React.FC = () => {
     const tabCountID = EditorStore.useState((e) => e.tabCountID);
@@ -19,9 +20,17 @@ const Editor: React.FC = () => {
     const currentLanguage = RunSettingsStore.useState((s) => s.currentLanguage);
     const currentSolver = RunSettingsStore.useState((s) => s.currentSolver);
 
+    const [currentTabKey, setCurrentTabKey] = useState<number>(tabCountID);
+
     const editorsRef = useRef<AceEditor>(null);
 
     const [editorSessions, setEditorSessions] = useState<any[]>([]);
+
+    // set the current tab ID depending on selected tab
+    useEffect(() => {
+        let keysTab = [...tabs.keys()];
+        setCurrentTabKey(keysTab[tabIndex]);
+    }, [tabIndex, tabs]);
 
     useEffect(() => {
         if (tabs.size === 0) {
@@ -65,48 +74,52 @@ const Editor: React.FC = () => {
         });
     };
 
+    const eraseTabs = () => {
+        let nextTabs = new Map().set(1, {
+            title: `L P 1`,
+            type: "",
+            value: "",
+        });
+        setEditorSessions([]);
+        EditorStore.update((e) => {
+            e.tabs = nextTabs;
+            e.currentTab = 0;
+            e.tabCountID = InitalTabCountID;
+        });
+    };
+
+    const deleteTab = (tabKey: number) => {
+        if (tabs.size === 1) {
+            deleteAllTabs();
+            return;
+        }
+        // delete tab session
+        let newSessions = [...editorSessions];
+        delete newSessions[tabKey];
+        setEditorSessions(newSessions);
+
+        let nextTabs = new Map(tabs);
+        nextTabs.delete(tabKey);
+        let shift = tabs.size - 1 === tabIndex ? true : false;
+        EditorStore.update((e) => {
+            e.currentTab = shift ? e.currentTab - 1 : e.currentTab;
+            e.tabs = nextTabs;
+            e.prevTabsSize = tabs.size;
+        });
+    };
+
     const onDeleteTab = (e: any, tabKey: number) => {
         e.stopPropagation();
 
         alertController
             .create({
-                message: WindowConfirmMessages.DeleteTab,
-                header: "Delete tab",
+                message: WindowConfirmMessages.DeleteTab.message,
+                header: WindowConfirmMessages.DeleteTab.header,
                 buttons: [
                     { text: "Cancel" },
                     {
                         text: "Delete",
-                        handler: () => {
-                            // delete tab session
-                            let newSessions = [...editorSessions];
-                            delete newSessions[tabKey];
-                            setEditorSessions(newSessions);
-
-                            if (tabs.size === 1) {
-                                let nextTabs = new Map().set(1, {
-                                    title: `L P 1`,
-                                    type: "",
-                                    value: "",
-                                });
-                                EditorStore.update((e) => {
-                                    e.tabs = nextTabs;
-                                    e.currentTab = 0;
-                                    e.tabCountID = InitalTabCountID;
-                                });
-                                return;
-                            }
-                            let nextTabs = new Map(tabs);
-                            nextTabs.delete(tabKey);
-                            let shift =
-                                tabs.size - 1 === tabIndex ? true : false;
-                            EditorStore.update((e) => {
-                                e.currentTab = shift
-                                    ? e.currentTab - 1
-                                    : e.currentTab;
-                                e.tabs = nextTabs;
-                                e.prevTabsSize = tabs.size;
-                            });
-                        },
+                        handler: () => deleteTab(tabKey),
                     },
                 ],
             })
@@ -143,6 +156,50 @@ const Editor: React.FC = () => {
 
     const search = () => {
         editorsRef.current?.editor.execCommand("find");
+    };
+
+    const cut = () => {
+        let stringToCopy = editorsRef.current?.editor.getCopyText();
+        if (stringToCopy) {
+            Utils.copyStringToClipboard(stringToCopy);
+            editorsRef.current?.editor.execCommand("cut");
+        }
+    };
+
+    const copy = () => {
+        let stringToCopy = editorsRef.current?.editor.getCopyText();
+        if (stringToCopy) Utils.copyStringToClipboard(stringToCopy);
+    };
+
+    const paste = () => {
+        Utils.getTextFromClipboard((textFromClipboard) => {
+            editorsRef.current?.editor.insert(textFromClipboard);
+        });
+    };
+
+    const downloadTab = () => {
+        let currentTab = tabs.get(currentTabKey);
+        if (currentTab) {
+            let tabContent = currentTab.value;
+            let tabTitle = currentTab.title;
+            Utils.downloadTextFile(tabTitle, tabContent);
+        }
+    };
+
+    const deleteAllTabs = () => {
+        alertController
+            .create({
+                message: WindowConfirmMessages.DeleteAllTabs.message,
+                header: WindowConfirmMessages.DeleteAllTabs.header,
+                buttons: [
+                    { text: "Cancel" },
+                    {
+                        text: "Delete",
+                        handler: () => eraseTabs(),
+                    },
+                ],
+            })
+            .then((alert) => alert.present());
     };
 
     const onSaveSession = (tabKey: number, session: any) => {
@@ -198,6 +255,11 @@ const Editor: React.FC = () => {
                             onUndo={undo}
                             onRedo={redo}
                             onSearch={search}
+                            onCut={cut}
+                            onCopy={copy}
+                            onPaste={paste}
+                            onDownloadTab={downloadTab}
+                            onDeleteAllTabs={deleteAllTabs}
                         />
                     </div>
                 </div>
