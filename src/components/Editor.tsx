@@ -90,7 +90,7 @@ const Editor: React.FC = () => {
 
     const deleteTab = (tabKey: number) => {
         if (tabs.size === 1) {
-            deleteAllTabs();
+            resetInput();
             return;
         }
         // delete tab session
@@ -186,15 +186,15 @@ const Editor: React.FC = () => {
         }
     };
 
-    const deleteAllTabs = () => {
+    const resetInput = () => {
         alertController
             .create({
-                message: WindowConfirmMessages.DeleteAllTabs.message,
-                header: WindowConfirmMessages.DeleteAllTabs.header,
+                message: WindowConfirmMessages.ResetInput.message,
+                header: WindowConfirmMessages.ResetInput.header,
                 buttons: [
                     { text: "Cancel" },
                     {
-                        text: "Delete",
+                        text: "Reset",
                         handler: () => eraseTabs(),
                     },
                 ],
@@ -265,7 +265,7 @@ const Editor: React.FC = () => {
                                 onCopy={copy}
                                 onPaste={paste}
                                 onDownloadTab={downloadTab}
-                                onDeleteAllTabs={deleteAllTabs}
+                                onResetInput={resetInput}
                             />
                         </div>
                     </div>
@@ -279,7 +279,7 @@ const Editor: React.FC = () => {
                         onCopy={copy}
                         onPaste={paste}
                         onDownloadTab={downloadTab}
-                        onDeleteAllTabs={deleteAllTabs}
+                        onResetInput={resetInput}
                     />
                 </div>
                 {tabPanels}

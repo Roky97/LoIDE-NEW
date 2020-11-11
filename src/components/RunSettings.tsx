@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Option from "./Option";
 import {
     IExecutorData,
@@ -28,8 +28,12 @@ import { addOutline } from "ionicons/icons";
 import TabToExecute from "./TabToExecute";
 import { useLanguageAvailable } from "../hooks/useLanguageAvailable";
 import NoLanguageAvailable from "./NoLangualeAvailable";
+import API from "../lib/api";
+import { useSetRunSettings } from "../hooks/useSetRunSettings";
 
 const RunSettings: React.FC = () => {
+    useSetRunSettings();
+
     const languages = LanguagesDataStore.useState((l) => l.languages);
 
     const currentLanguage = RunSettingsStore.useState((l) => l.currentLanguage);
@@ -225,6 +229,11 @@ const RunSettings: React.FC = () => {
             {executor.name}
         </IonSelectOption>
     ));
+
+    useEffect(() => {
+        API.emitGetLanguages();
+    }, []);
+
     return (
         <>
             {!languageAvailable && <NoLanguageAvailable />}

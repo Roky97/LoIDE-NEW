@@ -20,7 +20,7 @@ interface LoideToolbarEditorProps {
     onCopy: () => void;
     onPaste?: () => void;
     onDownloadTab: () => void;
-    onDeleteAllTabs: () => void;
+    onResetInput: () => void;
 }
 
 const LoideToolbarEditor: React.FC<LoideToolbarEditorProps> = (props) => {
@@ -32,9 +32,9 @@ const LoideToolbarEditor: React.FC<LoideToolbarEditorProps> = (props) => {
     return (
         <div>
             <button
-                title="Delete all tabs"
-                className="tab-button"
-                onClick={props.onDeleteAllTabs}
+                title="Reset input"
+                className="tab-button ion-hide-sm-down"
+                onClick={props.onResetInput}
             >
                 <IonIcon
                     color="dark"

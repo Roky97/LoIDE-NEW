@@ -15,17 +15,22 @@ import {
     IonTitle,
     IonToolbar,
 } from "@ionic/react";
+import { alertController } from "@ionic/core";
 import logo from "../assets/img/logo_LoIDE.svg";
 import RunSettings from "../components/RunSettings";
 import LoideRunNavButton from "../components/LoideRunNavButton";
 import Editor from "../components/Editor";
 import OpenProjectModal from "../components/OpenProjectModal";
 import {
+    closeCircleOutline,
     ellipsisVerticalOutline,
     folderOpenOutline,
     saveOutline,
 } from "ionicons/icons";
 import SaveProjectModal from "../components/SaveProjectModal";
+import { InitalTabCountID, WindowConfirmMessages } from "../lib/constants";
+import { EditorStore } from "../lib/store";
+import { ILoideTab } from "../lib/LoideInterfaces";
 
 const MainTab: React.FC = () => {
     const [showOpenModal, setShowOpenModal] = useState(false);
@@ -34,6 +39,35 @@ const MainTab: React.FC = () => {
         open: boolean;
         event: Event | undefined;
     }>({ open: false, event: undefined });
+
+    const eraseTabs = () => {
+        let nextTabs = new Map<number, ILoideTab>().set(InitalTabCountID, {
+            title: `L P ${InitalTabCountID}`,
+            type: "",
+            value: "",
+        });
+        EditorStore.update((e) => {
+            e.tabs = nextTabs;
+            e.currentTab = 0;
+            e.tabCountID = InitalTabCountID;
+        });
+    };
+
+    const showResetAlert = () => {
+        alertController
+            .create({
+                message: WindowConfirmMessages.ResetInput.message,
+                header: WindowConfirmMessages.ResetInput.header,
+                buttons: [
+                    { text: "Cancel" },
+                    {
+                        text: "Reset",
+                        handler: () => eraseTabs(),
+                    },
+                ],
+            })
+            .then((alert) => alert.present());
+    };
 
     return (
         <IonPage>
@@ -143,6 +177,18 @@ const MainTab: React.FC = () => {
                             <IonIcon
                                 color="primary"
                                 icon={saveOutline}
+                                slot="end"
+                            />
+                        </IonItem>
+                        <IonItem
+                            button={true}
+                            title="Reset input"
+                            onClick={() => showResetAlert()}
+                        >
+                            <IonLabel>Reset input</IonLabel>
+                            <IonIcon
+                                color="danger"
+                                icon={closeCircleOutline}
                                 slot="end"
                             />
                         </IonItem>

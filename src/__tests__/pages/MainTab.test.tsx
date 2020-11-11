@@ -86,4 +86,8 @@ test("test operations popover", async () => {
     fireEvent.click(button);
 
     await screen.findByTestId("operations-popover");
+
+    await screen.findAllByTitle("Open");
+    await screen.findAllByTitle("Save");
+    await screen.findAllByTitle("Reset input");
 });

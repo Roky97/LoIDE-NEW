@@ -42,13 +42,11 @@ import "./theme/variables.scss";
 import "./global.scss";
 import AboutTab from "./pages/AboutTab";
 import { LanguagesDataStore, OutputStore } from "./lib/store";
-import { useSetRunSettings } from "./hooks/useSetRunSettings";
 import API from "./lib/api";
 import { IOutputData } from "./lib/LoideAPIInterfaces";
 import { LoidePath } from "./lib/constants";
 
 const App: React.FC = () => {
-    useSetRunSettings();
     useEffect(() => {
         API.createSocket();
 
@@ -67,11 +65,6 @@ const App: React.FC = () => {
 
         return () => API.disconnectAndClearSocket();
     }, []);
-
-    useEffect(() => {
-        API.emitGetLanguages();
-    }, []);
-
     return (
         <IonApp>
             <IonReactRouter>

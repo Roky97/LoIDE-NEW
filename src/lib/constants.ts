@@ -26,7 +26,7 @@ export const Errors = {
 
 export const WindowConfirmMessages = {
     DeleteTab: { header: "Delete tab", message: "Are you sure want to delete this tab? This cannot be undone." },
-    DeleteAllTabs: { header: "Delete all tabs", message: "Are you sure want to delete all the tabs? This cannot be undone." }
+    ResetInput: { header: "Reset input", message: "This operation will delete all the tabs. This cannot be undone." }
 }
 
 export const LoideLanguages = {
