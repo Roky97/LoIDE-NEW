@@ -2,8 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import LoideAceEditor from "./LoideAceEditor";
 import { Tabs, TabList, TabPanel } from "react-tabs";
 import { EditorStore, RunSettingsStore } from "../lib/store";
-import { ILoideTab } from "../lib/LoideInterfaces";
-import { InitalTabCountID, WindowConfirmMessages } from "../lib/constants";
+import { WindowConfirmMessages } from "../lib/constants";
 import { IonIcon } from "@ionic/react";
 import { addOutline } from "ionicons/icons";
 import LoideTab from "./LoideTab";
@@ -33,64 +32,26 @@ const Editor: React.FC = () => {
     }, [tabIndex, tabs]);
 
     useEffect(() => {
-        if (tabs.size === 0) {
-            EditorStore.update((e) => {
-                e.tabs = new Map<number, ILoideTab>().set(tabCountID, {
-                    title: `L P ${tabCountID}`,
-                    type: "",
-                    value: "",
-                });
-                e.currentTab = 0;
-                e.prevTabsSize = 0;
+        if (tabs.size > prevTabsSize) {
+            var arr = document.getElementsByClassName("react-tabs__tab");
+            arr[arr.length - 1].scrollIntoView({
+                behavior: "smooth",
             });
-        } else {
-            if (tabs.size > prevTabsSize) {
-                var arr = document.getElementsByClassName("react-tabs__tab");
-                arr[arr.length - 1].scrollIntoView({
-                    behavior: "smooth",
-                });
-            }
         }
-    }, [prevTabsSize, tabCountID, tabs.size]);
+    }, [prevTabsSize, tabs.size]);
 
     const onChange = (tabKey: number, value: string) => {
-        let tab: ILoideTab = Object.assign({}, tabs.get(tabKey));
-
-        if (tab) {
-            tab.value = value;
-
-            let nextTabs = new Map(tabs);
-            nextTabs.set(tabKey, tab);
-
-            EditorStore.update((e) => {
-                e.tabs = nextTabs;
-            });
-        }
+        Utils.Editor.changeTabValue(tabKey, value);
     };
 
     const onSelectTab = (index: number) => {
-        EditorStore.update((e) => {
-            e.currentTab = index;
-        });
-    };
-
-    const eraseTabs = () => {
-        let nextTabs = new Map().set(1, {
-            title: `L P 1`,
-            type: "",
-            value: "",
-        });
-        setEditorSessions([]);
-        EditorStore.update((e) => {
-            e.tabs = nextTabs;
-            e.currentTab = 0;
-            e.tabCountID = InitalTabCountID;
-        });
+        Utils.Editor.selectTab(index);
     };
 
     const deleteTab = (tabKey: number) => {
         if (tabs.size === 1) {
-            resetInput();
+            setEditorSessions([]);
+            Utils.Editor.resetInput();
             return;
         }
         // delete tab session
@@ -98,17 +59,10 @@ const Editor: React.FC = () => {
         delete newSessions[tabKey];
         setEditorSessions(newSessions);
 
-        let nextTabs = new Map(tabs);
-        nextTabs.delete(tabKey);
-        let shift = tabs.size - 1 === tabIndex ? true : false;
-        EditorStore.update((e) => {
-            e.currentTab = shift ? e.currentTab - 1 : e.currentTab;
-            e.tabs = nextTabs;
-            e.prevTabsSize = tabs.size;
-        });
+        Utils.Editor.deleteTab(tabKey);
     };
 
-    const onDeleteTab = (e: any, tabKey: number) => {
+    const showDeleteTabAlert = (e: any, tabKey: number) => {
         e.stopPropagation();
 
         alertController
@@ -127,21 +81,7 @@ const Editor: React.FC = () => {
     };
 
     const addTab = () => {
-        let nextID = tabCountID + 1;
-
-        let nextTabs = new Map(tabs);
-        nextTabs.set(nextID, {
-            title: `L P ${nextID}`,
-            type: "",
-            value: "",
-        });
-
-        EditorStore.update((e) => {
-            e.currentTab = nextTabs.size - 1;
-            e.tabs = nextTabs;
-            e.prevTabsSize = tabs.size;
-            e.tabCountID = nextID;
-        });
+        Utils.Editor.addTab();
     };
 
     const undo = () => {
@@ -186,22 +126,6 @@ const Editor: React.FC = () => {
         }
     };
 
-    const resetInput = () => {
-        alertController
-            .create({
-                message: WindowConfirmMessages.ResetInput.message,
-                header: WindowConfirmMessages.ResetInput.header,
-                buttons: [
-                    { text: "Cancel" },
-                    {
-                        text: "Reset",
-                        handler: () => eraseTabs(),
-                    },
-                ],
-            })
-            .then((alert) => alert.present());
-    };
-
     const onSaveSession = (tabKey: number, session: any) => {
         let newSessions = [...editorSessions];
         newSessions[tabKey] = session;
@@ -209,7 +133,11 @@ const Editor: React.FC = () => {
     };
 
     const loideTabs = [...tabs.keys()].map((key) => (
-        <LoideTab key={`tab-${key}`} tabkey={key} onDeleteTab={onDeleteTab}>
+        <LoideTab
+            key={`tab-${key}`}
+            tabkey={key}
+            onDeleteTab={showDeleteTabAlert}
+        >
             {tabs.get(key)!.title}
         </LoideTab>
     ));
@@ -265,7 +193,6 @@ const Editor: React.FC = () => {
                                 onCopy={copy}
                                 onPaste={paste}
                                 onDownloadTab={downloadTab}
-                                onResetInput={resetInput}
                             />
                         </div>
                     </div>
@@ -279,7 +206,6 @@ const Editor: React.FC = () => {
                         onCopy={copy}
                         onPaste={paste}
                         onDownloadTab={downloadTab}
-                        onResetInput={resetInput}
                     />
                 </div>
                 {tabPanels}

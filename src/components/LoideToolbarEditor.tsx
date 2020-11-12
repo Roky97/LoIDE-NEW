@@ -3,7 +3,6 @@ import {
     arrowRedoOutline,
     arrowUndoOutline,
     clipboardOutline,
-    closeCircleOutline,
     copyOutline,
     cutOutline,
     downloadOutline,
@@ -20,7 +19,6 @@ interface LoideToolbarEditorProps {
     onCopy: () => void;
     onPaste?: () => void;
     onDownloadTab: () => void;
-    onResetInput: () => void;
 }
 
 const LoideToolbarEditor: React.FC<LoideToolbarEditorProps> = (props) => {
@@ -32,19 +30,8 @@ const LoideToolbarEditor: React.FC<LoideToolbarEditorProps> = (props) => {
     return (
         <div>
             <button
-                title="Reset input"
-                className="tab-button ion-hide-sm-down"
-                onClick={props.onResetInput}
-            >
-                <IonIcon
-                    color="dark"
-                    style={{ fontSize: "20px" }}
-                    icon={closeCircleOutline}
-                />
-            </button>
-            <button
                 title="Download content"
-                className="tab-button space-left"
+                className="tab-button"
                 onClick={props.onDownloadTab}
             >
                 <IonIcon

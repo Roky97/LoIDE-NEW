@@ -89,5 +89,5 @@ test("test operations popover", async () => {
 
     await screen.findAllByTitle("Open");
     await screen.findAllByTitle("Save");
-    await screen.findAllByTitle("Reset input");
+    await screen.findAllByTitle("Reset");
 });

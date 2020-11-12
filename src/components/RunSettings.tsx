@@ -32,8 +32,6 @@ import API from "../lib/api";
 import { useSetRunSettings } from "../hooks/useSetRunSettings";
 
 const RunSettings: React.FC = () => {
-    useSetRunSettings();
-
     const languages = LanguagesDataStore.useState((l) => l.languages);
 
     const currentLanguage = RunSettingsStore.useState((l) => l.currentLanguage);
@@ -233,6 +231,9 @@ const RunSettings: React.FC = () => {
     useEffect(() => {
         API.emitGetLanguages();
     }, []);
+
+    // set language, solver and executor if they are empty or resetted
+    useSetRunSettings();
 
     return (
         <>

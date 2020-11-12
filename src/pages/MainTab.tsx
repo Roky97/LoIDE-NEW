@@ -15,7 +15,7 @@ import {
     IonTitle,
     IonToolbar,
 } from "@ionic/react";
-import { alertController } from "@ionic/core";
+import { alertController, actionSheetController } from "@ionic/core";
 import logo from "../assets/img/logo_LoIDE.svg";
 import RunSettings from "../components/RunSettings";
 import LoideRunNavButton from "../components/LoideRunNavButton";
@@ -28,9 +28,8 @@ import {
     saveOutline,
 } from "ionicons/icons";
 import SaveProjectModal from "../components/SaveProjectModal";
-import { InitalTabCountID, WindowConfirmMessages } from "../lib/constants";
-import { EditorStore } from "../lib/store";
-import { ILoideTab } from "../lib/LoideInterfaces";
+import { WindowConfirmMessages } from "../lib/constants";
+import Utils from "../lib/utils";
 
 const MainTab: React.FC = () => {
     const [showOpenModal, setShowOpenModal] = useState(false);
@@ -40,20 +39,7 @@ const MainTab: React.FC = () => {
         event: Event | undefined;
     }>({ open: false, event: undefined });
 
-    const eraseTabs = () => {
-        let nextTabs = new Map<number, ILoideTab>().set(InitalTabCountID, {
-            title: `L P ${InitalTabCountID}`,
-            type: "",
-            value: "",
-        });
-        EditorStore.update((e) => {
-            e.tabs = nextTabs;
-            e.currentTab = 0;
-            e.tabCountID = InitalTabCountID;
-        });
-    };
-
-    const showResetAlert = () => {
+    const showResetInputAlert = () => {
         alertController
             .create({
                 message: WindowConfirmMessages.ResetInput.message,
@@ -61,8 +47,48 @@ const MainTab: React.FC = () => {
                 buttons: [
                     { text: "Cancel" },
                     {
-                        text: "Reset",
-                        handler: () => eraseTabs(),
+                        text: "Reset input",
+                        handler: () => Utils.Editor.resetInput(),
+                    },
+                ],
+            })
+            .then((alert) => alert.present());
+    };
+
+    const showResetProjectAlert = () => {
+        alertController
+            .create({
+                message: WindowConfirmMessages.ResetProject.message,
+                header: WindowConfirmMessages.ResetProject.header,
+                buttons: [
+                    { text: "Cancel" },
+                    {
+                        text: "Reset project",
+                        handler: () => Utils.resetProject(),
+                    },
+                ],
+            })
+            .then((alert) => alert.present());
+    };
+
+    const showResetActionSheet = () => {
+        actionSheetController
+            .create({
+                header: "Reset",
+                buttons: [
+                    {
+                        text: "Reset input",
+                        role: "destructive",
+                        handler: () => showResetInputAlert(),
+                    },
+                    {
+                        text: "Reset project",
+                        role: "destructive",
+                        handler: () => showResetProjectAlert(),
+                    },
+                    {
+                        text: "Cancel",
+                        role: "cancel",
                     },
                 ],
             })
@@ -103,6 +129,15 @@ const MainTab: React.FC = () => {
                         >
                             <IonIcon icon={saveOutline} />
                             <span className="margin-button-left">Save</span>
+                        </IonButton>
+                        <IonButton
+                            title="Reset"
+                            color="danger"
+                            className="ion-hide-sm-down"
+                            onClick={() => showResetActionSheet()}
+                        >
+                            <IonIcon icon={closeCircleOutline} />
+                            <span className="margin-button-left">Reset</span>
                         </IonButton>
                         <IonButton
                             color="primary"
@@ -182,10 +217,10 @@ const MainTab: React.FC = () => {
                         </IonItem>
                         <IonItem
                             button={true}
-                            title="Reset input"
-                            onClick={() => showResetAlert()}
+                            title="Reset"
+                            onClick={() => showResetActionSheet()}
                         >
-                            <IonLabel>Reset input</IonLabel>
+                            <IonLabel>Reset</IonLabel>
                             <IonIcon
                                 color="danger"
                                 icon={closeCircleOutline}
