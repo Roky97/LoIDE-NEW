@@ -5,6 +5,7 @@ import {
     IonItem,
     IonList,
     IonRow,
+    IonText,
 } from "@ionic/react";
 import React, { useState } from "react";
 import { useEffect } from "react";
@@ -17,7 +18,7 @@ interface ShareProjectProps {
 }
 
 const ShareProject: React.FC<ShareProjectProps> = (props) => {
-    const [url, setUrl] = useState<string>("loide.demacs.unical.it");
+    const [url, setUrl] = useState<string>("");
 
     const loideProjectData = useGetLoideProjectData();
 
@@ -28,6 +29,19 @@ const ShareProject: React.FC<ShareProjectProps> = (props) => {
 
         setUrl(URL);
     }, [loideProjectData]);
+
+    const [clipboardWriteSupported, setClipboardWriteSupported] = useState<
+        boolean
+    >(false);
+
+    useEffect(() => {
+        let supp = Utils.isClipboardWriteSupported();
+        setClipboardWriteSupported(supp);
+    }, []);
+
+    const selectAll = (e: any) => {
+        e.target.select();
+    };
 
     const copyLink = () => {
         Utils.copyTextToClipboard(
@@ -63,18 +77,29 @@ const ShareProject: React.FC<ShareProjectProps> = (props) => {
                                 inputmode="url"
                                 value={url}
                                 readonly={true}
+                                onFocus={selectAll}
                             />
                         </IonItem>
                     </IonList>
-                    <IonButton
-                        disabled={url.length === 0 ? true : false}
-                        expand="block"
-                        className="ion-margin-top"
-                        title="Copy link"
-                        onClick={copyLink}
-                    >
-                        Copy link
-                    </IonButton>
+                    {clipboardWriteSupported && (
+                        <IonButton
+                            expand="block"
+                            className="ion-margin-top"
+                            title="Copy link"
+                            onClick={copyLink}
+                        >
+                            Copy link
+                        </IonButton>
+                    )}
+
+                    {!clipboardWriteSupported && (
+                        <div className="ion-padding-top">
+                            <p className="ion-text-center"></p>
+                            <IonText color="dark" className="ion-text-center">
+                                <h5>Copy the link and share it.</h5>
+                            </IonText>
+                        </div>
+                    )}
                 </IonCol>
             </IonRow>
         </>
