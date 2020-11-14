@@ -18,18 +18,6 @@ interface ShareProjectProps {
 }
 
 const ShareProject: React.FC<ShareProjectProps> = (props) => {
-    const [url, setUrl] = useState<string>("");
-
-    const loideProjectData = useGetLoideProjectData();
-
-    useEffect(() => {
-        let URL = window.location.host;
-        let params = encodeURIComponent(JSON.stringify(loideProjectData));
-        URL += `/${LoidePath.Editor}/` + params;
-
-        setUrl(URL);
-    }, [loideProjectData]);
-
     const [clipboardWriteSupported, setClipboardWriteSupported] = useState<
         boolean
     >(false);
@@ -38,6 +26,60 @@ const ShareProject: React.FC<ShareProjectProps> = (props) => {
         let supp = Utils.isClipboardWriteSupported();
         setClipboardWriteSupported(supp);
     }, []);
+
+    const [url, setUrl] = useState<string>("");
+    const loideProjectData = useGetLoideProjectData();
+
+    useEffect(() => {
+        if (Object.keys(loideProjectData).length > 0) {
+            let URL = window.location.host;
+
+            let params = encodeURIComponent(JSON.stringify(loideProjectData));
+            URL += `/${LoidePath.Editor}/` + params;
+
+            fetch(
+                "https://is.gd/create.php?format=json&url=" +
+                    encodeURIComponent(URL),
+                {
+                    mode: "cors",
+                    method: "POST",
+                }
+            )
+                .then((res) => res.json())
+                .then(
+                    (result) => {
+                        if (result.shorturl === undefined) {
+                            if (URL.length >= 5000) {
+                                setUrl("Ops. Something went wrong");
+                                Utils.generateGeneralToast(
+                                    "The project is too long to be shared",
+                                    "Error generation link",
+                                    "danger"
+                                );
+                            }
+                            setUrl(URL);
+                        } else setUrl(result.shorturl);
+                    },
+                    (error) => {
+                        setUrl("Ops. Something went wrong");
+                        if (URL.length >= 5000) {
+                            Utils.generateGeneralToast(
+                                "The project is too long to be shared",
+                                "Error generation link",
+                                "danger"
+                            );
+                        } else {
+                            setUrl("Ops. Something went wrong");
+                            Utils.generateGeneralToast(
+                                "Try it later",
+                                "Error generation link",
+                                "danger"
+                            );
+                        }
+                    }
+                );
+        }
+    }, [loideProjectData]);
 
     const selectAll = (e: any) => {
         e.target.select();
