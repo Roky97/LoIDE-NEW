@@ -654,7 +654,6 @@ const Utils = {
     canSetSolver,
     canSetExecutor,
     canSetOption,
-    copyStringToClipboard,
     isClipboardReadSupported,
     isClipboardWriteSupported,
     getTextFromClipboard,

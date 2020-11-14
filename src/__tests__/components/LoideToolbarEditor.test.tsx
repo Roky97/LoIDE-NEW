@@ -103,49 +103,49 @@ test("test paste button", async () => {
     expect(onPaste).toBeCalledTimes(1);
 });
 
-test("test copy button", async () => {
-    const onCopy = jest.fn();
+// test("test copy button", async () => {
+//     const onCopy = jest.fn();
 
-    render(
-        <LoideToolbarEditor
-            onUndo={jest.fn()}
-            onRedo={jest.fn()}
-            onSearch={jest.fn()}
-            onPaste={jest.fn()}
-            onCopy={onCopy}
-            onCut={jest.fn()}
-            onDownloadTab={jest.fn()}
-        />
-    );
+//     render(
+//         <LoideToolbarEditor
+//             onUndo={jest.fn()}
+//             onRedo={jest.fn()}
+//             onSearch={jest.fn()}
+//             onPaste={jest.fn()}
+//             onCopy={onCopy}
+//             onCut={jest.fn()}
+//             onDownloadTab={jest.fn()}
+//         />
+//     );
 
-    const button = await screen.findByTitle("Copy");
-    fireEvent.click(button);
+//     const button = await screen.findByTitle("Copy");
+//     fireEvent.click(button);
 
-    expect(onCopy).toBeCalledTimes(1);
-});
+//     expect(onCopy).toBeCalledTimes(1);
+// });
 
-test("test cut button", async () => {
-    const onCut = jest.fn();
+// test("test cut button", async () => {
+//     const onCut = jest.fn();
 
-    render(
-        <LoideToolbarEditor
-            onUndo={jest.fn()}
-            onRedo={jest.fn()}
-            onSearch={jest.fn()}
-            onPaste={jest.fn()}
-            onCopy={jest.fn()}
-            onCut={onCut}
-            onDownloadTab={jest.fn()}
-        />
-    );
+//     render(
+//         <LoideToolbarEditor
+//             onUndo={jest.fn()}
+//             onRedo={jest.fn()}
+//             onSearch={jest.fn()}
+//             onPaste={jest.fn()}
+//             onCopy={jest.fn()}
+//             onCut={onCut}
+//             onDownloadTab={jest.fn()}
+//         />
+//     );
 
-    const button = await screen.findByTitle("Cut");
-    fireEvent.click(button);
+//     const button = await screen.findByTitle("Cut");
+//     fireEvent.click(button);
 
-    expect(onCut).toBeCalledTimes(1);
-});
+//     expect(onCut).toBeCalledTimes(1);
+// });
 
-test("test donwload content tab button", async () => {
+test("test download content tab button", async () => {
     const onDownloadTab = jest.fn();
 
     render(

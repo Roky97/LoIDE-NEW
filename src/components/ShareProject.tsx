@@ -96,7 +96,7 @@ const ShareProject: React.FC<ShareProjectProps> = (props) => {
                         <div className="ion-padding-top">
                             <p className="ion-text-center"></p>
                             <IonText color="dark" className="ion-text-center">
-                                <h5>Copy the link and share it.</h5>
+                                <h5>Copy the link and share it</h5>
                             </IonText>
                         </div>
                     )}

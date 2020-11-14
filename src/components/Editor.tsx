@@ -101,14 +101,14 @@ const Editor: React.FC = () => {
     const cut = () => {
         let stringToCopy = editorsRef.current?.editor.getCopyText();
         if (stringToCopy) {
-            Utils.copyStringToClipboard(stringToCopy);
+            Utils.copyTextToClipboard(stringToCopy);
             editorsRef.current?.editor.execCommand("cut");
         }
     };
 
     const copy = () => {
         let stringToCopy = editorsRef.current?.editor.getCopyText();
-        if (stringToCopy) Utils.copyStringToClipboard(stringToCopy);
+        if (stringToCopy) Utils.copyTextToClipboard(stringToCopy);
     };
 
     const paste = () => {

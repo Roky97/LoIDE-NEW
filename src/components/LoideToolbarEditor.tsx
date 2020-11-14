@@ -23,9 +23,13 @@ interface LoideToolbarEditorProps {
 
 const LoideToolbarEditor: React.FC<LoideToolbarEditorProps> = (props) => {
     const [pasteSupported, setPasteSupported] = useState<boolean>(false);
+    const [writeClipboardSupported, setWriteClipboardSupported] = useState<
+        boolean
+    >(false);
 
     useEffect(() => {
-        setPasteSupported(Utils.isClipboardReadSupported);
+        setPasteSupported(Utils.isClipboardReadSupported());
+        setWriteClipboardSupported(Utils.isClipboardWriteSupported());
     }, []);
     return (
         <div>
@@ -41,24 +45,34 @@ const LoideToolbarEditor: React.FC<LoideToolbarEditorProps> = (props) => {
                 />
             </button>
 
-            <button
-                title="Cut"
-                className="tab-button space-left"
-                onClick={props.onCut}
-            >
-                <IonIcon
-                    color="dark"
-                    style={{ fontSize: "20px" }}
-                    icon={cutOutline}
-                />
-            </button>
-            <button title="Copy" className="tab-button" onClick={props.onCopy}>
-                <IonIcon
-                    color="dark"
-                    style={{ fontSize: "20px" }}
-                    icon={copyOutline}
-                />
-            </button>
+            {writeClipboardSupported && (
+                <>
+                    <button
+                        title="Cut"
+                        className="tab-button space-left"
+                        onClick={props.onCut}
+                    >
+                        <IonIcon
+                            color="dark"
+                            style={{ fontSize: "20px" }}
+                            icon={cutOutline}
+                        />
+                    </button>
+
+                    <button
+                        title="Copy"
+                        className="tab-button"
+                        onClick={props.onCopy}
+                    >
+                        <IonIcon
+                            color="dark"
+                            style={{ fontSize: "20px" }}
+                            icon={copyOutline}
+                        />
+                    </button>
+                </>
+            )}
+
             {pasteSupported && (
                 <button
                     title="Paste"
