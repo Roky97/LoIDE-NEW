@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     IonButton,
     IonButtons,
@@ -26,18 +26,42 @@ import {
     ellipsisVerticalOutline,
     folderOpenOutline,
     saveOutline,
+    shareOutline,
 } from "ionicons/icons";
 import SaveProjectModal from "../components/SaveProjectModal";
 import { WindowConfirmMessages } from "../lib/constants";
 import Utils from "../lib/utils";
+import ShareProjectModal from "../components/ShareProjectModal";
+import { RouteComponentProps } from "react-router";
+import { LanguagesDataStore } from "../lib/store";
 
-const MainTab: React.FC = () => {
+interface MainTabPageProps
+    extends RouteComponentProps<{
+        data: string;
+    }> {}
+
+const MainTab: React.FC<MainTabPageProps> = ({ match }) => {
     const [showOpenModal, setShowOpenModal] = useState(false);
     const [showSaveModal, setShowSaveModal] = useState(false);
+    const [showShareModal, setShowShareModal] = useState(false);
     const [buttonsPopover, setButtonsPopover] = useState<{
         open: boolean;
         event: Event | undefined;
     }>({ open: false, event: undefined });
+
+    const languages = LanguagesDataStore.useState((l) => l.languages);
+
+    useEffect(() => {
+        if (languages.length > 0) {
+            let dataToLoad = decodeURIComponent(match.params.data);
+            // console.log(dataToLoad);
+            if (Utils.isJSON(dataToLoad)) {
+                let config = JSON.parse(dataToLoad);
+                Utils.setProjectFromLink(config, languages);
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [languages]);
 
     const showResetInputAlert = () => {
         alertController
@@ -131,6 +155,15 @@ const MainTab: React.FC = () => {
                             <span className="margin-button-left">Save</span>
                         </IonButton>
                         <IonButton
+                            title="Share"
+                            color="success"
+                            className="ion-hide-sm-down"
+                            onClick={() => setShowShareModal(true)}
+                        >
+                            <IonIcon icon={shareOutline} />
+                            <span className="margin-button-left">Share</span>
+                        </IonButton>
+                        <IonButton
                             title="Reset"
                             color="danger"
                             className="ion-hide-sm-down"
@@ -182,6 +215,10 @@ const MainTab: React.FC = () => {
                     isOpen={showSaveModal}
                     onDismiss={setShowSaveModal}
                 />
+                <ShareProjectModal
+                    isOpen={showShareModal}
+                    onDismiss={setShowShareModal}
+                />
                 <IonPopover
                     data-testid="operations-popover"
                     isOpen={buttonsPopover.open}
@@ -213,6 +250,19 @@ const MainTab: React.FC = () => {
                                 color="primary"
                                 icon={saveOutline}
                                 slot="end"
+                            />
+                        </IonItem>
+                        <IonItem
+                            button={true}
+                            title="Share"
+                            onClick={() => setShowShareModal(true)}
+                        >
+                            <IonLabel>Share</IonLabel>
+
+                            <IonIcon
+                                color="success"
+                                slot="end"
+                                icon={shareOutline}
                             />
                         </IonItem>
                         <IonItem

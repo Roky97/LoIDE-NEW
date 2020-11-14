@@ -5,7 +5,7 @@ import {
     ISolverData,
 } from "./LoideAPIInterfaces";
 import { toastController } from "@ionic/core";
-import { ILoideTab, ISolverOption } from "./LoideInterfaces";
+import { ILoideProject, ILoideTab, ISolverOption } from "./LoideInterfaces";
 import {
     EditorStore,
     initialEditorStore,
@@ -13,8 +13,10 @@ import {
     initialRunSettingsStore,
     OutputStore,
     RunSettingsStore,
+    UIStatusStore,
 } from "./store";
 import { enableMapSet } from "immer";
+import { InitalTabCountID } from "./constants";
 
 enableMapSet();
 
@@ -204,12 +206,18 @@ const copyStringToClipboard = (str: string) => {
     document.body.removeChild(el);
 };
 
-const isClipboardSupported = (): boolean => {
-    return typeof navigator.clipboard === "undefined" ? false : true;
+const isClipboardReadSupported = (): boolean => {
+    return typeof navigator?.clipboard?.readText === "undefined" ? false : true;
+};
+
+const isClipboardWriteSupported = (): boolean => {
+    return typeof navigator?.clipboard?.writeText === "undefined"
+        ? false
+        : true;
 };
 
 const getTextFromClipboard = (callback: (text: string) => void): void => {
-    if (isClipboardSupported()) {
+    if (isClipboardReadSupported()) {
         navigator.clipboard
             .readText()
             .then((text) => {
@@ -230,6 +238,18 @@ const getTextFromClipboard = (callback: (text: string) => void): void => {
             "Clipboard error",
             "danger"
         );
+};
+
+const copyTextToClipboard = (
+    text: string,
+    callbackSuccess?: () => void,
+    callbackError?: () => void
+) => {
+    if (isClipboardWriteSupported()) {
+        navigator.clipboard
+            .writeText(text)
+            .then(callbackSuccess, callbackError);
+    }
 };
 
 const downloadTextFile = (title: string, text: string) => {
@@ -321,6 +341,301 @@ const resetProject = () => {
     });
 };
 
+const createTabsFromArray = (textTabs: string[]) => {
+    let newTabs = new Map<number, ILoideTab>();
+    let indexTab = InitalTabCountID;
+    textTabs.forEach((text) => {
+        newTabs.set(indexTab, {
+            title: `L P ${indexTab}`,
+            type: "",
+            value: text,
+        });
+        indexTab++;
+    });
+    EditorStore.update((e) => {
+        e.tabCountID = indexTab;
+        e.tabs = newTabs;
+    });
+    UIStatusStore.update((u) => {
+        u.loadingFiles = false;
+    });
+    Utils.generateGeneralToast("File opened successfully.", "", "success");
+};
+
+const setProjectFromConfig = (
+    config: any,
+    languages: ILanguageData[],
+    onFinishCallback?: (done: boolean) => void
+) => {
+    if (Utils.hasRightProperty(config)) {
+        let project: ILoideProject = config;
+
+        let valuesNotSupported: string[] = [];
+        let optionsSupported: ISolverOption[] = [];
+        let optionsNotSupported: boolean = false;
+
+        // set the current language
+        if (Utils.canSetLanguage(project.language, languages)) {
+            RunSettingsStore.update((s) => {
+                s.currentLanguage = project.language;
+            });
+
+            // set the current solver
+            if (
+                Utils.canSetSolver(project.solver, project.language, languages)
+            ) {
+                RunSettingsStore.update((s) => {
+                    s.currentSolver = project.solver;
+                });
+
+                // set the current executor
+                if (
+                    Utils.canSetExecutor(
+                        project.executor,
+                        project.solver,
+                        project.language,
+                        languages
+                    )
+                ) {
+                    RunSettingsStore.update((s) => {
+                        s.currentExecutor = project.executor;
+                    });
+                } else {
+                    valuesNotSupported.push("• Executor");
+                }
+            } else {
+                valuesNotSupported.push("• Solver");
+                valuesNotSupported.push("• Executor");
+            }
+        } else {
+            valuesNotSupported.push("• Language");
+            valuesNotSupported.push("• Solver");
+            valuesNotSupported.push("• Executor");
+        }
+
+        for (let option of project.options) {
+            if (
+                Utils.canSetOption(
+                    option,
+                    project.solver,
+                    project.language,
+                    languages
+                )
+            )
+                optionsSupported.push(option);
+            else optionsNotSupported = true;
+        }
+
+        // set the ID tabs to execute, the options supported and the runAuto option
+        RunSettingsStore.update((s) => {
+            s.currentOptions = optionsSupported;
+            s.IDTabsToExecute = project.IDTabsToExecute;
+            s.runAuto = project.runAuto;
+        });
+
+        // set the tabs and their IDs
+        let newTabs = new Map<number, ILoideTab>();
+
+        project.tabs.forEach((program, index) => {
+            newTabs.set(project.IDTabs[index], {
+                title: program.title,
+                type: program.type,
+                value: program.value,
+            });
+        });
+
+        EditorStore.update((e) => {
+            e.tabs = newTabs;
+            e.tabCountID = project.IDTabs[project.IDTabs.length - 1]; // set the last ID
+        });
+
+        // set the output
+        OutputStore.update((o) => {
+            o.model = project.outputModel;
+            o.error = project.outputError;
+        });
+
+        if (valuesNotSupported.length > 0) {
+            Utils.generateGeneralToast(
+                `The following values cannot be setted:\n<b>${valuesNotSupported.join(
+                    ",\n"
+                )}\n${
+                    optionsNotSupported
+                        ? "<br>Found solver options that cannot be setted due above."
+                        : ""
+                } <b/>`,
+                "File not opened properly",
+                "warning",
+                10000
+            );
+
+            if (onFinishCallback) onFinishCallback(true);
+        } else if (optionsNotSupported) {
+            Utils.generateGeneralToast(
+                "Found solver options that cannot be setted due the incompatibility of the solver loaded.",
+                "File not opened properly.",
+                "warning",
+                7000
+            );
+            if (onFinishCallback) onFinishCallback(true);
+        } else {
+            Utils.generateGeneralToast(
+                "File opened successfully.",
+                "",
+                "success"
+            );
+            if (onFinishCallback) onFinishCallback(true);
+        }
+    } else {
+        Utils.generateGeneralToast(
+            "Config file not recognized",
+            "Error open file",
+            "danger"
+        );
+        if (onFinishCallback) onFinishCallback(false);
+    }
+    UIStatusStore.update((u) => {
+        u.loadingFiles = false;
+    });
+};
+
+const setProjectFromLink = (
+    config: any,
+    languages: ILanguageData[],
+    onFinishCallback?: (done: boolean) => void
+) => {
+    if (Utils.hasRightProperty(config)) {
+        let project: ILoideProject = config;
+
+        let valuesNotSupported: string[] = [];
+        let optionsSupported: ISolverOption[] = [];
+        let optionsNotSupported: boolean = false;
+
+        // set the current language
+        if (Utils.canSetLanguage(project.language, languages)) {
+            RunSettingsStore.update((s) => {
+                s.currentLanguage = project.language;
+            });
+
+            // set the current solver
+            if (
+                Utils.canSetSolver(project.solver, project.language, languages)
+            ) {
+                RunSettingsStore.update((s) => {
+                    s.currentSolver = project.solver;
+                });
+
+                // set the current executor
+                if (
+                    Utils.canSetExecutor(
+                        project.executor,
+                        project.solver,
+                        project.language,
+                        languages
+                    )
+                ) {
+                    RunSettingsStore.update((s) => {
+                        s.currentExecutor = project.executor;
+                    });
+                } else {
+                    valuesNotSupported.push("• Executor");
+                }
+            } else {
+                valuesNotSupported.push("• Solver");
+                valuesNotSupported.push("• Executor");
+            }
+        } else {
+            valuesNotSupported.push("• Language");
+            valuesNotSupported.push("• Solver");
+            valuesNotSupported.push("• Executor");
+        }
+
+        for (let option of project.options) {
+            if (
+                Utils.canSetOption(
+                    option,
+                    project.solver,
+                    project.language,
+                    languages
+                )
+            )
+                optionsSupported.push(option);
+            else optionsNotSupported = true;
+        }
+
+        // set the ID tabs to execute, the options supported and the runAuto option
+        RunSettingsStore.update((s) => {
+            s.currentOptions = optionsSupported;
+            s.IDTabsToExecute = project.IDTabsToExecute;
+            s.runAuto = project.runAuto;
+        });
+
+        // set the tabs and their IDs
+        let newTabs = new Map<number, ILoideTab>();
+
+        project.tabs.forEach((program, index) => {
+            newTabs.set(project.IDTabs[index], {
+                title: program.title,
+                type: program.type,
+                value: program.value,
+            });
+        });
+
+        EditorStore.update((e) => {
+            e.tabs = newTabs;
+            e.tabCountID = project.IDTabs[project.IDTabs.length - 1]; // set the last ID
+        });
+
+        // set the output
+        OutputStore.update((o) => {
+            o.model = project.outputModel;
+            o.error = project.outputError;
+        });
+
+        if (valuesNotSupported.length > 0) {
+            Utils.generateGeneralToast(
+                `The following values cannot be set:\n<b>${valuesNotSupported.join(
+                    ",\n"
+                )}\n${
+                    optionsNotSupported
+                        ? "<br>Found solver options that cannot be set due above."
+                        : ""
+                } <b/>`,
+                "Project not opened properly",
+                "warning",
+                10000
+            );
+
+            if (onFinishCallback) onFinishCallback(true);
+        } else if (optionsNotSupported) {
+            Utils.generateGeneralToast(
+                "Found solver options that cannot be set due the incompatibility of the solver loaded.",
+                "Project not opened properly.",
+                "warning",
+                7000
+            );
+            if (onFinishCallback) onFinishCallback(true);
+        } else {
+            Utils.generateGeneralToast(
+                "Project opened successfully.",
+                "",
+                "success"
+            );
+            if (onFinishCallback) onFinishCallback(true);
+        }
+    } else {
+        Utils.generateGeneralToast(
+            "Link not recognized",
+            "Error open the project from the link",
+            "danger"
+        );
+        if (onFinishCallback) onFinishCallback(false);
+    }
+    UIStatusStore.update((u) => {
+        u.loadingFiles = false;
+    });
+};
+
 const Editor = {
     resetInput,
     addTab,
@@ -340,10 +655,15 @@ const Utils = {
     canSetExecutor,
     canSetOption,
     copyStringToClipboard,
-    isClipboardSupported,
+    isClipboardReadSupported,
+    isClipboardWriteSupported,
     getTextFromClipboard,
     downloadTextFile,
     resetProject,
+    copyTextToClipboard,
+    createTabsFromArray,
+    setProjectFromConfig,
+    setProjectFromLink,
 };
 
 export default Utils;

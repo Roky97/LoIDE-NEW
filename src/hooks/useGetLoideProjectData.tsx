@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { RunSettingsStore, EditorStore, OutputStore } from "../lib/store";
 import { ILoideProject } from "../lib/LoideInterfaces";
 
-export const useGetLoideProjectData = (nameProject: string): ILoideProject => {
+export const useGetLoideProjectData = (): ILoideProject => {
     const currentLanguage = RunSettingsStore.useState((s) => s.currentLanguage);
     const currentSolver = RunSettingsStore.useState((s) => s.currentSolver);
     const currentExecutor = RunSettingsStore.useState((s) => s.currentExecutor);

@@ -55,165 +55,18 @@ const LoideFileDropzone: React.FC<LoideFileDropzoneProps> = (props) => {
 
     const setJSONInput = useCallback(
         (config: any) => {
-            if (Utils.hasRightProperty(config)) {
-                let project: ILoideProject = config;
-
-                let valuesNotSupported: string[] = [];
-                let optionsSupported: ISolverOption[] = [];
-                let optionsNotSupported: boolean = false;
-
-                // set the current language
-                if (Utils.canSetLanguage(project.language, languages)) {
-                    RunSettingsStore.update((s) => {
-                        s.currentLanguage = project.language;
-                    });
-
-                    // set the current solver
-                    if (
-                        Utils.canSetSolver(
-                            project.solver,
-                            project.language,
-                            languages
-                        )
-                    ) {
-                        RunSettingsStore.update((s) => {
-                            s.currentSolver = project.solver;
-                        });
-
-                        // set the current executor
-                        if (
-                            Utils.canSetExecutor(
-                                project.executor,
-                                project.solver,
-                                project.language,
-                                languages
-                            )
-                        ) {
-                            RunSettingsStore.update((s) => {
-                                s.currentExecutor = project.executor;
-                            });
-                        } else {
-                            valuesNotSupported.push("• Executor");
-                        }
-                    } else {
-                        valuesNotSupported.push("• Solver");
-                        valuesNotSupported.push("• Executor");
-                    }
-                } else {
-                    valuesNotSupported.push("• Language");
-                    valuesNotSupported.push("• Solver");
-                    valuesNotSupported.push("• Executor");
-                }
-
-                for (let option of project.options) {
-                    if (
-                        Utils.canSetOption(
-                            option,
-                            project.solver,
-                            project.language,
-                            languages
-                        )
-                    )
-                        optionsSupported.push(option);
-                    else optionsNotSupported = true;
-                }
-
-                // set the ID tabs to execute, the options supported and the runAuto option
-                RunSettingsStore.update((s) => {
-                    s.currentOptions = optionsSupported;
-                    s.IDTabsToExecute = project.IDTabsToExecute;
-                    s.runAuto = project.runAuto;
-                });
-
-                // set the tabs and their IDs
-                let newTabs = new Map<number, ILoideTab>();
-
-                project.tabs.forEach((program, index) => {
-                    newTabs.set(project.IDTabs[index], {
-                        title: program.title,
-                        type: program.type,
-                        value: program.value,
-                    });
-                });
-
-                EditorStore.update((e) => {
-                    e.tabs = newTabs;
-                    e.tabCountID = project.IDTabs[project.IDTabs.length - 1]; // set the last ID
-                });
-
-                // set the output
-                OutputStore.update((o) => {
-                    o.model = project.outputModel;
-                    o.error = project.outputError;
-                });
-
-                if (valuesNotSupported.length > 0) {
-                    Utils.generateGeneralToast(
-                        `The following values cannot be setted:\n<b>${valuesNotSupported.join(
-                            ",\n"
-                        )}\n${
-                            optionsNotSupported
-                                ? "<br>Found solver options that cannot be setted due above."
-                                : ""
-                        } <b/>`,
-                        "File not opened properly",
-                        "warning",
-                        10000
-                    );
-
-                    if (props.onFinishLoad) props.onFinishLoad(true);
-                } else if (optionsNotSupported) {
-                    Utils.generateGeneralToast(
-                        "Found solver options that cannot be setted due the incompatibility of the solver loaded.",
-                        "File not opened properly.",
-                        "warning",
-                        7000
-                    );
-                    if (props.onFinishLoad) props.onFinishLoad(true);
-                } else {
-                    Utils.generateGeneralToast(
-                        "File opened successfully.",
-                        "",
-                        "success"
-                    );
-                    if (props.onFinishLoad) props.onFinishLoad(true);
-                }
-            } else {
-                Utils.generateGeneralToast(
-                    "Config file not recognized",
-                    "Error open file",
-                    "danger"
-                );
-                if (props.onFinishLoad) props.onFinishLoad(false);
-            }
-            UIStatusStore.update((u) => {
-                u.loadingFiles = false;
-            });
+            Utils.setProjectFromConfig(config, languages, props.onFinishLoad);
         },
         [props, languages]
     );
 
-    const setTabsFromFiles = useCallback((textsTabs: string[]) => {
-        let newTabs = new Map<number, ILoideTab>();
-        let indexTab = InitalTabCountID;
-        textsTabs.forEach((text) => {
-            newTabs.set(indexTab, {
-                title: `L P ${indexTab}`,
-                type: "",
-                value: text,
-            });
-            indexTab++;
-        });
-        EditorStore.update((e) => {
-            e.tabCountID = indexTab;
-            e.tabs = newTabs;
-        });
-        UIStatusStore.update((u) => {
-            u.loadingFiles = false;
-        });
-        Utils.generateGeneralToast("File opened successfully.", "", "success");
-        if (props.onFinishLoad) props.onFinishLoad(true);
-    }, []);
+    const setTabsFromFiles = useCallback(
+        (textsTabs: string[]) => {
+            Utils.createTabsFromArray(textsTabs);
+            if (props.onFinishLoad) props.onFinishLoad(true);
+        },
+        [props]
+    );
 
     const {
         acceptedFiles,

@@ -71,7 +71,7 @@ const App: React.FC = () => {
                 <IonTabs>
                     <IonRouterOutlet>
                         <Route
-                            path={`/${LoidePath.Editor}`}
+                            path={`/${LoidePath.Editor}/:data`}
                             component={MainTab}
                             exact={true}
                         />

@@ -13,7 +13,7 @@ import { useGetLoideProjectData } from "../hooks/useGetLoideProjectData";
 const SaveProject: React.FC = () => {
     const [nameProject, setNameProject] = useState<string>("LoIDE_Project");
 
-    const loideProjectData = useGetLoideProjectData(nameProject);
+    const loideProjectData = useGetLoideProjectData();
 
     const donwloadFile = () => {
         let fileContent = JSON.stringify(loideProjectData);

@@ -25,7 +25,7 @@ const LoideToolbarEditor: React.FC<LoideToolbarEditorProps> = (props) => {
     const [pasteSupported, setPasteSupported] = useState<boolean>(false);
 
     useEffect(() => {
-        setPasteSupported(Utils.isClipboardSupported);
+        setPasteSupported(Utils.isClipboardReadSupported);
     }, []);
     return (
         <div>
