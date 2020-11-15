@@ -5,6 +5,7 @@ import {
     IonItem,
     IonList,
     IonRow,
+    IonSpinner,
     IonText,
 } from "@ionic/react";
 import React, { useState } from "react";
@@ -27,8 +28,10 @@ const ShareProject: React.FC<ShareProjectProps> = (props) => {
         setClipboardWriteSupported(supp);
     }, []);
 
-    const [url, setUrl] = useState<string>("");
+    const [url, setUrl] = useState<string>("Loading...");
     const loideProjectData = useGetLoideProjectData();
+
+    const [urlLoading, setUrlLoading] = useState<boolean>(true);
 
     useEffect(() => {
         if (Object.keys(loideProjectData).length > 0) {
@@ -48,6 +51,7 @@ const ShareProject: React.FC<ShareProjectProps> = (props) => {
                 .then((res) => res.json())
                 .then(
                     (result) => {
+                        setUrlLoading(false);
                         if (result.shorturl === undefined) {
                             if (URL.length >= 5000) {
                                 setUrl("Ops. Something went wrong");
@@ -62,6 +66,7 @@ const ShareProject: React.FC<ShareProjectProps> = (props) => {
                     },
                     (error) => {
                         setUrl("Ops. Something went wrong");
+                        setUrlLoading(false);
                         if (URL.length >= 5000) {
                             Utils.generateGeneralToast(
                                 "The project is too long to be shared",
@@ -121,6 +126,13 @@ const ShareProject: React.FC<ShareProjectProps> = (props) => {
                                 readonly={true}
                                 onFocus={selectAll}
                             />
+                            {urlLoading && (
+                                <IonSpinner
+                                    slot="end"
+                                    color="primary"
+                                    name="dots"
+                                />
+                            )}
                         </IonItem>
                     </IonList>
                     {clipboardWriteSupported && (
