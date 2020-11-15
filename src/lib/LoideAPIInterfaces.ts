@@ -1,14 +1,14 @@
 export interface ILanguageData {
     name: string;
     value: string;
-    solvers: ISolverData[]
+    solvers: ISolverData[];
 }
 export interface ISolverData {
     name: string;
     value: string;
     executors: IExecutorData[];
     options?: IOptionsData[];
-};
+}
 
 export interface IExecutorData {
     name: string;
@@ -27,7 +27,7 @@ export interface ILoideRunData {
     engine: string;
     executor: string;
     program: string[];
-    option?: { name: string, value: string[] }[];
+    option?: { name: string; value: string[] }[];
 }
 
 export interface IOutputData {

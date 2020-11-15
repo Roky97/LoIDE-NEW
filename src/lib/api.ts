@@ -1,7 +1,12 @@
 import { APIWSEvents, Errors } from "./constants";
-import io from "socket.io-client"
+import io from "socket.io-client";
 import { toastController } from "@ionic/core";
-import { ILanguageData, ILoideRunData, IOutputData, IOutputProblemData } from "./LoideAPIInterfaces";
+import {
+    ILanguageData,
+    ILoideRunData,
+    IOutputData,
+    IOutputProblemData,
+} from "./LoideAPIInterfaces";
 import { SocketStatusStore, UIStatusStore } from "./store";
 
 // LoIDE Web Server API URL
@@ -13,18 +18,19 @@ const createSocket = () => {
     if (!socket) {
         socket = io(APIUrl, { reconnection: false });
         socket.on(APIWSEvents.on.connectError, async (error: any) => {
-            await toastController.create({
-                position: "top",
-                header: "Error",
-                message: Errors.ConnectionError,
-                color: "danger",
-                duration: 3000,
-                buttons: ["OK"]
-            })
-                .then(toast => {
-                    toast.present()
+            await toastController
+                .create({
+                    position: "top",
+                    header: "Error",
+                    message: Errors.ConnectionError,
+                    color: "danger",
+                    duration: 3000,
+                    buttons: ["OK"],
+                })
+                .then((toast) => {
+                    toast.present();
                 });
-            SocketStatusStore.update(s => {
+            SocketStatusStore.update((s) => {
                 s.connected = false;
             });
             UIStatusStore.update((s) => {
@@ -33,54 +39,62 @@ const createSocket = () => {
             console.error(Errors.ConnectionError);
         });
     }
-}
+};
 
-const setRunProjectListener = (callbackOutput: (output: IOutputData) => void) => {
+const setRunProjectListener = (
+    callbackOutput: (output: IOutputData) => void
+) => {
     if (socket) {
         socket.off(APIWSEvents.on.problem);
         socket.off(APIWSEvents.on.output);
 
-        socket.on(APIWSEvents.on.problem, async (response: IOutputProblemData) => {
-            SocketStatusStore.update(s => {
-                s.connected = true;
-            });
-            await toastController.create({
-                position: "top",
-                header: "Execution error",
-                message: response.reason,
-                color: "danger",
-                duration: 3000,
-                buttons: ["OK"]
-            })
-                .then(toast => {
-                    toast.present()
+        socket.on(
+            APIWSEvents.on.problem,
+            async (response: IOutputProblemData) => {
+                SocketStatusStore.update((s) => {
+                    s.connected = true;
                 });
-        });
+                await toastController
+                    .create({
+                        position: "top",
+                        header: "Execution error",
+                        message: response.reason,
+                        color: "danger",
+                        duration: 3000,
+                        buttons: ["OK"],
+                    })
+                    .then((toast) => {
+                        toast.present();
+                    });
+            }
+        );
 
         socket.on(APIWSEvents.on.output, (response: IOutputData) => {
-            SocketStatusStore.update(s => {
+            SocketStatusStore.update((s) => {
                 s.connected = true;
             });
             callbackOutput(response);
         });
     }
-}
+};
 
-const setGetLanguagesListener = (callbackLanguages: (output: ILanguageData[]) => void) => {
+const setGetLanguagesListener = (
+    callbackLanguages: (output: ILanguageData[]) => void
+) => {
     if (socket) {
         socket.off(APIWSEvents.on.languages);
         socket.on(APIWSEvents.on.languages, (response: string) => {
             let data: ILanguageData[] = Array.from(JSON.parse(response));
-            SocketStatusStore.update(s => {
+            SocketStatusStore.update((s) => {
                 s.connected = true;
             });
             UIStatusStore.update((s) => {
                 s.connectingToTheServer = false;
             });
             callbackLanguages(data);
-        })
+        });
     }
-}
+};
 
 const emitGetLanguages = () => {
     if (socket) {
@@ -92,30 +106,37 @@ const emitGetLanguages = () => {
         }
         socket.emit(APIWSEvents.emit.getLanguages);
     }
-}
+};
 
 const emitRunProject = (data: ILoideRunData) => {
     if (socket) {
         if (socket.disconnected) socket.connect();
         socket.emit(APIWSEvents.emit.run, JSON.stringify(data));
     }
-}
+};
 
 const isConnected = (): boolean => {
     if (socket) {
         return socket.connected;
     }
     return false;
-}
-
+};
 
 const disconnectAndClearSocket = () => {
     if (socket) {
         socket.removeAllListeners();
         socket.disconnect();
     }
-}
+};
 
-const API = { createSocket, isConnected, disconnectAndClearSocket, setRunProjectListener, setGetLanguagesListener, emitRunProject, emitGetLanguages }
+const API = {
+    createSocket,
+    isConnected,
+    disconnectAndClearSocket,
+    setRunProjectListener,
+    setGetLanguagesListener,
+    emitRunProject,
+    emitGetLanguages,
+};
 
 export default API;

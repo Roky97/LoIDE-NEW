@@ -18,17 +18,17 @@ export interface IToggleItem {
 }
 
 export interface ILanguagesStore {
-    languages: ILanguageData[]
+    languages: ILanguageData[];
 }
 
 export interface IRunSettingsStore {
-    currentLanguage: string,
-    currentSolver: string,
-    currentExecutor: string,
+    currentLanguage: string;
+    currentSolver: string;
+    currentExecutor: string;
 
-    currentOptions: ISolverOption[]
+    currentOptions: ISolverOption[];
 
-    IDTabsToExecute: number[]
+    IDTabsToExecute: number[];
 
     runAuto: boolean;
 }
@@ -42,8 +42,8 @@ export interface ILoideTab {
 export interface IEditorStore {
     tabCountID: number;
     currentTab: number;
-    tabs: Map<number, ILoideTab>
-    prevTabsSize: number
+    tabs: Map<number, ILoideTab>;
+    prevTabsSize: number;
 }
 
 export interface IOutputStore {
@@ -73,7 +73,7 @@ export interface ILoideProject {
 
     IDTabsToExecute: number[];
 
-    tabs: ILoideTab[]
+    tabs: ILoideTab[];
     IDTabs: number[];
 
     runAuto: boolean;
