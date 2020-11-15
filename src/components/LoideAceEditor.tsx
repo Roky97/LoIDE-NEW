@@ -4,6 +4,7 @@ import AceEditor from "react-ace";
 
 import "../lib/ace/mode-asp";
 import "ace-builds/src-noconflict/theme-tomorrow";
+import "ace-builds/src-noconflict/theme-idle_fingers";
 import "ace-builds/src-noconflict/ext-language_tools";
 import "ace-builds/src-min-noconflict/ext-searchbox";
 import { LoideLanguages, LoideSolvers } from "../lib/constants";
@@ -45,6 +46,7 @@ function createEditSession(session: any) {
 
 interface LoideAceEditorProps {
     mode: string;
+    darkTheme: boolean;
     solver: string;
     tabKey: number;
     value?: string;
@@ -520,7 +522,7 @@ const LoideAceEditor = React.forwardRef<AceEditor, LoideAceEditorProps>(
                 width="0px"
                 // mode={props.mode}
                 mode="text"
-                theme="tomorrow"
+                theme={props.darkTheme ? "idle_fingers" : "tomorrow"}
                 name={`editor-${props.tabKey}`}
                 value={props.value}
                 editorProps={{

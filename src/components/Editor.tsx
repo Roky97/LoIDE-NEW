@@ -10,6 +10,7 @@ import { alertController } from "@ionic/core";
 import LoideToolbarEditor from "./LoideToolbarEditor";
 import AceEditor from "react-ace";
 import Utils from "../lib/utils";
+import { useIsDarkMode } from "../hooks/useIsDarkMode";
 
 const Editor: React.FC = () => {
     const tabCountID = EditorStore.useState((e) => e.tabCountID);
@@ -24,6 +25,8 @@ const Editor: React.FC = () => {
     const editorsRef = useRef<AceEditor>(null);
 
     const [editorSessions, setEditorSessions] = useState<any[]>([]);
+
+    const darkMode = useIsDarkMode();
 
     // set the current tab ID depending on selected tab
     useEffect(() => {
@@ -151,6 +154,7 @@ const Editor: React.FC = () => {
                 mode={currentLanguage}
                 solver={currentSolver}
                 value={tabs.get(key)!.value}
+                darkTheme={darkMode}
                 onChange={onChange}
                 onSaveSession={onSaveSession}
             />

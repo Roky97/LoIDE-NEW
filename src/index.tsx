@@ -2,6 +2,7 @@ import { setupConfig } from "@ionic/core";
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
+import { DarkModeProvider } from "./providers/DarkModeProvider";
 import { ViewportProvider } from "./providers/ViewportProvider";
 import * as serviceWorker from "./serviceWorker";
 
@@ -10,9 +11,11 @@ setupConfig({
 });
 
 ReactDOM.render(
-    <ViewportProvider>
-        <App />
-    </ViewportProvider>,
+    <DarkModeProvider>
+        <ViewportProvider>
+            <App />
+        </ViewportProvider>
+    </DarkModeProvider>,
     document.getElementById("root")
 );
 
