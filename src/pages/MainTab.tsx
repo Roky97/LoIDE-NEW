@@ -29,7 +29,11 @@ import {
     shareOutline,
 } from "ionicons/icons";
 import SaveProjectModal from "../components/SaveProjectModal";
-import { WindowConfirmMessages } from "../lib/constants";
+import {
+    ActionSheet,
+    ButtonText,
+    WindowConfirmMessages,
+} from "../lib/constants";
 import Utils from "../lib/utils";
 import ShareProjectModal from "../components/ShareProjectModal";
 import { RouteComponentProps } from "react-router";
@@ -54,7 +58,6 @@ const MainTab: React.FC<MainTabPageProps> = ({ match }) => {
     useEffect(() => {
         if (languages.length > 0) {
             let dataToLoad = decodeURIComponent(match.params.data);
-            // console.log(dataToLoad);
             if (Utils.isJSON(dataToLoad)) {
                 let config = JSON.parse(dataToLoad);
                 Utils.setProjectFromLink(config, languages);
@@ -69,9 +72,9 @@ const MainTab: React.FC<MainTabPageProps> = ({ match }) => {
                 message: WindowConfirmMessages.ResetInput.message,
                 header: WindowConfirmMessages.ResetInput.header,
                 buttons: [
-                    { text: "Cancel" },
+                    { text: ButtonText.Cancel },
                     {
-                        text: "Reset input",
+                        text: ButtonText.ResetInput,
                         handler: () => Utils.Editor.resetInput(),
                     },
                 ],
@@ -85,9 +88,9 @@ const MainTab: React.FC<MainTabPageProps> = ({ match }) => {
                 message: WindowConfirmMessages.ResetProject.message,
                 header: WindowConfirmMessages.ResetProject.header,
                 buttons: [
-                    { text: "Cancel" },
+                    { text: ButtonText.Cancel },
                     {
-                        text: "Reset project",
+                        text: ButtonText.ResetProject,
                         handler: () => Utils.resetProject(),
                     },
                 ],
@@ -98,20 +101,20 @@ const MainTab: React.FC<MainTabPageProps> = ({ match }) => {
     const showResetActionSheet = () => {
         actionSheetController
             .create({
-                header: "Reset",
+                header: ActionSheet.Reset,
                 buttons: [
                     {
-                        text: "Reset input",
+                        text: ButtonText.ResetInput,
                         role: "destructive",
                         handler: () => showResetInputAlert(),
                     },
                     {
-                        text: "Reset project",
+                        text: ButtonText.ResetProject,
                         role: "destructive",
                         handler: () => showResetProjectAlert(),
                     },
                     {
-                        text: "Cancel",
+                        text: ButtonText.Cancel,
                         role: "cancel",
                     },
                 ],

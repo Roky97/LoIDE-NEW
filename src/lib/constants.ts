@@ -18,6 +18,15 @@ export const APIWSEvents = {
     },
 };
 
+export const APIURLShortening = "https://is.gd/create.php?format=json&url=";
+
+export const SuffixNameTab = "L P ";
+
+export const ValuesNotSupported = {
+    Language: "• Language",
+    Solver: "• Solver",
+    Executor: "• Executor",
+};
 export const Errors = {
     ConnectionError:
         "Unable to connect to the server, maybe you or the server are offline.\nTry it later.",
@@ -25,6 +34,95 @@ export const Errors = {
         "Falied to run the project. Maybe the server or you are offline.\nTry it later.",
     GetLanguagesError:
         "Falied to get the languages. Maybe the server or you are offline.\nTry it later.",
+};
+
+export const Toast = {
+    FileOpenedSuccessfully: {
+        header: "",
+        message: "File opened successfully.",
+    },
+    FileNotOpenedProperly: {
+        header: "File not opened properly",
+        message: {
+            TheFollowingValuesCannotBeSetted:
+                "The following values cannot be set:",
+            FoundSolverOptions:
+                "Found solver options that cannot be set due above.",
+            FoundSolverOptionsIncompatibilitySolverLoaded:
+                "Found solver options that cannot be set due the incompatibility of the solver loaded.",
+        },
+    },
+    ProjectOpenedSuccessfully: {
+        header: "Project opened successfully.",
+        message: "",
+    },
+    ProjectNotOpenedProperly: {
+        header: "Project not opened properly",
+        message: {
+            TheFollowingValuesCannotBeSetted:
+                "The following values cannot be set:",
+            FoundSolverOptions:
+                "Found solver options that cannot be set due above.",
+            FoundSolverOptionsIncompatibilitySolverLoaded:
+                "Found solver options that cannot be set due the incompatibility of the solver loaded.",
+        },
+    },
+    ConfigFileNotRecognized: {
+        header: "Config file not recognized",
+        message: "Error open file",
+    },
+    LinkFileNotRecognized: {
+        header: "Link not recognized",
+        message: "Error open the project from the link",
+    },
+
+    ErrorOpenFile: {
+        header: "Error open file",
+        message: {
+            FileReadingWasAborted: "File reading was aborted",
+            FileReadingHasFailed: "File reading has failed",
+        },
+    },
+
+    ErrorLinkGeneration: {
+        header: "Error link generation",
+        message: {
+            TheProjectIsTooLong: "The project is too long to be shared",
+            TryItLater: "Try it later",
+        },
+    },
+    LinkCopiedSuccessfully: {
+        header: "Link copied successfully",
+        message: "",
+    },
+    CannotCopyTheLink: {
+        header: "Cannot copy the link",
+        message: "",
+    },
+    ExecutionError: {
+        header: "Execution error",
+        message: "",
+    },
+    Error: {
+        header: "Error",
+        message: "",
+    },
+};
+
+export const ButtonText = {
+    OK: "OK",
+    Cancel: "Cancel",
+    ResetInput: "Reset input",
+    ResetProject: "Reset project",
+};
+
+export const ActionSheet = {
+    Reset: "Reset",
+};
+
+export const URLInput = {
+    Error: "Ops. Something went wrong",
+    Loading: "Loading...",
 };
 
 export const WindowConfirmMessages = {

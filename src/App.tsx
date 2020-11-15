@@ -100,7 +100,7 @@ const App: React.FC = () => {
 
                     <IonTabBar slot="bottom">
                         <IonTabButton
-                            tab="editor"
+                            tab={LoidePath.Editor}
                             href={`/${LoidePath.Editor}`}
                         >
                             <IonIcon icon={codeSlashOutline} />
@@ -108,7 +108,7 @@ const App: React.FC = () => {
                         </IonTabButton>
 
                         <IonTabButton
-                            tab="run-settings"
+                            tab={LoidePath.RunSettings}
                             href={`/${LoidePath.RunSettings}`}
                             className="ion-hide-lg-up"
                         >
@@ -117,13 +117,16 @@ const App: React.FC = () => {
                         </IonTabButton>
 
                         <IonTabButton
-                            tab="output"
+                            tab={LoidePath.Output}
                             href={`/${LoidePath.Output}`}
                         >
                             <IonIcon icon={documentTextOutline} />
                             <IonLabel>Output</IonLabel>
                         </IonTabButton>
-                        <IonTabButton tab="about" href={`/${LoidePath.About}`}>
+                        <IonTabButton
+                            tab={LoidePath.About}
+                            href={`/${LoidePath.About}`}
+                        >
                             <IonIcon icon={informationCircleOutline} />
                             <IonLabel>About</IonLabel>
                         </IonTabButton>

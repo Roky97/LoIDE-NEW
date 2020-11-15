@@ -11,7 +11,7 @@ import {
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useGetLoideProjectData } from "../hooks/useGetLoideProjectData";
-import { LoidePath } from "../lib/constants";
+import { APIURLShortening, LoidePath, Toast, URLInput } from "../lib/constants";
 import Utils from "../lib/utils";
 
 interface ShareProjectProps {
@@ -28,7 +28,7 @@ const ShareProject: React.FC<ShareProjectProps> = (props) => {
         setClipboardWriteSupported(supp);
     }, []);
 
-    const [url, setUrl] = useState<string>("Loading...");
+    const [url, setUrl] = useState<string>(URLInput.Loading);
     const loideProjectData = useGetLoideProjectData();
 
     const [urlLoading, setUrlLoading] = useState<boolean>(true);
@@ -40,24 +40,20 @@ const ShareProject: React.FC<ShareProjectProps> = (props) => {
             let params = encodeURIComponent(JSON.stringify(loideProjectData));
             URL += `/${LoidePath.Editor}/` + params;
 
-            fetch(
-                "https://is.gd/create.php?format=json&url=" +
-                    encodeURIComponent(URL),
-                {
-                    mode: "cors",
-                    method: "POST",
-                }
-            )
+            fetch(APIURLShortening + encodeURIComponent(URL), {
+                mode: "cors",
+                method: "POST",
+            })
                 .then((res) => res.json())
                 .then(
                     (result) => {
                         setUrlLoading(false);
                         if (result.shorturl === undefined) {
                             if (URL.length >= 5000) {
-                                setUrl("Ops. Something went wrong");
+                                setUrl(URLInput.Error);
                                 Utils.generateGeneralToast(
-                                    "The project is too long to be shared",
-                                    "Error generation link",
+                                    `${Toast.ErrorLinkGeneration.message.TheProjectIsTooLong}`,
+                                    `${Toast.ErrorLinkGeneration.header}`,
                                     "danger"
                                 );
                             }
@@ -65,19 +61,18 @@ const ShareProject: React.FC<ShareProjectProps> = (props) => {
                         } else setUrl(result.shorturl);
                     },
                     (error) => {
-                        setUrl("Ops. Something went wrong");
+                        setUrl(URLInput.Error);
                         setUrlLoading(false);
                         if (URL.length >= 5000) {
                             Utils.generateGeneralToast(
-                                "The project is too long to be shared",
-                                "Error generation link",
+                                `${Toast.ErrorLinkGeneration.message.TheProjectIsTooLong}`,
+                                `${Toast.ErrorLinkGeneration.header}`,
                                 "danger"
                             );
                         } else {
-                            setUrl("Ops. Something went wrong");
                             Utils.generateGeneralToast(
-                                "Try it later",
-                                "Error generation link",
+                                `${Toast.ErrorLinkGeneration.message.TryItLater}`,
+                                `${Toast.ErrorLinkGeneration.header}`,
                                 "danger"
                             );
                         }
@@ -95,8 +90,8 @@ const ShareProject: React.FC<ShareProjectProps> = (props) => {
             url,
             () => {
                 Utils.generateGeneralToast(
-                    "",
-                    "Link copied succefully",
+                    Toast.LinkCopiedSuccessfully.message,
+                    Toast.LinkCopiedSuccessfully.header,
                     "success"
                 );
 
@@ -104,8 +99,8 @@ const ShareProject: React.FC<ShareProjectProps> = (props) => {
             },
             () => {
                 Utils.generateGeneralToast(
-                    "",
-                    "Cannot copy the link",
+                    Toast.CannotCopyTheLink.message,
+                    Toast.CannotCopyTheLink.header,
                     "danger"
                 );
                 if (props.onCopyLink) props.onCopyLink(false);

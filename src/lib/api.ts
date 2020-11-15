@@ -1,4 +1,4 @@
-import { APIWSEvents, Errors } from "./constants";
+import { APIWSEvents, ButtonText, Errors } from "./constants";
 import io from "socket.io-client";
 import { toastController } from "@ionic/core";
 import {
@@ -8,6 +8,7 @@ import {
     IOutputProblemData,
 } from "./LoideAPIInterfaces";
 import { SocketStatusStore, UIStatusStore } from "./store";
+import { Toast } from "./constants";
 
 // LoIDE Web Server API URL
 const APIUrl = "localhost:8084";
@@ -21,11 +22,11 @@ const createSocket = () => {
             await toastController
                 .create({
                     position: "top",
-                    header: "Error",
+                    header: Toast.Error.header,
                     message: Errors.ConnectionError,
                     color: "danger",
                     duration: 3000,
-                    buttons: ["OK"],
+                    buttons: [ButtonText.OK],
                 })
                 .then((toast) => {
                     toast.present();
@@ -57,11 +58,11 @@ const setRunProjectListener = (
                 await toastController
                     .create({
                         position: "top",
-                        header: "Execution error",
+                        header: Toast.ExecutionError.header,
                         message: response.reason,
                         color: "danger",
                         duration: 3000,
-                        buttons: ["OK"],
+                        buttons: [ButtonText.OK],
                     })
                     .then((toast) => {
                         toast.present();

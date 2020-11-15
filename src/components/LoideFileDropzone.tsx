@@ -1,18 +1,7 @@
 import React, { CSSProperties, useCallback, useEffect, useMemo } from "react";
 import { useDropzone } from "react-dropzone";
-import { InitalTabCountID } from "../lib/constants";
-import {
-    ILoideProject,
-    ILoideTab,
-    ISolverOption,
-} from "../lib/LoideInterfaces";
-import {
-    EditorStore,
-    LanguagesDataStore,
-    OutputStore,
-    RunSettingsStore,
-    UIStatusStore,
-} from "../lib/store";
+import { Toast } from "../lib/constants";
+import { LanguagesDataStore, UIStatusStore } from "../lib/store";
 import Utils from "../lib/utils";
 
 const baseStyle: CSSProperties = {
@@ -91,15 +80,15 @@ const LoideFileDropzone: React.FC<LoideFileDropzoneProps> = (props) => {
 
                     reader.onabort = () => {
                         Utils.generateGeneralToast(
-                            "File reading was aborted",
-                            "Error open file",
+                            `${Toast.ErrorOpenFile.message.FileReadingWasAborted}`,
+                            `${Toast.ErrorOpenFile.header}`,
                             "danger"
                         );
                     };
                     reader.onerror = () => {
                         Utils.generateGeneralToast(
-                            "File reading has failed",
-                            "Error open file",
+                            `${Toast.ErrorOpenFile.message.FileReadingHasFailed}`,
+                            `${Toast.ErrorOpenFile.header}`,
                             "danger"
                         );
                     };
@@ -120,15 +109,15 @@ const LoideFileDropzone: React.FC<LoideFileDropzoneProps> = (props) => {
 
                 reader.onabort = () => {
                     Utils.generateGeneralToast(
-                        "File reading was aborted",
-                        "Error open file",
+                        `${Toast.ErrorOpenFile.message.FileReadingWasAborted}`,
+                        `${Toast.ErrorOpenFile.header}`,
                         "danger"
                     );
                 };
                 reader.onerror = () => {
                     Utils.generateGeneralToast(
-                        "File reading has failed",
-                        "Error open file",
+                        `${Toast.ErrorOpenFile.message.FileReadingHasFailed}`,
+                        `${Toast.ErrorOpenFile.header}`,
                         "danger"
                     );
                 };

@@ -1,5 +1,5 @@
 import { Store } from "pullstate";
-import { InitalTabCountID } from "./constants";
+import { InitalTabCountID, SuffixNameTab } from "./constants";
 import {
     ILanguagesStore,
     ILoideTab,
@@ -30,7 +30,7 @@ export const RunSettingsStore = new Store<IRunSettingsStore>(
 );
 
 export const initialTabs = new Map<number, ILoideTab>().set(InitalTabCountID, {
-    title: `L P ${InitalTabCountID}`,
+    title: `${SuffixNameTab}${InitalTabCountID}`,
     type: "",
     value: "",
 });

@@ -6,17 +6,18 @@ import { ionFireEvent as fireEvent } from "@ionic/react-test-utils";
 import { ILoideTab } from "../../lib/LoideInterfaces";
 
 import { mockIonicReact } from "@ionic/react-test-utils";
+import { SuffixNameTab } from "../../lib/constants";
 mockIonicReact();
 
 var tabs: Map<number, ILoideTab> = new Map<number, ILoideTab>();
 tabs.set(1, {
-    title: `L P 1`,
+    title: `${SuffixNameTab}1`,
     type: "",
     value: "node(1)",
 });
 
 tabs.set(2, {
-    title: `L P 2`,
+    title: `${SuffixNameTab}2`,
     type: "",
     value: "color(2)",
 });

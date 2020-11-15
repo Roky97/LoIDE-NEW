@@ -16,7 +16,12 @@ import {
     UIStatusStore,
 } from "./store";
 import { enableMapSet } from "immer";
-import { InitalTabCountID } from "./constants";
+import {
+    InitalTabCountID,
+    SuffixNameTab,
+    Toast,
+    ValuesNotSupported,
+} from "./constants";
 
 enableMapSet();
 
@@ -278,7 +283,7 @@ const addTab = () => {
 
         let nextTabs = new Map(e.tabs);
         nextTabs.set(nextID, {
-            title: `L P ${nextID}`,
+            title: `${SuffixNameTab}${nextID}`,
             type: "",
             value: "",
         });
@@ -346,7 +351,7 @@ const createTabsFromArray = (textTabs: string[]) => {
     let indexTab = InitalTabCountID;
     textTabs.forEach((text) => {
         newTabs.set(indexTab, {
-            title: `L P ${indexTab}`,
+            title: `${SuffixNameTab}${indexTab}`,
             type: "",
             value: text,
         });
@@ -359,7 +364,11 @@ const createTabsFromArray = (textTabs: string[]) => {
     UIStatusStore.update((u) => {
         u.loadingFiles = false;
     });
-    Utils.generateGeneralToast("File opened successfully.", "", "success");
+    Utils.generateGeneralToast(
+        Toast.FileOpenedSuccessfully.message,
+        Toast.FileOpenedSuccessfully.header,
+        "success"
+    );
 };
 
 const setProjectFromConfig = (
@@ -401,16 +410,16 @@ const setProjectFromConfig = (
                         s.currentExecutor = project.executor;
                     });
                 } else {
-                    valuesNotSupported.push("• Executor");
+                    valuesNotSupported.push(ValuesNotSupported.Executor);
                 }
             } else {
-                valuesNotSupported.push("• Solver");
-                valuesNotSupported.push("• Executor");
+                valuesNotSupported.push(ValuesNotSupported.Solver);
+                valuesNotSupported.push(ValuesNotSupported.Executor);
             }
         } else {
-            valuesNotSupported.push("• Language");
-            valuesNotSupported.push("• Solver");
-            valuesNotSupported.push("• Executor");
+            valuesNotSupported.push(ValuesNotSupported.Language);
+            valuesNotSupported.push(ValuesNotSupported.Solver);
+            valuesNotSupported.push(ValuesNotSupported.Executor);
         }
 
         for (let option of project.options) {
@@ -457,14 +466,15 @@ const setProjectFromConfig = (
 
         if (valuesNotSupported.length > 0) {
             Utils.generateGeneralToast(
-                `The following values cannot be setted:\n<b>${valuesNotSupported.join(
-                    ",\n"
-                )}\n${
+                `${
+                    Toast.FileNotOpenedProperly.message
+                        .TheFollowingValuesCannotBeSetted
+                }\n<b>${valuesNotSupported.join(",\n")}\n${
                     optionsNotSupported
-                        ? "<br>Found solver options that cannot be setted due above."
+                        ? `<br>${Toast.FileNotOpenedProperly.message.FoundSolverOptions}`
                         : ""
                 } <b/>`,
-                "File not opened properly",
+                Toast.FileNotOpenedProperly.header,
                 "warning",
                 10000
             );
@@ -472,24 +482,25 @@ const setProjectFromConfig = (
             if (onFinishCallback) onFinishCallback(true);
         } else if (optionsNotSupported) {
             Utils.generateGeneralToast(
-                "Found solver options that cannot be setted due the incompatibility of the solver loaded.",
-                "File not opened properly.",
+                Toast.FileNotOpenedProperly.message
+                    .FoundSolverOptionsIncompatibilitySolverLoaded,
+                Toast.FileNotOpenedProperly.header,
                 "warning",
                 7000
             );
             if (onFinishCallback) onFinishCallback(true);
         } else {
             Utils.generateGeneralToast(
-                "File opened successfully.",
-                "",
+                Toast.FileOpenedSuccessfully.message,
+                Toast.FileOpenedSuccessfully.header,
                 "success"
             );
             if (onFinishCallback) onFinishCallback(true);
         }
     } else {
         Utils.generateGeneralToast(
-            "Config file not recognized",
-            "Error open file",
+            Toast.ConfigFileNotRecognized.message,
+            Toast.ConfigFileNotRecognized.header,
             "danger"
         );
         if (onFinishCallback) onFinishCallback(false);
@@ -538,16 +549,16 @@ const setProjectFromLink = (
                         s.currentExecutor = project.executor;
                     });
                 } else {
-                    valuesNotSupported.push("• Executor");
+                    valuesNotSupported.push(ValuesNotSupported.Executor);
                 }
             } else {
-                valuesNotSupported.push("• Solver");
-                valuesNotSupported.push("• Executor");
+                valuesNotSupported.push(ValuesNotSupported.Solver);
+                valuesNotSupported.push(ValuesNotSupported.Executor);
             }
         } else {
-            valuesNotSupported.push("• Language");
-            valuesNotSupported.push("• Solver");
-            valuesNotSupported.push("• Executor");
+            valuesNotSupported.push(ValuesNotSupported.Language);
+            valuesNotSupported.push(ValuesNotSupported.Solver);
+            valuesNotSupported.push(ValuesNotSupported.Executor);
         }
 
         for (let option of project.options) {
@@ -594,14 +605,15 @@ const setProjectFromLink = (
 
         if (valuesNotSupported.length > 0) {
             Utils.generateGeneralToast(
-                `The following values cannot be set:\n<b>${valuesNotSupported.join(
-                    ",\n"
-                )}\n${
+                `${
+                    Toast.FileNotOpenedProperly.message
+                        .TheFollowingValuesCannotBeSetted
+                }\n<b>${valuesNotSupported.join(",\n")}${
                     optionsNotSupported
-                        ? "<br>Found solver options that cannot be set due above."
+                        ? `<br>${Toast.FileNotOpenedProperly.message.FoundSolverOptions}`
                         : ""
                 } <b/>`,
-                "Project not opened properly",
+                Toast.FileNotOpenedProperly.header,
                 "warning",
                 10000
             );
@@ -609,24 +621,25 @@ const setProjectFromLink = (
             if (onFinishCallback) onFinishCallback(true);
         } else if (optionsNotSupported) {
             Utils.generateGeneralToast(
-                "Found solver options that cannot be set due the incompatibility of the solver loaded.",
-                "Project not opened properly.",
+                Toast.FileNotOpenedProperly.message
+                    .FoundSolverOptionsIncompatibilitySolverLoaded,
+                Toast.ProjectNotOpenedProperly.header,
                 "warning",
                 7000
             );
             if (onFinishCallback) onFinishCallback(true);
         } else {
             Utils.generateGeneralToast(
-                "Project opened successfully.",
                 "",
+                Toast.ProjectOpenedSuccessfully.header,
                 "success"
             );
             if (onFinishCallback) onFinishCallback(true);
         }
     } else {
         Utils.generateGeneralToast(
-            "Link not recognized",
-            "Error open the project from the link",
+            Toast.LinkFileNotRecognized.message,
+            Toast.LinkFileNotRecognized.header,
             "danger"
         );
         if (onFinishCallback) onFinishCallback(false);
