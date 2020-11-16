@@ -12,13 +12,15 @@ import {
     IonToolbar,
 } from "@ionic/react";
 import Output from "../components/Output";
-import { OutputStore } from "../lib/store";
+import { OutputStore, UIStatusStore } from "../lib/store";
 import { backspaceOutline, downloadOutline } from "ionicons/icons";
 import Utils from "../lib/utils";
 
 const OutputTab: React.FC = () => {
     const outputModel = OutputStore.useState((o) => o.model);
     const outputError = OutputStore.useState((o) => o.error);
+
+    const outputFontSize = UIStatusStore.useState((u) => u.fontSizeOutput);
 
     const clearOutput = () => {
         OutputStore.update((o) => {
@@ -96,7 +98,11 @@ const OutputTab: React.FC = () => {
                         className="ion-no-padding"
                         style={{ height: "100%" }}
                     >
-                        <Output model={outputModel} error={outputError} />
+                        <Output
+                            model={outputModel}
+                            error={outputError}
+                            fontSize={outputFontSize}
+                        />
                     </IonCol>
                 </IonRow>
             </IonContent>

@@ -32,7 +32,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-    :root {
+    body.dark {
         --bg-main: rgba(0, 0, 0, 0);
         --tabs-color: #2d2c2c;
         --tabs-color-hover: #424040;
@@ -49,13 +49,30 @@
         --output-background-color: #292929;
     }
 
-    .logo {
+    body.dark .logo {
         filter: invert(100%);
     }
+}
 
-    .add-tab {
-        color: white;
-    }
+body.dark {
+    --bg-main: rgba(0, 0, 0, 0);
+    --tabs-color: #2d2c2c;
+    --tabs-color-hover: #424040;
+    --tabs-color-active: #565454;
+    --tab-background-color-selected: #636363;
+    --tab-text-color-selected: white;
+    --tab-border-color-selected: var(--tab-list-background-color);
+    --tab-list-background-color: #242424;
+
+    --version-color: #337ab7;
+    --sidebar-background-color: #fff5ee;
+    --run-settings-background-color: rgba(255, 245, 238, 1);
+    --output-border-color: #292929;
+    --output-background-color: #292929;
+}
+
+body.dark .logo {
+    filter: invert(100%);
 }
 
 .font-pwa {
@@ -116,9 +133,6 @@
         position: relative;
         flex: none;
     }
-}
-
-.second-tab {
 }
 
 .toolbar {

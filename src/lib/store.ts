@@ -51,6 +51,9 @@ export const OutputStore = new Store<IOutputStore>(initialOutputStore);
 export const initialUIStatusStore: IUIStatusStore = {
     connectingToTheServer: false,
     loadingFiles: false,
+    darkMode: false,
+    fontSizeEditor: 15,
+    fontSizeOutput: 20,
 };
 export const UIStatusStore = new Store<IUIStatusStore>(initialUIStatusStore);
 

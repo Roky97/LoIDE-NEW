@@ -1,5 +1,5 @@
 /* eslint-disable no-template-curly-in-string */
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import AceEditor from "react-ace";
 
 import "../lib/ace/mode-asp";
@@ -51,6 +51,7 @@ interface LoideAceEditorProps {
     tabKey: number;
     value?: string;
     session?: any;
+    fontSize?: number;
 
     onChange?: (tabKey: number, value: string) => void;
     onFocus?: (tabKey: number, e: any) => void;
@@ -62,6 +63,13 @@ const LoideAceEditor = React.forwardRef<AceEditor, LoideAceEditorProps>(
         const ace = require("ace-builds/src-noconflict/ace");
 
         const reactAce = useRef<AceEditor>(null);
+
+        const [fontSize, setFontSize] = useState<number>(12);
+
+        useEffect(() => {
+            if (fontSize !== props.fontSize && props.fontSize)
+                setFontSize(props.fontSize);
+        }, [fontSize, props.fontSize]);
 
         // effect to save and restore the editor session
         useEffect(() => {
@@ -525,6 +533,7 @@ const LoideAceEditor = React.forwardRef<AceEditor, LoideAceEditorProps>(
                 theme={props.darkTheme ? "idle_fingers" : "tomorrow"}
                 name={`editor-${props.tabKey}`}
                 value={props.value}
+                fontSize={fontSize}
                 editorProps={{
                     $blockScrolling: true,
                 }}

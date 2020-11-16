@@ -3,11 +3,15 @@ import React from "react";
 interface OutputProps {
     model: string;
     error: string;
+    fontSize: number;
 }
 
 const Output: React.FC<OutputProps> = (props) => {
     return (
-        <div className="loide-output">
+        <div
+            className="loide-output"
+            style={{ fontSize: `${props.fontSize}px` }}
+        >
             <div className="output-content ion-padding">
                 <div className="output-model">{props.model}</div>
                 <div

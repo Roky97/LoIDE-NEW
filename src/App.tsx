@@ -15,6 +15,7 @@ import {
     documentTextOutline,
     cog,
     informationCircleOutline,
+    colorPaletteOutline,
 } from "ionicons/icons";
 import MainTab from "./pages/MainTab";
 import RunSettingsTab from "./pages/RunSettingsTab";
@@ -45,6 +46,7 @@ import { LanguagesDataStore, OutputStore } from "./lib/store";
 import API from "./lib/api";
 import { IOutputData } from "./lib/LoideAPIInterfaces";
 import { LoidePath } from "./lib/constants";
+import AppearanceTab from "./pages/AppearanceTab";
 
 const App: React.FC = () => {
     useEffect(() => {
@@ -85,6 +87,10 @@ const App: React.FC = () => {
                             component={OutputTab}
                         />
                         <Route
+                            path={`/${LoidePath.Appearance}`}
+                            component={AppearanceTab}
+                        />
+                        <Route
                             path={`/${LoidePath.About}`}
                             component={AboutTab}
                         />
@@ -123,6 +129,15 @@ const App: React.FC = () => {
                             <IonIcon icon={documentTextOutline} />
                             <IonLabel>Output</IonLabel>
                         </IonTabButton>
+
+                        <IonTabButton
+                            tab={LoidePath.Appearance}
+                            href={`/${LoidePath.Appearance}`}
+                        >
+                            <IonIcon icon={colorPaletteOutline} />
+                            <IonLabel>Appearance</IonLabel>
+                        </IonTabButton>
+
                         <IonTabButton
                             tab={LoidePath.About}
                             href={`/${LoidePath.About}`}

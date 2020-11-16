@@ -28,6 +28,14 @@ test("renders the Output tab button", async () => {
     expect(tabButton).toBeTruthy();
 });
 
+test("renders the Appearance tab button", async () => {
+    const { container } = render(<App />);
+    const tabButton = container.querySelector(
+        `[href="/${LoidePath.Appearance}"]`
+    );
+    expect(tabButton).toBeTruthy();
+});
+
 test("renders the About tab button", async () => {
     const { container } = render(<App />);
     const tabButton = container.querySelector(`[href="/${LoidePath.About}"]`);

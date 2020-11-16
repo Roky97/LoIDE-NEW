@@ -54,6 +54,9 @@ export interface IOutputStore {
 export interface IUIStatusStore {
     connectingToTheServer: boolean;
     loadingFiles: boolean;
+    darkMode: boolean;
+    fontSizeEditor: number;
+    fontSizeOutput: number;
 }
 
 export interface IDimensions {

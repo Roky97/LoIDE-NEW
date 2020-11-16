@@ -3,6 +3,7 @@ export const LoidePath = {
     RunSettings: "run-settings",
     Output: "output",
     About: "about",
+    Appearance: "appearance",
 };
 
 export const APIWSEvents = {

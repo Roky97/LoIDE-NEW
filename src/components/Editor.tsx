@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import LoideAceEditor from "./LoideAceEditor";
 import { Tabs, TabList, TabPanel } from "react-tabs";
-import { EditorStore, RunSettingsStore } from "../lib/store";
+import { EditorStore, RunSettingsStore, UIStatusStore } from "../lib/store";
 import { WindowConfirmMessages } from "../lib/constants";
 import { IonIcon } from "@ionic/react";
 import { addOutline } from "ionicons/icons";
@@ -27,6 +27,8 @@ const Editor: React.FC = () => {
     const [editorSessions, setEditorSessions] = useState<any[]>([]);
 
     const darkMode = useIsDarkMode();
+
+    const fontEditorSize = UIStatusStore.useState((u)=> u.fontSizeEditor)
 
     // set the current tab ID depending on selected tab
     useEffect(() => {
@@ -155,6 +157,7 @@ const Editor: React.FC = () => {
                 solver={currentSolver}
                 value={tabs.get(key)!.value}
                 darkTheme={darkMode}
+                fontSize={fontEditorSize}
                 onChange={onChange}
                 onSaveSession={onSaveSession}
             />
