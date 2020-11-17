@@ -242,16 +242,16 @@ const getTextFromClipboard = (callback: (text: string) => void): void => {
             .catch((err) => {
                 // error because maybe the user didn't grant access to read from clipboard
                 Utils.generateGeneralToast(
-                    "Clipboard read error, maybe you didn't grant the access to read from the clipboard",
-                    "Clipboard error",
+                    Toast.ClipboardError.message,
+                    Toast.ClipboardError.header,
                     "danger"
                 );
                 console.error(err);
             });
     } else
         Utils.generateGeneralToast(
-            "Clipboard not supported",
-            "Clipboard error",
+            Toast.ClipboardIsNotSupported.message,
+            Toast.ClipboardIsNotSupported.header,
             "danger"
         );
 };

@@ -108,6 +108,15 @@ export const Toast = {
         header: "Error",
         message: "",
     },
+    ClipboardIsNotSupported: {
+        header: "Clipboard error",
+        message: "Clipboard is not supported",
+    },
+    ClipboardError: {
+        header: "Clipboard error",
+        message:
+            "Clipboard read error, maybe you didn't grant the access to read from the clipboard",
+    },
 };
 
 export const ButtonText = {
