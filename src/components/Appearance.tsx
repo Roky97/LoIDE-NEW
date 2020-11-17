@@ -69,7 +69,7 @@ const Appearance: React.FC<AppearanceProps> = (props) => {
                         snaps={true}
                         title="Font size editor range"
                     >
-                        <IonLabel slot="start">Font size </IonLabel>
+                        <IonLabel slot="start">Font size</IonLabel>
                     </IonRange>
                 </IonItem>
                 <IonListHeader>Output</IonListHeader>
@@ -83,7 +83,7 @@ const Appearance: React.FC<AppearanceProps> = (props) => {
                         snaps={true}
                         title="Font size output range"
                     >
-                        <IonLabel slot="start">Font size </IonLabel>
+                        <IonLabel slot="start">Font size</IonLabel>
                     </IonRange>
                 </IonItem>
             </IonList>

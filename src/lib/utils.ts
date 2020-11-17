@@ -213,13 +213,23 @@ const copyStringToClipboard = (str: string) => {
 };
 
 const isClipboardReadSupported = (): boolean => {
-    return typeof navigator?.clipboard?.readText === "undefined" ? false : true;
+    try {
+        return typeof navigator?.clipboard?.readText === "undefined"
+            ? false
+            : true;
+    } catch (error) {
+        return false;
+    }
 };
 
 const isClipboardWriteSupported = (): boolean => {
-    return typeof navigator?.clipboard?.writeText === "undefined"
-        ? false
-        : true;
+    try {
+        return typeof navigator?.clipboard?.writeText === "undefined"
+            ? false
+            : true;
+    } catch (error) {
+        return false;
+    }
 };
 
 const getTextFromClipboard = (callback: (text: string) => void): void => {
