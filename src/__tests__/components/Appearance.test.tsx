@@ -3,10 +3,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import Appearance from "../../components/Appearance";
-import {
-    ionFireEvent as fireEvent,
-    ionFireEvent,
-} from "@ionic/react-test-utils";
+import { ionFireEvent } from "@ionic/react-test-utils";
 
 test("Appearance renders without crashing", () => {
     window.HTMLElement.prototype.scrollIntoView = jest.fn();
@@ -47,4 +44,25 @@ test("test font size output item", async () => {
     ionFireEvent.ionChange(range, "1");
 
     expect(labelText).toBe("Font size");
+});
+
+test("test reset button", async () => {
+    Object.defineProperty(window, "matchMedia", {
+        writable: true,
+        value: jest.fn().mockImplementation((query) => ({
+            matches: false,
+            media: query,
+            onchange: null,
+            addListener: jest.fn(), // Deprecated
+            removeListener: jest.fn(), // Deprecated
+            addEventListener: jest.fn(),
+            removeEventListener: jest.fn(),
+            dispatchEvent: jest.fn(),
+        })),
+    });
+
+    render(<Appearance />);
+
+    const button = await screen.findByTitle("Reset appearance options");
+    ionFireEvent.click(button);
 });

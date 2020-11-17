@@ -1,4 +1,5 @@
 import {
+    IonButton,
     IonIcon,
     IonItem,
     IonLabel,
@@ -10,6 +11,7 @@ import {
 import { moonOutline } from "ionicons/icons";
 import React from "react";
 import { UIStatusStore } from "../lib/store";
+import Utils from "../lib/utils";
 
 interface AppearanceProps {}
 
@@ -85,6 +87,16 @@ const Appearance: React.FC<AppearanceProps> = (props) => {
                     </IonRange>
                 </IonItem>
             </IonList>
+            <IonButton
+                className="ion-margin-top"
+                color="danger"
+                fill="outline"
+                expand="block"
+                title="Reset appearance options"
+                onClick={Utils.resetAppearanceOptions}
+            >
+                Reset
+            </IonButton>
         </>
     );
 };

@@ -11,6 +11,7 @@ import {
     initialEditorStore,
     initialOutputStore,
     initialRunSettingsStore,
+    initialUIStatusStore,
     OutputStore,
     RunSettingsStore,
     UIStatusStore,
@@ -649,6 +650,14 @@ const setProjectFromLink = (
     });
 };
 
+const resetAppearanceOptions = () => {
+    UIStatusStore.update((u) => {
+        u.fontSizeEditor = initialUIStatusStore.fontSizeEditor;
+        u.fontSizeOutput = initialUIStatusStore.fontSizeOutput;
+        u.darkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    });
+};
+
 const Editor = {
     resetInput,
     addTab,
@@ -676,6 +685,7 @@ const Utils = {
     createTabsFromArray,
     setProjectFromConfig,
     setProjectFromLink,
+    resetAppearanceOptions,
 };
 
 export default Utils;
