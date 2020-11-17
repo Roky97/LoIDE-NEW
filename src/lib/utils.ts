@@ -668,6 +668,18 @@ const resetAppearanceOptions = () => {
     });
 };
 
+const removeNewOutputBadge = () => {
+    UIStatusStore.update((u) => {
+        u.newOutput = false;
+    });
+};
+
+const addNewOutputBadge = () => {
+    UIStatusStore.update((u) => {
+        u.newOutput = true;
+    });
+};
+
 const Editor = {
     resetInput,
     addTab,
@@ -696,6 +708,8 @@ const Utils = {
     setProjectFromConfig,
     setProjectFromLink,
     resetAppearanceOptions,
+    removeNewOutputBadge,
+    addNewOutputBadge,
 };
 
 export default Utils;

@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Redirect, Route } from "react-router-dom";
 import {
     IonApp,
+    IonBadge,
     IonIcon,
     IonLabel,
     IonRouterOutlet,
@@ -42,13 +43,16 @@ import "./theme/variables.scss";
 
 import "./global.scss";
 import AboutTab from "./pages/AboutTab";
-import { LanguagesDataStore, OutputStore } from "./lib/store";
+import { LanguagesDataStore, OutputStore, UIStatusStore } from "./lib/store";
 import API from "./lib/api";
 import { IOutputData } from "./lib/LoideAPIInterfaces";
 import { LoidePath } from "./lib/constants";
 import AppearanceTab from "./pages/AppearanceTab";
+import Utils from "./lib/utils";
 
 const App: React.FC = () => {
+    const newOutput = UIStatusStore.useState((u) => u.newOutput);
+
     useEffect(() => {
         API.createSocket();
 
@@ -63,10 +67,20 @@ const App: React.FC = () => {
                 o.model = output.model;
                 o.error = output.error;
             });
+
+            Utils.addNewOutputBadge();
         });
 
         return () => API.disconnectAndClearSocket();
     }, []);
+
+    useEffect(() => {
+        const button = document.querySelector(".output-tab-button");
+        button?.addEventListener("click", () => {
+            Utils.removeNewOutputBadge();
+        });
+    }, []);
+
     return (
         <IonApp>
             <IonReactRouter>
@@ -125,9 +139,11 @@ const App: React.FC = () => {
                         <IonTabButton
                             tab={LoidePath.Output}
                             href={`/${LoidePath.Output}`}
+                            className="output-tab-button"
                         >
                             <IonIcon icon={documentTextOutline} />
                             <IonLabel>Output</IonLabel>
+                            {newOutput && <IonBadge color="danger">!</IonBadge>}
                         </IonTabButton>
 
                         <IonTabButton

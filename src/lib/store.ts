@@ -54,6 +54,7 @@ export const initialUIStatusStore: IUIStatusStore = {
     darkMode: false,
     fontSizeEditor: 15,
     fontSizeOutput: 20,
+    newOutput: false,
 };
 export const UIStatusStore = new Store<IUIStatusStore>(initialUIStatusStore);
 

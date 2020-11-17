@@ -57,6 +57,7 @@ export interface IUIStatusStore {
     darkMode: boolean;
     fontSizeEditor: number;
     fontSizeOutput: number;
+    newOutput: boolean;
 }
 
 export interface IDimensions {
