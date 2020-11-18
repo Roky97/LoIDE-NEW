@@ -22,16 +22,14 @@ tabs.set(2, {
     value: "color(2)",
 });
 
-const onCheckCurrentTab: (value: boolean) => void = jest.fn();
-const onCheckTab: (idTab: number, value: boolean) => void = jest.fn();
-
 test("renders without crashing", () => {
     const { baseElement } = render(
         <TabToExecute
             tabs={tabs}
             tabsIDToExecute={[]}
-            onCheckCurrentTab={onCheckCurrentTab}
-            onCheckTab={onCheckTab}
+            onCheckCurrentTab={jest.fn()}
+            onCheckTab={jest.fn()}
+            onCheckAllTabs={jest.fn()}
         />
     );
     expect(baseElement).toBeDefined();
@@ -42,8 +40,9 @@ test("renders the header", async () => {
         <TabToExecute
             tabs={tabs}
             tabsIDToExecute={[]}
-            onCheckCurrentTab={onCheckCurrentTab}
-            onCheckTab={onCheckTab}
+            onCheckCurrentTab={jest.fn()}
+            onCheckTab={jest.fn()}
+            onCheckAllTabs={jest.fn()}
         />
     );
 
@@ -55,8 +54,9 @@ test("renders the curent tab item", async () => {
         <TabToExecute
             tabs={tabs}
             tabsIDToExecute={[]}
-            onCheckCurrentTab={onCheckCurrentTab}
-            onCheckTab={onCheckTab}
+            onCheckCurrentTab={jest.fn()}
+            onCheckTab={jest.fn()}
+            onCheckAllTabs={jest.fn()}
         />
     );
 
@@ -68,8 +68,9 @@ test("renders the tab items", async () => {
         <TabToExecute
             tabs={tabs}
             tabsIDToExecute={[]}
-            onCheckCurrentTab={onCheckCurrentTab}
-            onCheckTab={onCheckTab}
+            onCheckCurrentTab={jest.fn()}
+            onCheckTab={jest.fn()}
+            onCheckAllTabs={jest.fn()}
         />
     );
 
@@ -77,22 +78,36 @@ test("renders the tab items", async () => {
     await screen.findByText(tabs.get(2)!.title);
 });
 
-test("test click the current tab item", async () => {
+test("test click the current tab radio item", async () => {
     render(
         <TabToExecute
             tabs={tabs}
             tabsIDToExecute={[]}
-            onCheckCurrentTab={onCheckCurrentTab}
-            onCheckTab={onCheckTab}
+            onCheckCurrentTab={jest.fn()}
+            onCheckTab={jest.fn()}
+            onCheckAllTabs={jest.fn()}
         />
     );
 
-    const item = await (await screen.findByText("Current tab"))
-        .nextElementSibling;
+    const radio = await screen.findByTitle("Current tab");
 
-    fireEvent.click(item!, "");
+    fireEvent.click(radio!, "");
+});
 
-    expect(item).toHaveProperty("checked", true);
+test("test click the all tabs radio item", async () => {
+    render(
+        <TabToExecute
+            tabs={tabs}
+            tabsIDToExecute={[]}
+            onCheckCurrentTab={jest.fn()}
+            onCheckTab={jest.fn()}
+            onCheckAllTabs={jest.fn()}
+        />
+    );
+
+    const radio = await screen.findByTitle("All tabs");
+
+    fireEvent.click(radio!, "");
 });
 
 test("test click the tab items", async () => {
@@ -100,8 +115,9 @@ test("test click the tab items", async () => {
         <TabToExecute
             tabs={tabs}
             tabsIDToExecute={[]}
-            onCheckCurrentTab={onCheckCurrentTab}
-            onCheckTab={onCheckTab}
+            onCheckCurrentTab={jest.fn()}
+            onCheckTab={jest.fn()}
+            onCheckAllTabs={jest.fn()}
         />
     );
 

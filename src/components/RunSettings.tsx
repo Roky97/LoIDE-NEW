@@ -195,11 +195,14 @@ const RunSettings: React.FC = () => {
     };
 
     const onCheckTab = (idTab: number, value: boolean) => {
-        let index = tabsIDToExecute.indexOf(idTab);
         RunSettingsStore.update((settings) => {
+            let index = settings.IDTabsToExecute.indexOf(idTab);
             let nextTabIDs = [...settings.IDTabsToExecute];
-            if (index === -1) nextTabIDs.push(idTab);
-            else nextTabIDs.splice(index, 1);
+            if (index === -1) {
+                if (value) nextTabIDs.push(idTab);
+            } else {
+                if (!value) nextTabIDs.splice(index, 1);
+            }
             settings.IDTabsToExecute = nextTabIDs;
         });
     };
@@ -207,6 +210,14 @@ const RunSettings: React.FC = () => {
         if (value)
             RunSettingsStore.update((settings) => {
                 settings.IDTabsToExecute = [];
+            });
+    };
+
+    const onCheckAllTabs = (value: boolean) => {
+        if (value)
+            RunSettingsStore.update((settings) => {
+                let nextTabIDs = [...editorTabs.keys()];
+                settings.IDTabsToExecute = nextTabIDs;
             });
     };
 
@@ -318,6 +329,7 @@ const RunSettings: React.FC = () => {
                             tabs={editorTabs}
                             tabsIDToExecute={tabsIDToExecute}
                             onCheckCurrentTab={onCheckCurrentTab}
+                            onCheckAllTabs={onCheckAllTabs}
                             onCheckTab={onCheckTab}
                         />
                     </IonCol>

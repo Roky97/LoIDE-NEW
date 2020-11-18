@@ -170,6 +170,7 @@ export const OutputPositions = {
     disabled: "disabled",
 };
 export const CurrentTab = "current-tab";
+export const AllTabs = "all-tabs";
 
 export const screenBreakpoints = {
     extraSmall: 576,
