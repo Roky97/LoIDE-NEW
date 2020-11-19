@@ -124,10 +124,13 @@ export const ButtonText = {
     Cancel: "Cancel",
     ResetInput: "Reset input",
     ResetProject: "Reset project",
+    Rename: "Rename",
+    Delete: "Delete",
 };
 
 export const ActionSheet = {
-    Reset: "Reset",
+    Reset: "Reset actions",
+    Tab: "Tab actions",
 };
 
 export const URLInput = {
@@ -150,6 +153,14 @@ export const WindowConfirmMessages = {
         message:
             "This operation will reset all the run settings, the project input and output. This cannot be undone.",
     },
+    RenameTab: {
+        header: "Rename tab",
+        message: "",
+    },
+};
+
+export const Inputs = {
+    RenameTab: { name: "rename", placeholder: "Insert a name" },
 };
 
 export const LoideLanguages = {

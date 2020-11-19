@@ -339,6 +339,21 @@ const changeTabValue = (tabKey: number, value: string) => {
     });
 };
 
+const changeTabName = (tabKey: number, name: string) => {
+    EditorStore.update((e) => {
+        let tab: ILoideTab = Object.assign({}, e.tabs.get(tabKey));
+
+        if (tab) {
+            tab.title = name;
+
+            let nextTabs = new Map(e.tabs);
+            nextTabs.set(tabKey, tab);
+
+            e.tabs = nextTabs;
+        }
+    });
+};
+
 const resetProject = () => {
     RunSettingsStore.update((s) => {
         s.currentLanguage = initialRunSettingsStore.currentLanguage;
@@ -686,6 +701,7 @@ const Editor = {
     deleteTab,
     selectTab,
     changeTabValue,
+    changeTabName,
 };
 
 const Utils = {

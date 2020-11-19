@@ -2,15 +2,20 @@ import React, { useEffect, useRef, useState } from "react";
 import LoideAceEditor from "./LoideAceEditor";
 import { Tabs, TabList, TabPanel } from "react-tabs";
 import { EditorStore, RunSettingsStore, UIStatusStore } from "../lib/store";
-import { WindowConfirmMessages } from "../lib/constants";
+import {
+    ActionSheet,
+    ButtonText,
+    Inputs,
+    WindowConfirmMessages,
+} from "../lib/constants";
 import { IonIcon } from "@ionic/react";
 import { addOutline } from "ionicons/icons";
 import LoideTab from "./LoideTab";
-import { alertController } from "@ionic/core";
 import LoideToolbarEditor from "./LoideToolbarEditor";
 import AceEditor from "react-ace";
 import Utils from "../lib/utils";
 import { useIsDarkMode } from "../hooks/useIsDarkMode";
+import { alertController, actionSheetController } from "@ionic/core";
 
 const Editor: React.FC = () => {
     const tabCountID = EditorStore.useState((e) => e.tabCountID);
@@ -28,7 +33,7 @@ const Editor: React.FC = () => {
 
     const darkMode = useIsDarkMode();
 
-    const fontEditorSize = UIStatusStore.useState((u)=> u.fontSizeEditor)
+    const fontEditorSize = UIStatusStore.useState((u) => u.fontSizeEditor);
 
     // set the current tab ID depending on selected tab
     useEffect(() => {
@@ -137,11 +142,64 @@ const Editor: React.FC = () => {
         setEditorSessions(newSessions);
     };
 
+    const showRenameAlert = (tabKey: number) => {
+        alertController
+            .create({
+                message: WindowConfirmMessages.RenameTab.message,
+                header: WindowConfirmMessages.RenameTab.header,
+
+                inputs: [
+                    {
+                        name: Inputs.RenameTab.name,
+                        type: "text",
+                        placeholder: Inputs.RenameTab.placeholder,
+                    },
+                ],
+                buttons: [
+                    { text: ButtonText.Cancel },
+                    {
+                        text: ButtonText.Rename,
+                        handler: (data) =>
+                            Utils.Editor.changeTabName(tabKey, data.rename),
+                    },
+                ],
+            })
+            .then((alert) => alert.present());
+    };
+
+    const showTabActionSheet = (tabKey: number) => {
+        actionSheetController
+            .create({
+                header: ActionSheet.Tab,
+                buttons: [
+                    {
+                        text: ButtonText.Rename,
+                        handler: () => showRenameAlert(tabKey),
+                    },
+                    {
+                        text: ButtonText.Delete,
+                        role: "destructive",
+                        handler: () => {
+                            showDeleteTabAlert(new Event("click"), tabKey);
+                        },
+                    },
+                    {
+                        text: ButtonText.Cancel,
+                        role: "cancel",
+                    },
+                ],
+            })
+            .then((alert) => {
+                alert.present();
+            });
+    };
+
     const loideTabs = [...tabs.keys()].map((key) => (
         <LoideTab
             key={`tab-${key}`}
             tabkey={key}
             onDeleteTab={showDeleteTabAlert}
+            onLongPress={showTabActionSheet}
         >
             {tabs.get(key)!.title}
         </LoideTab>
