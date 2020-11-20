@@ -16,6 +16,7 @@ import AceEditor from "react-ace";
 import Utils from "../lib/utils";
 import { useIsDarkMode } from "../hooks/useIsDarkMode";
 import { alertController, actionSheetController } from "@ionic/core";
+import { ILoideTab } from "../lib/LoideInterfaces";
 
 const Editor: React.FC = () => {
     const tabCountID = EditorStore.useState((e) => e.tabCountID);
@@ -183,6 +184,13 @@ const Editor: React.FC = () => {
                     {
                         text: ButtonText.ClearContent,
                         handler: () => Utils.Editor.clearTabValue(tabKey),
+                    },
+                    {
+                        text: ButtonText.SaveContent,
+                        handler: () => {
+                            let tab = tabs.get(tabKey);
+                            if (tab) Utils.Editor.saveTabContent(tab);
+                        },
                     },
                     {
                         text: ButtonText.Delete,

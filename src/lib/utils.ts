@@ -390,6 +390,10 @@ const clearTabValue = (tabKey: number) => {
     });
 };
 
+const saveTabContent = (tab: ILoideTab) => {
+    downloadTextFile(tab.title, tab.value);
+};
+
 const resetProject = () => {
     RunSettingsStore.update((s) => {
         s.currentLanguage = initialRunSettingsStore.currentLanguage;
@@ -740,6 +744,7 @@ const Editor = {
     changeTabName,
     duplicateTab,
     clearTabValue,
+    saveTabContent,
 };
 
 const Utils = {

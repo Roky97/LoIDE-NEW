@@ -128,6 +128,7 @@ export const ButtonText = {
     Delete: "Delete",
     Duplicate: "Duplicate",
     ClearContent: "Clear content",
+    SaveContent: "Save content",
 };
 
 export const ActionSheet = {
