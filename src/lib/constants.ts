@@ -126,6 +126,7 @@ export const ButtonText = {
     ResetProject: "Reset project",
     Rename: "Rename",
     Delete: "Delete",
+    Duplicate: "Duplicate",
 };
 
 export const ActionSheet = {

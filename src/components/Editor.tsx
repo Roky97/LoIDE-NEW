@@ -177,6 +177,10 @@ const Editor: React.FC = () => {
                         handler: () => showRenameAlert(tabKey),
                     },
                     {
+                        text: ButtonText.Duplicate,
+                        handler: () => Utils.Editor.duplicateTab(tabKey),
+                    },
+                    {
                         text: ButtonText.Delete,
                         role: "destructive",
                         handler: () => {

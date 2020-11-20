@@ -354,6 +354,27 @@ const changeTabName = (tabKey: number, name: string) => {
     });
 };
 
+const duplicateTab = (tabKey: number) => {
+    EditorStore.update((e) => {
+        let tab: ILoideTab = Object.assign({}, e.tabs.get(tabKey));
+        if (tab) {
+            let nextID = e.tabCountID + 1;
+
+            let nextTabs = new Map(e.tabs);
+            nextTabs.set(nextID, {
+                title: `${SuffixNameTab}${nextID}`,
+                type: tab.type,
+                value: tab.value,
+            });
+
+            e.currentTab = nextTabs.size - 1;
+            e.prevTabsSize = e.tabs.size;
+            e.tabs = nextTabs;
+            e.tabCountID = nextID;
+        }
+    });
+};
+
 const resetProject = () => {
     RunSettingsStore.update((s) => {
         s.currentLanguage = initialRunSettingsStore.currentLanguage;
@@ -702,6 +723,7 @@ const Editor = {
     selectTab,
     changeTabValue,
     changeTabName,
+    duplicateTab,
 };
 
 const Utils = {
