@@ -375,6 +375,21 @@ const duplicateTab = (tabKey: number) => {
     });
 };
 
+const clearTabValue = (tabKey: number) => {
+    EditorStore.update((e) => {
+        let tab: ILoideTab = Object.assign({}, e.tabs.get(tabKey));
+
+        if (tab) {
+            tab.value = "";
+
+            let nextTabs = new Map(e.tabs);
+            nextTabs.set(tabKey, tab);
+
+            e.tabs = nextTabs;
+        }
+    });
+};
+
 const resetProject = () => {
     RunSettingsStore.update((s) => {
         s.currentLanguage = initialRunSettingsStore.currentLanguage;
@@ -724,6 +739,7 @@ const Editor = {
     changeTabValue,
     changeTabName,
     duplicateTab,
+    clearTabValue,
 };
 
 const Utils = {

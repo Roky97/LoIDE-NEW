@@ -181,6 +181,10 @@ const Editor: React.FC = () => {
                         handler: () => Utils.Editor.duplicateTab(tabKey),
                     },
                     {
+                        text: ButtonText.ClearContent,
+                        handler: () => Utils.Editor.clearTabValue(tabKey),
+                    },
+                    {
                         text: ButtonText.Delete,
                         role: "destructive",
                         handler: () => {

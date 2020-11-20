@@ -127,6 +127,7 @@ export const ButtonText = {
     Rename: "Rename",
     Delete: "Delete",
     Duplicate: "Duplicate",
+    ClearContent: "Clear content",
 };
 
 export const ActionSheet = {
