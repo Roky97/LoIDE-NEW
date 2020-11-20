@@ -16,7 +16,6 @@ import AceEditor from "react-ace";
 import Utils from "../lib/utils";
 import { useIsDarkMode } from "../hooks/useIsDarkMode";
 import { alertController, actionSheetController } from "@ionic/core";
-import { ILoideTab } from "../lib/LoideInterfaces";
 
 const Editor: React.FC = () => {
     const tabCountID = EditorStore.useState((e) => e.tabCountID);
@@ -73,7 +72,7 @@ const Editor: React.FC = () => {
         Utils.Editor.deleteTab(tabKey);
     };
 
-    const showDeleteTabAlert = (e: any, tabKey: number) => {
+    const showDeleteTabAlert = (tabKey: number, e: any) => {
         e.stopPropagation();
 
         alertController
@@ -196,7 +195,7 @@ const Editor: React.FC = () => {
                         text: ButtonText.Delete,
                         role: "destructive",
                         handler: () => {
-                            showDeleteTabAlert(new Event("click"), tabKey);
+                            showDeleteTabAlert(tabKey, new Event("click"));
                         },
                     },
                     {
@@ -216,6 +215,7 @@ const Editor: React.FC = () => {
             tabkey={key}
             onDeleteTab={showDeleteTabAlert}
             onLongPress={showTabActionSheet}
+            onContextMenu={showTabActionSheet}
         >
             {tabs.get(key)!.title}
         </LoideTab>

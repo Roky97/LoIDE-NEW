@@ -37,7 +37,11 @@ const useLongPress = (
     );
 
     return {
-        onMouseDown: (e) => start(e),
+        onMouseDown: (e) => {
+            if (e.button !== 2)
+                // if the button is different from the right button
+                start(e);
+        },
         onTouchStart: (e) => start(e),
         onMouseUp: (e) => clear(e),
         onMouseLeave: (e) => clear(e, false),
