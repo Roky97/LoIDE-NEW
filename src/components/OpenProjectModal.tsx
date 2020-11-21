@@ -9,6 +9,7 @@ import {
     IonToolbar,
 } from "@ionic/react";
 import React, { useEffect, useState } from "react";
+import { useIsDarkMode } from "../hooks/useIsDarkMode";
 import { UIStatusStore } from "../lib/store";
 import LoideFileDropzone from "./LoideFileDropzone";
 
@@ -19,6 +20,8 @@ interface OpenFileModalModalProps {
 
 const OpenProjectModal: React.FC<OpenFileModalModalProps> = (props) => {
     const [showModal, setShowModal] = useState(false);
+
+    const darkMode = useIsDarkMode();
 
     const loadingFiles = UIStatusStore.useState((u) => u.loadingFiles);
 
@@ -56,7 +59,10 @@ const OpenProjectModal: React.FC<OpenFileModalModalProps> = (props) => {
                     </div>
                 )}
                 {!loadingFiles && (
-                    <LoideFileDropzone onFinishLoad={onFinishLoad} />
+                    <LoideFileDropzone
+                        onFinishLoad={onFinishLoad}
+                        darkMode={darkMode}
+                    />
                 )}
             </IonContent>
         </IonModal>

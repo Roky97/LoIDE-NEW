@@ -1,10 +1,4 @@
-import {
-    IonButton,
-    IonCol,
-    IonProgressBar,
-    IonRow,
-    IonSpinner,
-} from "@ionic/react";
+import { IonButton, IonCol, IonProgressBar, IonRow } from "@ionic/react";
 import React from "react";
 import API from "../lib/api";
 import { SocketStatusStore, UIStatusStore } from "../lib/store";

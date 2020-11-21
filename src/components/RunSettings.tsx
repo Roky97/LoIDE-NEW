@@ -255,7 +255,7 @@ const RunSettings: React.FC = () => {
                         size="12"
                         className="ion-no-padding ion-margin-bottom"
                     >
-                        <IonList>
+                        <IonList className="ion-no-padding">
                             <IonListHeader>
                                 <IonLabel>
                                     Language, Solver and Executor
@@ -318,6 +318,10 @@ const RunSettings: React.FC = () => {
                                     title="Add option"
                                     expand="block"
                                     onClick={addOption}
+                                    style={{
+                                        marginTop: "10px",
+                                        marginBottom: "10px",
+                                    }}
                                 >
                                     <IonIcon icon={addOutline} />
                                     Add Option

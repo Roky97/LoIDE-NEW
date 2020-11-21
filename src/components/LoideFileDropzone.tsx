@@ -4,6 +4,11 @@ import { Toast } from "../lib/constants";
 import { LanguagesDataStore, UIStatusStore } from "../lib/store";
 import Utils from "../lib/utils";
 
+const darkModeColor: CSSProperties = {
+    backgroundColor: "#262626",
+    borderColor: "#424242",
+};
+
 const baseStyle: CSSProperties = {
     flex: 1,
     cursor: "pointer",
@@ -37,6 +42,7 @@ const rejectStyle = {
 
 interface LoideFileDropzoneProps {
     onFinishLoad?: (value: boolean) => void;
+    darkMode: boolean;
 }
 
 const LoideFileDropzone: React.FC<LoideFileDropzoneProps> = (props) => {
@@ -140,11 +146,12 @@ const LoideFileDropzone: React.FC<LoideFileDropzoneProps> = (props) => {
     const style = useMemo(
         () => ({
             ...baseStyle,
+            ...(props.darkMode ? darkModeColor : {}),
             ...(isDragActive ? activeStyle : {}),
             ...(isDragAccept ? acceptStyle : {}),
             ...(isDragReject ? rejectStyle : {}),
         }),
-        [isDragActive, isDragReject, isDragAccept]
+        [isDragActive, isDragReject, isDragAccept, props.darkMode]
     );
 
     return (

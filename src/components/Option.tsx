@@ -118,7 +118,7 @@ const Option: React.FC<OptionProps> = (props) => {
     });
 
     return (
-        <IonList className="ion-margin-bottom">
+        <IonList className="ion-no-padding">
             <IonItem>
                 <IonBadge
                     slot="start"
