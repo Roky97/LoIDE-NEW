@@ -503,6 +503,7 @@ const setProjectFromConfig = (
         });
 
         EditorStore.update((e) => {
+            e.currentTab = 0;
             e.tabs = newTabs;
             e.tabCountID = project.IDTabs[project.IDTabs.length - 1]; // set the last ID
         });
@@ -642,6 +643,7 @@ const setProjectFromLink = (
         });
 
         EditorStore.update((e) => {
+            e.currentTab = 0;
             e.tabs = newTabs;
             e.tabCountID = project.IDTabs[project.IDTabs.length - 1]; // set the last ID
         });
