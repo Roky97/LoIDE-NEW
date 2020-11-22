@@ -1,6 +1,6 @@
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import SaveProjectModal from "../../components/SaveProjectModal";
+import SaveProjectModal from "../../modals/SaveProjectModal";
 
 test("renders without crashing", () => {
     const onDismiss = jest.fn();

@@ -11,7 +11,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { useIsDarkMode } from "../hooks/useIsDarkMode";
 import { UIStatusStore } from "../lib/store";
-import LoideFileDropzone from "./LoideFileDropzone";
+import LoideFileDropzone from "../components/LoideFileDropzone";
 
 interface OpenFileModalModalProps {
     isOpen: boolean;

@@ -8,7 +8,7 @@ import {
     IonToolbar,
 } from "@ionic/react";
 import React, { useEffect, useState } from "react";
-import ShareProject from "./ShareProject";
+import ShareProject from "../components/ShareProject";
 
 interface ShareProjectModalProps {
     isOpen: boolean;

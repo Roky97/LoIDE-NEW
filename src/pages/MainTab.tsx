@@ -20,7 +20,7 @@ import logo from "../assets/img/logo_LoIDE.svg";
 import RunSettings from "../components/RunSettings";
 import LoideRunNavButton from "../components/LoideRunNavButton";
 import Editor from "../components/Editor";
-import OpenProjectModal from "../components/OpenProjectModal";
+import OpenProjectModal from "../modals/OpenProjectModal";
 import {
     closeCircleOutline,
     ellipsisVerticalOutline,
@@ -28,14 +28,14 @@ import {
     saveOutline,
     shareOutline,
 } from "ionicons/icons";
-import SaveProjectModal from "../components/SaveProjectModal";
+import SaveProjectModal from "../modals/SaveProjectModal";
 import {
     ActionSheet,
     ButtonText,
     WindowConfirmMessages,
 } from "../lib/constants";
 import Utils from "../lib/utils";
-import ShareProjectModal from "../components/ShareProjectModal";
+import ShareProjectModal from "../modals/ShareProjectModal";
 import { RouteComponentProps } from "react-router";
 import { LanguagesDataStore } from "../lib/store";
 

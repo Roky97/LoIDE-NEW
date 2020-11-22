@@ -1,6 +1,6 @@
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import ShareProjectModal from "../../components/ShareProjectModal";
+import ShareProjectModal from "../../modals/ShareProjectModal";
 
 test("renders without crashing", () => {
     const onDismiss = jest.fn();

@@ -8,7 +8,7 @@ import {
     IonToolbar,
 } from "@ionic/react";
 import React, { useEffect, useState } from "react";
-import SaveProject from "./SaveProject";
+import SaveProject from "../components/SaveProject";
 
 interface SaveProjectModalProps {
     isOpen: boolean;
