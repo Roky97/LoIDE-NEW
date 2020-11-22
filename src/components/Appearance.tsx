@@ -10,6 +10,7 @@ import {
 } from "@ionic/react";
 import { moonOutline } from "ionicons/icons";
 import React from "react";
+import { LocalStorageItems } from "../lib/constants";
 import { UIStatusStore } from "../lib/store";
 import Utils from "../lib/utils";
 
@@ -24,6 +25,10 @@ const Appearance: React.FC<AppearanceProps> = (props) => {
         UIStatusStore.update((u) => {
             u.darkMode = !darkMode;
         });
+        localStorage.setItem(
+            LocalStorageItems.darkMode,
+            (!darkMode).toString()
+        );
     };
 
     const onFontEditorChange = (e: any) => {
@@ -32,6 +37,10 @@ const Appearance: React.FC<AppearanceProps> = (props) => {
             UIStatusStore.update((u) => {
                 u.fontSizeEditor = value;
             });
+            localStorage.setItem(
+                LocalStorageItems.fontSizeEditor,
+                value.toString()
+            );
         }
     };
 
@@ -42,6 +51,10 @@ const Appearance: React.FC<AppearanceProps> = (props) => {
             UIStatusStore.update((u) => {
                 u.fontSizeOutput = value;
             });
+            localStorage.setItem(
+                LocalStorageItems.fontSizeOutput,
+                value.toString()
+            );
         }
     };
     return (

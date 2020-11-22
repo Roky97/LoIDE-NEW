@@ -79,6 +79,8 @@ const App: React.FC = () => {
         button?.addEventListener("click", () => {
             Utils.removeNewOutputBadge();
         });
+
+        Utils.restoreAppearanceFromLocalStorage();
     }, []);
 
     return (

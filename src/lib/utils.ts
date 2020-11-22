@@ -19,6 +19,7 @@ import {
 import { enableMapSet } from "immer";
 import {
     InitalTabCountID,
+    LocalStorageItems,
     SuffixNameTab,
     Toast,
     ValuesNotSupported,
@@ -701,11 +702,17 @@ const setProjectFromLink = (
 };
 
 const resetAppearanceOptions = () => {
+    let darkModeMatches = window.matchMedia("(prefers-color-scheme: dark)")
+        .matches;
     UIStatusStore.update((u) => {
         u.fontSizeEditor = initialUIStatusStore.fontSizeEditor;
         u.fontSizeOutput = initialUIStatusStore.fontSizeOutput;
-        u.darkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        u.darkMode = darkModeMatches;
     });
+
+    localStorage.setItem(LocalStorageItems.darkMode, "");
+    localStorage.setItem(LocalStorageItems.fontSizeEditor, "");
+    localStorage.setItem(LocalStorageItems.fontSizeOutput, "");
 };
 
 const removeNewOutputBadge = () => {
@@ -718,6 +725,26 @@ const addNewOutputBadge = () => {
     UIStatusStore.update((u) => {
         u.newOutput = true;
     });
+};
+
+const restoreAppearanceFromLocalStorage = () => {
+    let darkMode = localStorage.getItem(LocalStorageItems.darkMode);
+    if (darkMode)
+        UIStatusStore.update((u) => {
+            u.darkMode = Boolean(darkMode);
+        });
+
+    let fontEditor = localStorage.getItem(LocalStorageItems.fontSizeEditor);
+    if (fontEditor)
+        UIStatusStore.update((u) => {
+            u.fontSizeEditor = Number(fontEditor);
+        });
+
+    let fontOutput = localStorage.getItem(LocalStorageItems.fontSizeOutput);
+    if (fontOutput)
+        UIStatusStore.update((u) => {
+            u.fontSizeOutput = Number(fontOutput);
+        });
 };
 
 const Editor = {
@@ -754,6 +781,7 @@ const Utils = {
     resetAppearanceOptions,
     removeNewOutputBadge,
     addNewOutputBadge,
+    restoreAppearanceFromLocalStorage,
 };
 
 export default Utils;

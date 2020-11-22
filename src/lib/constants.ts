@@ -131,6 +131,12 @@ export const ButtonText = {
     SaveContent: "Save content",
 };
 
+export const LocalStorageItems = {
+    darkMode: "darkMode",
+    fontSizeEditor: "fontSizeEditor",
+    fontSizeOutput: "fontSizeOutput",
+};
+
 export const ActionSheet = {
     Reset: "Reset actions",
     Tab: "Tab actions",
