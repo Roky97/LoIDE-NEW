@@ -83,6 +83,10 @@ const App: React.FC = () => {
         Utils.restoreAppearanceFromLocalStorage();
     }, []);
 
+    useEffect(() => {
+        API.emitGetLanguages();
+    }, []);
+
     return (
         <IonApp>
             <IonReactRouter>

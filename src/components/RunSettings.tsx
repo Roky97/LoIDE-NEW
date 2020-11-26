@@ -239,10 +239,6 @@ const RunSettings: React.FC = () => {
         </IonSelectOption>
     ));
 
-    useEffect(() => {
-        API.emitGetLanguages();
-    }, []);
-
     // set language, solver and executor if they are empty or resetted
     useSetRunSettings();
 
