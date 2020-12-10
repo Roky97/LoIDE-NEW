@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Option from "./Option";
 import {
     IExecutorData,
@@ -28,7 +28,6 @@ import { addOutline } from "ionicons/icons";
 import TabToExecute from "./TabToExecute";
 import { useLanguageAvailable } from "../hooks/useLanguageAvailable";
 import NoLanguageAvailable from "./NoLangualeAvailable";
-import API from "../lib/api";
 import { useSetRunSettings } from "../hooks/useSetRunSettings";
 
 const RunSettings: React.FC = () => {
