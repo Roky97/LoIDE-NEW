@@ -16,7 +16,11 @@ const NoLanguageAvailable: React.FC = () => {
         <>
             <IonProgressBar
                 type="indeterminate"
-                style={reconnecting ? { position: "fixed" } : { opacity: 0 }}
+                style={
+                    reconnecting
+                        ? { position: "fixed" }
+                        : { opacity: 0, position: "fixed" }
+                }
             ></IonProgressBar>
             <IonRow>
                 <IonCol className="ion-text-center ion-padding">
