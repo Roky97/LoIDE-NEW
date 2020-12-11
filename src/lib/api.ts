@@ -11,14 +11,14 @@ import { SocketStatusStore, UIStatusStore } from "./store";
 import { Toast } from "./constants";
 
 // LoIDE Web Server API URL
-const APIUrl = "localhost:8084";
+const APIUrl = "192.168.1.32:8084";
 
 var socket: SocketIOClient.Socket | undefined = undefined;
 
 const createSocket = () => {
     if (!socket) {
         socket = io(APIUrl, { reconnection: false });
-        socket.on(APIWSEvents.on.connectError, async (error: any) => {
+        socket.io.on("error", async (error: any) => {
             await toastController
                 .create({
                     position: "top",
@@ -111,7 +111,12 @@ const emitGetLanguages = () => {
 
 const emitRunProject = (data: ILoideRunData) => {
     if (socket) {
-        if (socket.disconnected) socket.connect();
+        if (socket.disconnected) {
+            UIStatusStore.update((s) => {
+                s.connectingToTheServer = true;
+            });
+            socket.connect();
+        }
         socket.emit(APIWSEvents.emit.run, JSON.stringify(data));
     }
 };
